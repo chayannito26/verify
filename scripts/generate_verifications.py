@@ -30,7 +30,7 @@ def render_template(template_text: str, data: dict) -> str:
         "gender": data.get("gender", ""),
         "registration_date": data.get("registration_date", ""),
         "registration_id": data.get("registration_id", ""),
-        "photo": data.get("photo", "")
+        "photo": data.get("photo", "") or f"https://chayannito26.com/college-students/images/bulbul/{data.get('roll', 'placeholder')}.jpg"
     }
     for key, val in placeholders.items():
         out = out.replace("{{" + key + "}}", str(val))
