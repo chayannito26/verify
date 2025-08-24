@@ -21,12 +21,30 @@ import argparse
 from pathlib import Path
 from typing import Iterable, Optional
 
+# Rich: pretty console, spinners, progress bars, traceback
+from rich.console import Console
+from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, TimeElapsedColumn, TaskProgressColumn
+from rich.traceback import install as rich_traceback_install
+from rich.panel import Panel
+from rich.theme import Theme
+
 # Resolve paths relative to this script
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 ROOT_DIR = SCRIPT_DIR
 REG_JSON = SCRIPT_DIR / "registrants.json"
 TEMPLATE_FILE = SCRIPT_DIR / "template.html"
+
+# Rich setup
+CUSTOM_THEME = Theme({
+    "info": "cyan",
+    "success": "green",
+    "warning": "yellow",
+    "error": "bold red",
+    "path": "magenta",
+})
+console = Console(theme=CUSTOM_THEME)
+rich_traceback_install(show_locals=False)
 
 def id_to_filename(reg_id: str) -> str:
     b64 = base64.urlsafe_b64encode(reg_id.encode('utf-8')).decode('utf-8')
@@ -162,12 +180,13 @@ def write_if_changed(path: Path, content: str) -> bool:
         try:
             old = path.read_text(encoding="utf-8")
             if old == content:
-                print(f"Unchanged: {path}")
+                console.print(f"Unchanged: [path]{path}[/path]", style="warning")
                 return False
-        except Exception:
-            pass
+        except Exception as e:
+            console.print(f"[warning]Could not read existing file[/warning] [path]{path}[/path]: {e}")
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
-    print(f"Wrote: {path}")
+    console.print(f":white_check_mark: [success]Wrote[/success] [path]{path}[/path]")
     return True
 
 # ---- Referral helpers ----
@@ -234,9 +253,9 @@ def _copy_static_pages(out_dir: Path):
             dst = out_dir / name
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
-            print(f"Copied: {src} -> {dst}")
+            console.print(f":page_facing_up: Copied [path]{src}[/path] -> [path]{dst}[/path]", style="info")
         else:
-            print(f"Warning: static page not found: {src}")
+            console.print(f"[warning]Static page not found:[/warning] [path]{src}[/path]")
 
 def _filter_registrants(registrants: list[dict], ids: Optional[Iterable[str]], limit: Optional[int]) -> list[dict]:
     if ids:
@@ -255,28 +274,34 @@ def main(argv: Optional[list[str]] = None):
     parser.add_argument("--no-static", action="store_true", help="Do not copy index.html and 404.html into output")
     args = parser.parse_args(argv)
 
-    out_dir = Path(args.out).resolve()
-    if args.clean and out_dir.exists():
-        print(f"Cleaning: {out_dir}")
-        shutil.rmtree(out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
+    console.rule("[bold cyan]Chayannito 26 – Verification Generator")
 
-    if not REG_JSON.is_file():
-        print(f"Error: {REG_JSON} not found.")
-        return
-    if not TEMPLATE_FILE.is_file():
-        print(f"Error: {TEMPLATE_FILE} not found.")
-        return
+    # Prepare output directory
+    with console.status("[cyan]Preparing output directory..."):
+        out_dir = Path(args.out).resolve()
+        if args.clean and out_dir.exists():
+            console.print(f":broom: [warning]Cleaning[/warning] [path]{out_dir}[/path]")
+            shutil.rmtree(out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
 
-    template_text = TEMPLATE_FILE.read_text(encoding="utf-8")
-    with open(REG_JSON, "r", encoding="utf-8") as f:
-        all_registrants = json.load(f)
+    # Validate and load inputs
+    with console.status("[cyan]Loading template and data..."):
+        if not REG_JSON.is_file():
+            console.print(f"[error]Error:[/error] [path]{REG_JSON}[/path] not found.")
+            return
+        if not TEMPLATE_FILE.is_file():
+            console.print(f"[error]Error:[/error] [path]{TEMPLATE_FILE}[/path] not found.")
+            return
+        template_text = TEMPLATE_FILE.read_text(encoding="utf-8")
+        with open(REG_JSON, "r", encoding="utf-8") as f:
+            all_registrants = json.load(f)
 
     # Apply filters for local testing
     ids_list = [s for s in (args.ids.split(",") if args.ids else []) if s]
     registrants = _filter_registrants(all_registrants, ids_list or None, args.limit)
+    console.print(f":mag: [info]Filtered registrants:[/info] {len(registrants)}")
 
-    # Mapping and indexes are based on the filtered set to avoid dangling links in partial builds
+    # Mapping and indexes based on filtered set
     id_to_file = {}
     for r in registrants:
         reg_id = r.get("registration_id", "")
@@ -285,40 +310,67 @@ def main(argv: Optional[list[str]] = None):
 
     by_id, by_roll, by_name = _build_indexes(registrants)
 
+    # Render pages with a progress bar
     links = []
     ref_cells = []
-    for entry in registrants:
-        reg_id = entry.get("registration_id", "")
-        if not reg_id:
-            print("Skipping entry without registration_id:", entry)
-            links.append("#")
-            ref_cells.append("—")
-            continue
+    files_written = 0
+    files_unchanged = 0
 
-        filename = id_to_file[reg_id]
-        out_path = out_dir / filename
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(bar_width=None),
+        TaskProgressColumn(),
+        TimeElapsedColumn(),
+        console=console,
+    ) as progress:
+        task = progress.add_task("Rendering registrant pages", total=len(registrants))
+        for entry in registrants:
+            reg_id = entry.get("registration_id", "")
+            if not reg_id:
+                console.print("[warning]Skipping entry without registration_id:[/warning] " + str(entry))
+                links.append("#")
+                ref_cells.append("—")
+                progress.advance(task)
+                continue
 
-        ref_section = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
-        rendered = render_template(template_text, entry, {"referred_by_section": ref_section})
-        write_if_changed(out_path, rendered)
-        print(f"(from registration_id: {reg_id})")
+            filename = id_to_file[reg_id]
+            out_path = out_dir / filename
 
-        ref_val = entry.get("referred_by")
-        referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
-        if referer:
-            ref_link = id_to_file.get(referer["registration_id"], "#")
-            ref_cells.append(f'<a href="{ref_link}" class="text-green-600 hover:underline">{referer["name"]}</a>')
-        else:
-            ref_cells.append("—")
+            ref_section = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
+            rendered = render_template(template_text, entry, {"referred_by_section": ref_section})
 
-        links.append(filename)
+            changed = write_if_changed(out_path, rendered)
+            files_written += int(changed)
+            files_unchanged += int(not changed)
+
+            ref_val = entry.get("referred_by")
+            referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
+            if referer:
+                ref_link = id_to_file.get(referer["registration_id"], "#")
+                ref_cells.append(f'<a href="{ref_link}" class="text-green-600 hover:underline">{referer["name"]}</a>')
+            else:
+                ref_cells.append("—")
+
+            links.append(filename)
+            progress.advance(task)
 
     master_html = render_master_list(registrants, links, ref_cells)
-    write_if_changed(out_dir / "master_list.html", master_html)
+    changed_master = write_if_changed(out_dir / "master_list.html", master_html)
 
     # Copy static files unless explicitly disabled
     if not args.no_static:
         _copy_static_pages(out_dir)
+
+    console.print(Panel.fit(
+        f"Total registrants: {len(registrants)}\n"
+        f"Generated pages: {files_written}\n"
+        f"Unchanged pages: {files_unchanged}\n"
+        f"master_list.html: {'updated' if changed_master else 'unchanged'}\n"
+        f"Output: [path]{out_dir}[/path]",
+        title="Summary",
+        border_style="green"
+    ))
 
 if __name__ == "__main__":
     main()
