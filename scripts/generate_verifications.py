@@ -24,13 +24,61 @@ def id_to_filename(reg_id: str) -> str:
 
 def render_template(template_text: str, data: dict) -> str:
     out = template_text
+    revoked = True if data.get("revoked") is True else False
+
+    # Accent mapping
+    if revoked:
+        title_status = "Revoked"
+        avatar_border_class = "border-red-500"
+        avatar_filter_class = "grayscale"
+        status_badge_bg = "bg-red-500"
+        status_icon_path = "M6 18L18 6M6 6l12 12"
+        status_text_class = "text-red-600"
+        status_text = "Registration Revoked"
+        footer_bar_bg_class = "bg-red-50"
+        footer_bar_border_class = "border-red-100"
+        id_text_class = "text-red-800"
+        id_badge_bg_class = "bg-red-200"
+        revoked_banner = (
+            '<div class="mb-4 w-full max-w-sm rounded-xl border border-red-200 '
+            'bg-red-50 text-red-700 px-4 py-3 text-sm font-medium">'
+            'This registration has been revoked. If you believe this is an error, please contact the organizers.'
+            "</div>"
+        )
+    else:
+        title_status = "Verified"
+        avatar_border_class = "border-green-500"
+        avatar_filter_class = ""
+        status_badge_bg = "bg-green-500"
+        status_icon_path = "M5 13l4 4L19 7"
+        status_text_class = "text-green-600"
+        status_text = "Registration Verified"
+        footer_bar_bg_class = "bg-green-50"
+        footer_bar_border_class = "border-green-100"
+        id_text_class = "text-green-800"
+        id_badge_bg_class = "bg-green-200"
+        revoked_banner = ""
+
     placeholders = {
         "name": data.get("name", ""),
         "roll": data.get("roll", ""),
         "gender": data.get("gender", ""),
         "registration_date": data.get("registration_date", ""),
         "registration_id": data.get("registration_id", ""),
-        "photo": data.get("photo", "") or f"https://chayannito26.com/college-students/images/bulbul/{data.get('roll', 'placeholder')}.jpg"
+        "photo": data.get("photo", "") or f"https://chayannito26.com/college-students/images/bulbul/{data.get('roll', 'placeholder')}.jpg",
+        # New dynamic placeholders
+        "title_status": title_status,
+        "avatar_border_class": avatar_border_class,
+        "avatar_filter_class": avatar_filter_class,
+        "status_badge_bg": status_badge_bg,
+        "status_icon_path": status_icon_path,
+        "status_text_class": status_text_class,
+        "status_text": status_text,
+        "footer_bar_bg_class": footer_bar_bg_class,
+        "footer_bar_border_class": footer_bar_border_class,
+        "id_text_class": id_text_class,
+        "id_badge_bg_class": id_badge_bg_class,
+        "revoked_banner": revoked_banner,
     }
     for key, val in placeholders.items():
         out = out.replace("{{" + key + "}}", str(val))
@@ -92,6 +140,20 @@ def render_master_list(registrants, links) -> str:
 </body>
 </html>"""
 
+def write_if_changed(path: Path, content: str) -> bool:
+    """Write only if content differs. Returns True if written."""
+    if path.exists():
+        try:
+            old = path.read_text(encoding="utf-8")
+            if old == content:
+                print(f"Unchanged: {path}")
+                return False
+        except Exception:
+            pass
+    path.write_text(content, encoding="utf-8")
+    print(f"Wrote: {path}")
+    return True
+
 def main():
     if not Path(REG_JSON).is_file():
         print(f"Error: {REG_JSON} not found.")
@@ -119,15 +181,14 @@ def main():
         out_path = Path(OUTPUT_DIR) / filename
 
         rendered = render_template(template_text, entry)
-        out_path.write_text(rendered, encoding="utf-8")
-        print(f"Wrote: {out_path}  (from registration_id: {reg_id})")
+        write_if_changed(out_path, rendered)
+        print(f"(from registration_id: {reg_id})")
 
         links.append(filename)
 
     # Generate master list
     master_html = render_master_list(registrants, links)
-    Path(OUTPUT_DIR, "master_list.html").write_text(master_html, encoding="utf-8")
-    print(f"Master list written to {OUTPUT_DIR}/master_list.html")
+    write_if_changed(Path(OUTPUT_DIR, "master_list.html"), master_html)
 
 if __name__ == "__main__":
     main()

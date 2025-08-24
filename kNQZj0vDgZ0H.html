@@ -17,11 +17,13 @@
         <span class="text-xl font-bold text-slate-700">Chayannito 26</span>
     </div>
 
+    
+
     <div class="bg-white w-full max-w-sm rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-[1.02] duration-300">
         <div class="p-8">
             <div class="relative w-32 h-32 mx-auto mb-6">
-                <img 
-                    class="rounded-full w-full h-full object-cover border-4 border-green-500" 
+                <img
+                    class="rounded-full w-full h-full object-cover border-4 border-green-500 "
                     src="https://chayannito26.com/college-students/images/bulbul/1202425010276.jpg"
                     alt="Registrant's Photo"
                     onerror="this.onerror=null;this.src='https://chayannito26.com/college-students/images/bulbul/placeholder.jpg">
@@ -71,9 +73,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             const dateElement = document.getElementById('scanDate');
             if (dateElement) {
-                dateElement.textContent = new Date().toLocaleString('en-US', { 
+                dateElement.textContent = new Date().toLocaleString('en-US', {
                     year: 'numeric', month: 'long', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit' 
+                    hour: '2-digit', minute: '2-digit'
                 });
             }
         });

@@ -5,7 +5,8 @@
     "gender": "Male",
     "registration_date": "17 August 2025",
     "registration_id": "SC-B-0001",
-    "photo": ""
+    "photo": "",
+    "revoked": false
   },
   {
     "name": "Afiya Rubaiyah",
@@ -13,7 +14,7 @@
     "gender": "Female",
     "registration_date": "18 August 2025",
     "registration_id": "AR-G-0001",
-    "photo": ""
+    "photo": "",
   },
   {
     "name": "S Shanta",
