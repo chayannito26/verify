@@ -2,19 +2,31 @@
 """
 generate_verifications.py
 
-- Generates per-registrant verification HTML files in 'verify/'.
-- Also generates a 'master_list.html' that lists all registrants with links.
+- Generates per-registrant verification HTML files.
+- Generates 'master_list.html'.
+- Copies static pages (index.html, 404.html) into the output dir.
+
+Usage examples:
+  - CI full build to dist/:       python3 generate_verifications.py --out ../dist --clean
+  - Local quick sample build:     python3 generate_verifications.py --out ../dist --clean --limit 10
+  - Build specific IDs only:      python3 generate_verifications.py --out ../dist --ids SC-B-0001,AR-G-0001
 """
 
 import os
 import json
 import base64
 import codecs
+import shutil
+import argparse
 from pathlib import Path
+from typing import Iterable, Optional
 
-REG_JSON = "registrants.json"
-TEMPLATE_FILE = "template.html"
-OUTPUT_DIR = "../."
+# Resolve paths relative to this script
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+ROOT_DIR = SCRIPT_DIR
+REG_JSON = SCRIPT_DIR / "registrants.json"
+TEMPLATE_FILE = SCRIPT_DIR / "template.html"
 
 def id_to_filename(reg_id: str) -> str:
     b64 = base64.urlsafe_b64encode(reg_id.encode('utf-8')).decode('utf-8')
@@ -66,7 +78,6 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
         "registration_date": data.get("registration_date", ""),
         "registration_id": data.get("registration_id", ""),
         "photo": data.get("photo", "") or f"https://chayannito26.com/college-students/images/bulbul/{data.get('roll', 'placeholder')}.jpg",
-        # New dynamic placeholders
         "title_status": title_status,
         "avatar_border_class": avatar_border_class,
         "avatar_filter_class": avatar_filter_class,
@@ -79,7 +90,6 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
         "id_text_class": id_text_class,
         "id_badge_bg_class": id_badge_bg_class,
         "revoked_banner": revoked_banner,
-        # new default placeholder so template never shows raw braces
         "referred_by_section": "",
     }
     if extra:
@@ -216,29 +226,63 @@ def _build_ref_section(entry, by_id, by_roll, by_name, id_to_file):
                 </div>
     '''
 
-def main():
-    if not Path(REG_JSON).is_file():
+def _copy_static_pages(out_dir: Path):
+    """Copy index.html and 404.html from repo root (verify/) into out_dir."""
+    for name in ("index.html", "404.html"):
+        src = ROOT_DIR / name
+        if src.is_file():
+            dst = out_dir / name
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+            print(f"Copied: {src} -> {dst}")
+        else:
+            print(f"Warning: static page not found: {src}")
+
+def _filter_registrants(registrants: list[dict], ids: Optional[Iterable[str]], limit: Optional[int]) -> list[dict]:
+    if ids:
+        wanted = {i.strip() for i in ids if i and i.strip()}
+        return [r for r in registrants if r.get("registration_id") in wanted]
+    if isinstance(limit, int) and limit > 0:
+        return registrants[:limit]
+    return registrants
+
+def main(argv: Optional[list[str]] = None):
+    parser = argparse.ArgumentParser(description="Generate verification pages")
+    parser.add_argument("--out", default=str(ROOT_DIR / "dist"), help="Output directory for generated site")
+    parser.add_argument("--clean", action="store_true", help="Clean output directory before generating")
+    parser.add_argument("--limit", type=int, default=None, help="Generate only first N registrants")
+    parser.add_argument("--ids", type=str, default=None, help="Comma-separated registration_id list to generate")
+    parser.add_argument("--no-static", action="store_true", help="Do not copy index.html and 404.html into output")
+    args = parser.parse_args(argv)
+
+    out_dir = Path(args.out).resolve()
+    if args.clean and out_dir.exists():
+        print(f"Cleaning: {out_dir}")
+        shutil.rmtree(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    if not REG_JSON.is_file():
         print(f"Error: {REG_JSON} not found.")
         return
-    if not Path(TEMPLATE_FILE).is_file():
+    if not TEMPLATE_FILE.is_file():
         print(f"Error: {TEMPLATE_FILE} not found.")
         return
 
-    template_text = Path(TEMPLATE_FILE).read_text(encoding="utf-8")
-
+    template_text = TEMPLATE_FILE.read_text(encoding="utf-8")
     with open(REG_JSON, "r", encoding="utf-8") as f:
-        registrants = json.load(f)
+        all_registrants = json.load(f)
 
-    Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
+    # Apply filters for local testing
+    ids_list = [s for s in (args.ids.split(",") if args.ids else []) if s]
+    registrants = _filter_registrants(all_registrants, ids_list or None, args.limit)
 
-    # Build filename mapping first (stable, based on registration_id only)
+    # Mapping and indexes are based on the filtered set to avoid dangling links in partial builds
     id_to_file = {}
     for r in registrants:
         reg_id = r.get("registration_id", "")
         if reg_id:
             id_to_file[reg_id] = f"{id_to_filename(reg_id)}.html"
 
-    # Build lookup indexes for referral resolution
     by_id, by_roll, by_name = _build_indexes(registrants)
 
     links = []
@@ -252,16 +296,13 @@ def main():
             continue
 
         filename = id_to_file[reg_id]
-        out_path = Path(OUTPUT_DIR) / filename
+        out_path = out_dir / filename
 
-        # Build referral UI snippet for detail page
         ref_section = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
-
         rendered = render_template(template_text, entry, {"referred_by_section": ref_section})
         write_if_changed(out_path, rendered)
         print(f"(from registration_id: {reg_id})")
 
-        # For master list: pre-render a compact cell (link if resolvable)
         ref_val = entry.get("referred_by")
         referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
         if referer:
@@ -272,9 +313,12 @@ def main():
 
         links.append(filename)
 
-    # Generate master list
     master_html = render_master_list(registrants, links, ref_cells)
-    write_if_changed(Path(OUTPUT_DIR, "master_list.html"), master_html)
+    write_if_changed(out_dir / "master_list.html", master_html)
+
+    # Copy static files unless explicitly disabled
+    if not args.no_static:
+        _copy_static_pages(out_dir)
 
 if __name__ == "__main__":
     main()
