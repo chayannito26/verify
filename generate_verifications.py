@@ -149,7 +149,16 @@ def render_master_list(registrants, links, ref_cells) -> str:
   <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
     <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
       <h1 class="text-2xl font-bold text-slate-700">Chayannito 26 – Master Verified List</h1>
-      <span class="text-sm text-gray-500">Total: {len(registrants)}</span>
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-500">Total: {len(registrants)}</span>
+        <a href="https://shop.chayannito26.com" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 px-3 py-2 text-white text-sm font-semibold shadow hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 10-8 0v4M5 9h14l-1 10a2 2 0 01-2 2H8a2 2 0 01-2-2L5 9z" />
+          </svg>
+          Shop
+        </a>
+      </div>
     </div>
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
