@@ -22,7 +22,7 @@ def id_to_filename(reg_id: str) -> str:
     rot = codecs.encode(b64, "rot_13")
     return rot[::-1]
 
-def render_template(template_text: str, data: dict) -> str:
+def render_template(template_text: str, data: dict, extra: dict | None = None) -> str:
     out = template_text
     revoked = True if data.get("revoked") is True else False
 
@@ -79,15 +79,19 @@ def render_template(template_text: str, data: dict) -> str:
         "id_text_class": id_text_class,
         "id_badge_bg_class": id_badge_bg_class,
         "revoked_banner": revoked_banner,
+        # new default placeholder so template never shows raw braces
+        "referred_by_section": "",
     }
+    if extra:
+        placeholders.update(extra)
     for key, val in placeholders.items():
         out = out.replace("{{" + key + "}}", str(val))
     return out
 
-def render_master_list(registrants, links) -> str:
+def render_master_list(registrants, links, ref_cells) -> str:
     """Create the master_list.html content with Tailwind styling."""
     rows = []
-    for reg, link in zip(registrants, links):
+    for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
         rows.append(f"""
         <tr class="hover:bg-green-50 transition-colors">
             <td class="px-6 py-4 font-semibold text-gray-800">
@@ -96,6 +100,7 @@ def render_master_list(registrants, links) -> str:
             <td class="px-6 py-4 text-gray-600">{reg['roll']}</td>
             <td class="px-6 py-4 font-mono text-sm text-green-800">{reg['registration_id']}</td>
             <td class="px-6 py-4 text-gray-600">{reg['registration_date']}</td>
+            <td class="px-6 py-4">{ref_cell}</td>
         </tr>
         """)
     rows_html = "\n".join(rows)
@@ -126,6 +131,7 @@ def render_master_list(registrants, links) -> str:
             <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Roll</th>
             <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Registration ID</th>
             <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Referred By</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-100">
@@ -154,6 +160,62 @@ def write_if_changed(path: Path, content: str) -> bool:
     print(f"Wrote: {path}")
     return True
 
+# ---- Referral helpers ----
+def _build_indexes(registrants):
+    by_id = {}
+    by_roll = {}
+    by_name = {}
+    for r in registrants:
+        rid = r.get("registration_id")
+        if rid:
+            by_id[rid] = r
+        roll = r.get("roll")
+        if roll:
+            by_roll[roll] = r
+        name = r.get("name")
+        if name:
+            by_name[name.strip().lower()] = r
+    return by_id, by_roll, by_name
+
+def _resolve_referer(ref_value, by_id, by_roll, by_name):
+    if not ref_value or not isinstance(ref_value, str):
+        return None
+    ref_value = ref_value.strip()
+    # Prefer registration_id
+    if ref_value in by_id:
+        return by_id[ref_value]
+    # Try roll
+    if ref_value in by_roll:
+        return by_roll[ref_value]
+    # Try case-insensitive name
+    key = ref_value.lower()
+    if key in by_name:
+        return by_name[key]
+    return None
+
+def _build_ref_section(entry, by_id, by_roll, by_name, id_to_file):
+    ref_val = entry.get("referred_by")
+    if not ref_val:
+        return ""
+    referer = _resolve_referer(ref_val, by_id, by_roll, by_name)
+    if referer:
+        href = id_to_file.get(referer.get("registration_id"), "#")
+        label = referer.get("name", ref_val)
+        return f'''
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 font-medium">Referred By</span>
+                    <a href="{href}" class="text-green-600 hover:underline font-semibold">{label}</a>
+                </div>
+        '''
+    # fallback: show text as-is
+    safe_text = str(ref_val)
+    return f'''
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 font-medium">Referred By</span>
+                    <span class="text-gray-800 font-semibold">{safe_text}</span>
+                </div>
+    '''
+
 def main():
     if not Path(REG_JSON).is_file():
         print(f"Error: {REG_JSON} not found.")
@@ -169,25 +231,49 @@ def main():
 
     Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
 
+    # Build filename mapping first (stable, based on registration_id only)
+    id_to_file = {}
+    for r in registrants:
+        reg_id = r.get("registration_id", "")
+        if reg_id:
+            id_to_file[reg_id] = f"{id_to_filename(reg_id)}.html"
+
+    # Build lookup indexes for referral resolution
+    by_id, by_roll, by_name = _build_indexes(registrants)
+
     links = []
+    ref_cells = []
     for entry in registrants:
         reg_id = entry.get("registration_id", "")
         if not reg_id:
             print("Skipping entry without registration_id:", entry)
+            links.append("#")
+            ref_cells.append("—")
             continue
 
-        base_name = id_to_filename(reg_id)
-        filename = f"{base_name}.html"
+        filename = id_to_file[reg_id]
         out_path = Path(OUTPUT_DIR) / filename
 
-        rendered = render_template(template_text, entry)
+        # Build referral UI snippet for detail page
+        ref_section = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
+
+        rendered = render_template(template_text, entry, {"referred_by_section": ref_section})
         write_if_changed(out_path, rendered)
         print(f"(from registration_id: {reg_id})")
+
+        # For master list: pre-render a compact cell (link if resolvable)
+        ref_val = entry.get("referred_by")
+        referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
+        if referer:
+            ref_link = id_to_file.get(referer["registration_id"], "#")
+            ref_cells.append(f'<a href="{ref_link}" class="text-green-600 hover:underline">{referer["name"]}</a>')
+        else:
+            ref_cells.append("—")
 
         links.append(filename)
 
     # Generate master list
-    master_html = render_master_list(registrants, links)
+    master_html = render_master_list(registrants, links, ref_cells)
     write_if_changed(Path(OUTPUT_DIR, "master_list.html"), master_html)
 
 if __name__ == "__main__":
