@@ -3,8 +3,6 @@ name: Deploy verification pages
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'verify/**'
   workflow_dispatch:
 
 permissions:
@@ -31,15 +29,20 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Build site (to verify/dist)
-        working-directory: verify/scripts
+      - name: Install Python deps
         run: |
-          python3 generate_verifications.py --out ../dist --clean
+          python -m pip install --upgrade pip
+          pip install rich
+
+      - name: Build site (to ./dist)
+        working-directory: .
+        run: |
+          python3 generate_verifications.py --out ./dist --clean
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: verify/dist
+          path: ./dist
 
   deploy:
     environment:
