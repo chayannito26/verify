@@ -255,7 +255,7 @@ def _build_ref_section(entry, by_id, by_roll, by_name, id_to_file):
     '''
 
 def _copy_static_pages(out_dir: Path):
-    """Copy index.html and 404.html from repo root (verify/) into out_dir."""
+    """Copy index.html, 404.html and registrants.json from repo root (verify/) into out_dir."""
     for name in ("index.html", "404.html"):
         src = ROOT_DIR / name
         if src.is_file():
@@ -265,6 +265,15 @@ def _copy_static_pages(out_dir: Path):
             console.print(f":page_facing_up: Copied [path]{src}[/path] -> [path]{dst}[/path]", style="info")
         else:
             console.print(f"[warning]Static page not found:[/warning] [path]{src}[/path]")
+
+    # Copy the registrants.json file so the output bundle includes the source data
+    if REG_JSON.is_file():
+        dst = out_dir / REG_JSON.name
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(REG_JSON, dst)
+        console.print(f":page_facing_up: Copied [path]{REG_JSON}[/path] -> [path]{dst}[/path]", style="info")
+    else:
+        console.print(f"[warning]registrants.json not found:[/warning] [path]{REG_JSON}[/path]")
 
 def _filter_registrants(registrants: list[dict], ids: Optional[Iterable[str]], limit: Optional[int]) -> list[dict]:
     if ids:
