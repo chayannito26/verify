@@ -95,7 +95,7 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
         "gender": data.get("gender", ""),
         "registration_date": data.get("registration_date", ""),
         "registration_id": data.get("registration_id", ""),
-        "photo": data.get("photo", "") or f"https://chayannito26.com/college-students/images/bulbul/{data.get('roll', 'placeholder')}.jpg",
+        "photo": data.get("photo", "") or f"https://chayannito26.com/college-students/images/{data.get('roll', 'placeholder')}.jpg",
         "title_status": title_status,
         "avatar_border_class": avatar_border_class,
         "avatar_filter_class": avatar_filter_class,
