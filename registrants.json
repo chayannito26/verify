@@ -7,7 +7,9 @@
     "registration_id": "SC-B-0001",
     "photo": "",
     "revoked": false,
-    "referred_by": ""
+    "referred_by": "",
+    "paid": 1200,
+    "parts_available": ["T-Shirt", "Food", "Gift"]
   },
   {
     "name": "Afiya Rubaiyah",
@@ -17,7 +19,9 @@
     "registration_id": "AR-G-0001",
     "photo": "",
     "revoked": false,
-    "referred_by": "SC-B-0001"
+    "referred_by": "SC-B-0001",
+    "paid": 1250,
+    "parts_available": ["T-Shirt", "Food", "Gift"]
   },
   {
     "name": "S Shanta",
@@ -27,6 +31,8 @@
     "registration_id": "CO-G-0001",
     "photo": "",
     "revoked": false,
-    "referred_by": "AR-G-0001"
+    "referred_by": "AR-G-0001",
+    "paid": 1250,
+    "parts_available": ["T-Shirt", "Food", "Gift"]
   }
 ]
