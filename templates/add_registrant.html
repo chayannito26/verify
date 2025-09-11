@@ -173,7 +173,8 @@
                     <div class="bg-gray-50 rounded-lg p-4">
                         <h3 class="text-sm font-medium text-gray-700 mb-2">Auto-generated Information</h3>
                         <div class="text-sm text-gray-600 space-y-1">
-                            <p><strong>Registration Date:</strong> <span id="reg-date">Today's date will be used</span></p>
+                            <label for="registration_date"><strong>Registration Date:</strong></label>
+                            <input type="date" id="registration_date" name="registration_date" class="border-gray-300 rounded-md px-2 py-1 focus:ring-emerald-500 focus:border-emerald-500" />
                             <p><strong>Registration ID:</strong> <span id="reg-id">Will be generated based on group and gender</span></p>
                         </div>
                     </div>
@@ -204,13 +205,15 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Update registration date
-    const regDate = document.getElementById('reg-date');
-    regDate.textContent = new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long', 
-        day: 'numeric'
-    });
+    // Pre-fill registration date input with today's date
+    const regDateInput = document.getElementById('registration_date');
+    if (regDateInput) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        regDateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
 
     // Update registration ID preview when group/gender changes
     const groupSelect = document.getElementById('group');

@@ -68,7 +68,7 @@
         {% if messages %}
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
                 {% for category, message in messages %}
-                    <div class="mb-4 p-4 rounded-md {% if category == 'error' %}bg-red-50 border border-red-200 text-red-700{% elif category == 'success' %}bg-green-50 border border-green-200 text-green-700{% else %}bg-blue-50 border border-blue-200 text-blue-700{% endif %}">
+                    <div class="flash-message mb-4 p-4 rounded-md {% if category == 'error' %}bg-red-50 border border-red-200 text-red-700{% elif category == 'success' %}bg-green-50 border border-green-200 text-green-700{% else %}bg-blue-50 border border-blue-200 text-blue-700{% endif %}">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 {% if category == 'error' %}
@@ -125,7 +125,7 @@
 
         // Auto-hide flash messages after 5 seconds
         setTimeout(function() {
-            const alerts = document.querySelectorAll('[class*="bg-red-50"], [class*="bg-green-50"], [class*="bg-blue-50"]');
+            const alerts = document.querySelectorAll('.flash-message');
             alerts.forEach(alert => {
                 if (alert.parentElement) {
                     alert.style.transition = 'opacity 0.5s';

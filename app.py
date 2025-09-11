@@ -23,8 +23,8 @@ VERIFICATION_BASE_URL = 'https://chayannito26.github.io/verify'
 
 # Group and gender mappings
 GROUP_INFO = {
-    'AR': {'name': 'Arts', 'emoji': '🎨', 'color': 'purple'},
-    'SC': {'name': 'Science', 'emoji': '🔬', 'color': 'blue'}, 
+    'AR': {'name': 'Arts', 'emoji': '🎨', 'color': 'blue'},
+    'SC': {'name': 'Science', 'emoji': '🔬', 'color': 'red'},
     'CO': {'name': 'Commerce', 'emoji': '💼', 'color': 'green'}
 }
 
