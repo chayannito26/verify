@@ -9,6 +9,8 @@
     "revoked": false,
     "referred_by": "",
     "paid": 1200,
+    "email": "arianmollik323@gmail.com",
+    "phone": "01534723318",
     "parts_available": ["T-Shirt", "Food", "Gift"]
   },
   {
@@ -21,6 +23,8 @@
     "revoked": false,
     "referred_by": "SC-B-0001",
     "paid": 1250,
+    "email": "",
+    "phone": "",
     "parts_available": ["T-Shirt", "Food", "Gift"]
   },
   {
@@ -33,6 +37,22 @@
     "revoked": false,
     "referred_by": "AR-G-0001",
     "paid": 1250,
+    "email": "",
+    "phone": "",
+    "parts_available": ["T-Shirt", "Food", "Gift"]
+  },
+  {
+    "name": "Marzia Mittika",
+    "roll": "1202425010271",
+    "gender": "Female",
+    "registration_date": "11 September 2025",
+    "registration_id": "SC-G-0001",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0001",
+    "paid": 1200,
+    "email": "marziamittika@gmail.com",
+    "phone": "01777367999",
     "parts_available": ["T-Shirt", "Food", "Gift"]
   }
 ]
