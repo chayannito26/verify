@@ -11,7 +11,11 @@
     "paid": 1200,
     "email": "arianmollik323@gmail.com",
     "phone": "01534723318",
-    "parts_available": ["T-Shirt", "Food", "Gift"]
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   },
   {
     "name": "Afiya Rubaiyah",
@@ -25,7 +29,11 @@
     "paid": 1250,
     "email": "afiyarubaiyah@gmail.com",
     "phone": "01742219294",
-    "parts_available": ["T-Shirt", "Food", "Gift"]
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   },
   {
     "name": "S Shanta",
@@ -39,7 +47,11 @@
     "paid": 1250,
     "email": "shantaahmed033@gmail.com",
     "phone": "01804638592",
-    "parts_available": ["T-Shirt", "Food", "Gift"]
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   },
   {
     "name": "Marzia Mittika",
@@ -53,6 +65,28 @@
     "paid": 1200,
     "email": "marziamittika@gmail.com",
     "phone": "01777367999",
-    "parts_available": ["T-Shirt", "Food", "Gift"]
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
+  },
+  {
+    "name": "Test Student Updated",
+    "roll": "1202425999999",
+    "gender": "Male",
+    "registration_date": "11 September 2025",
+    "registration_id": "SC-B-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1300,
+    "email": "test@example.com",
+    "phone": "01700000000",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   }
 ]
