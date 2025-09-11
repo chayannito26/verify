@@ -21,10 +21,10 @@
     "registration_id": "AR-G-0001",
     "photo": "",
     "revoked": false,
-    "referred_by": "SC-B-0001",
+    "referred_by": "",
     "paid": 1250,
-    "email": "",
-    "phone": "",
+    "email": "afiyarubaiyah@gmail.com",
+    "phone": "01742219294",
     "parts_available": ["T-Shirt", "Food", "Gift"]
   },
   {
@@ -35,10 +35,10 @@
     "registration_id": "CO-G-0001",
     "photo": "",
     "revoked": false,
-    "referred_by": "AR-G-0001",
+    "referred_by": "",
     "paid": 1250,
-    "email": "",
-    "phone": "",
+    "email": "shantaahmed033@gmail.com",
+    "phone": "01804638592",
     "parts_available": ["T-Shirt", "Food", "Gift"]
   },
   {
