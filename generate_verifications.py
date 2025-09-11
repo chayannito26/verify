@@ -12,7 +12,6 @@ Usage examples:
   - Build specific IDs only:      python3 generate_verifications.py --out ../dist --ids SC-B-0001,AR-G-0001
 """
 
-import os
 import json
 import base64
 import codecs
@@ -31,6 +30,10 @@ from rich.theme import Theme
 # Resolve paths relative to this script
 SCRIPT_DIR = Path(__file__).resolve().parent
 
+# --- Constants ---
+# These IDs will always be generated, even if not in registrants.json
+PLACEHOLDER_IDS = ["AR-B-0001", "SC-G-0001", "CO-B-0001"]
+# Path definitions
 ROOT_DIR = SCRIPT_DIR
 REG_JSON = SCRIPT_DIR / "registrants.json"
 TEMPLATE_FILE = SCRIPT_DIR / "template.html"
@@ -55,6 +58,7 @@ def id_to_filename(reg_id: str) -> str:
 def render_template(template_text: str, data: dict, extra: dict | None = None) -> str:
     out = template_text
     revoked = True if data.get("revoked") is True else False
+    is_placeholder = data.get("is_placeholder", False)
 
     # Accent mapping
     if revoked:
@@ -73,6 +77,24 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
             '<div class="mb-4 w-full max-w-sm rounded-xl border border-red-200 '
             'bg-red-50 text-red-700 px-4 py-3 text-sm font-medium">'
             'This registration has been revoked. If you believe this is an error, please contact the organizers.'
+            "</div>"
+        )
+    elif is_placeholder:
+        title_status = "Not Registered"
+        avatar_border_class = "border-gray-300"
+        avatar_filter_class = "grayscale"
+        status_badge_bg = "bg-gray-400"
+        status_icon_path = "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        status_text_class = "text-gray-600"
+        status_text = "Not Yet Registered"
+        footer_bar_bg_class = "bg-gray-50"
+        footer_bar_border_class = "border-gray-100"
+        id_text_class = "text-gray-800"
+        id_badge_bg_class = "bg-gray-200"
+        revoked_banner = (
+            '<div class="mb-4 w-full max-w-sm rounded-xl border border-amber-200 '
+            'bg-amber-50 text-amber-800 px-4 py-3 text-sm font-medium">'
+            'No one has registered for this slot yet. Please retry later.'
             "</div>"
         )
     else:
@@ -314,6 +336,22 @@ def main(argv: Optional[list[str]] = None):
         with open(REG_JSON, "r", encoding="utf-8") as f:
             all_registrants = json.load(f)
 
+    # --- Add placeholder entries for special IDs if they don't exist ---
+    existing_ids = {r["registration_id"] for r in all_registrants if "registration_id" in r}
+    for reg_id in PLACEHOLDER_IDS:
+        if reg_id not in existing_ids:
+            all_registrants.append({
+                "registration_id": reg_id,
+                "name": "Not Yet Registered",
+                "roll": "N/A",
+                "gender": "N/A",
+                "registration_date": "N/A",
+                "photo": "https://chayannito26.com/college-students/images/placeholder.jpg",
+                "revoked": False,
+                "referred_by": "",
+                "is_placeholder": True,
+            })
+
     # Apply filters for local testing
     ids_list = [s for s in (args.ids.split(",") if args.ids else []) if s]
     registrants = _filter_registrants(all_registrants, ids_list or None, args.limit)
@@ -373,7 +411,12 @@ def main(argv: Optional[list[str]] = None):
             links.append(filename)
             progress.advance(task)
 
-    master_html = render_master_list(registrants, links, ref_cells)
+    # Filter out placeholder registrants from the master list
+    final_registrants_for_master_list = [r for r in registrants if not r.get("is_placeholder")]
+    final_links = [links[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
+    final_ref_cells = [ref_cells[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
+
+    master_html = render_master_list(final_registrants_for_master_list, final_links, final_ref_cells)
     changed_master = write_if_changed(out_dir / "master_list.html", master_html)
 
     # Copy static files unless explicitly disabled
@@ -381,7 +424,8 @@ def main(argv: Optional[list[str]] = None):
         _copy_static_pages(out_dir)
 
     console.print(Panel.fit(
-        f"Total registrants: {len(registrants)}\n"
+        f"Total registrants processed: {len(registrants)}\n"
+        f"Registrants in master list: {len(final_registrants_for_master_list)}\n"
         f"Generated pages: {files_written}\n"
         f"Unchanged pages: {files_unchanged}\n"
         f"master_list.html: {'updated' if changed_master else 'unchanged'}\n"
