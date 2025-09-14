@@ -215,15 +215,43 @@ document.addEventListener('DOMContentLoaded', function() {
         regDateInput.value = `${yyyy}-${mm}-${dd}`;
     }
 
-    // Update registration ID preview when group/gender changes
+    // Roll prefix logic
+    const rollInput = document.getElementById('roll');
     const groupSelect = document.getElementById('group');
     const genderSelect = document.getElementById('gender');
     const regIdSpan = document.getElementById('reg-id');
 
+    // Prefixes for each group code
+    const groupPrefixes = {
+        'SC': '1202425010', // Science
+        'AR': '1202425020', // Arts
+        'CO': '1202425030'  // Commerce
+    };
+
+    // Default to Science prefix before group is selected
+    if (rollInput && (!groupSelect.value || groupSelect.value === '')) {
+        rollInput.value = groupPrefixes['SC'];
+    }
+
+    function updateRollPrefix() {
+        let prefix = groupPrefixes['SC']; // Default to Science
+        if (groupSelect.value && groupPrefixes[groupSelect.value]) {
+            prefix = groupPrefixes[groupSelect.value];
+        }
+        if (rollInput) {
+            rollInput.value = prefix;
+        }
+    }
+
+    groupSelect.addEventListener('change', function() {
+        updateRollPrefix();
+        updateRegIdPreview();
+    });
+
+    // Update registration ID preview when group/gender changes
     function updateRegIdPreview() {
         const group = groupSelect.value;
         const gender = genderSelect.value;
-        
         if (group && gender) {
             const genderMap = {
                 'Male': 'B',
@@ -236,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    groupSelect.addEventListener('change', updateRegIdPreview);
     genderSelect.addEventListener('change', updateRegIdPreview);
 });
 </script>
