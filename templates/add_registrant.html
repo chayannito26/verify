@@ -223,15 +223,46 @@ document.addEventListener('DOMContentLoaded', function() {
         regDateInput.value = `${yyyy}-${mm}-${dd}`;
     }
 
-    // Update registration ID preview when group/gender changes
+    // Roll prefix logic
+    const rollInput = document.getElementById('roll');
     const groupSelect = document.getElementById('group');
     const genderSelect = document.getElementById('gender');
-    const regIdSpan = document.getElementById('reg-id');
-    const rollInput = document.getElementById('roll');
-
     const registrationIdInput = document.getElementById('registration_id');
-    const regIdHint = document.getElementById('reg-id');
 
+    // Prefixes for each group code
+    const groupPrefixes = {
+        'SC': '1202425010', // Science
+        'AR': '1202425020', // Arts
+        'CO': '1202425030'  // Commerce
+    };
+
+    // Default to Science prefix before group is selected
+    if (rollInput && (!groupSelect.value || groupSelect.value === '')) {
+        rollInput.value = groupPrefixes['SC'];
+        // mark as auto-filled so we can safely overwrite when group changes
+        rollInput.dataset.autofill = '1';
+    }
+
+    function updateRollPrefix() {
+        let prefix = groupPrefixes['SC']; // Default to Science
+        if (groupSelect.value && groupPrefixes[groupSelect.value]) {
+            prefix = groupPrefixes[groupSelect.value];
+        }
+        if (rollInput) {
+            // Only update if the input was auto-filled previously or empty
+            if (rollInput.dataset.autofill === '1' || rollInput.value.trim() === '') {
+                rollInput.value = prefix;
+                rollInput.dataset.autofill = '1';
+            }
+        }
+    }
+
+    groupSelect.addEventListener('change', function() {
+        updateRollPrefix();
+        updateRegIdPreview();
+    });
+
+    // Update registration ID preview when group/gender changes
     async function updateRegIdPreview() {
         const group = groupSelect.value;
         const gender = genderSelect.value;
@@ -275,6 +306,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateGroupFromRoll() {
         const roll = rollInput.value.trim();
+        // user is typing; don't auto-overwrite their roll on group change
+        rollInput.dataset.autofill = '0';
         const inferred = inferGroupFromRoll(roll);
         if (inferred) {
             for (let i = 0; i < groupSelect.options.length; i++) {
@@ -287,7 +320,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    groupSelect.addEventListener('change', updateRegIdPreview);
     genderSelect.addEventListener('change', updateRegIdPreview);
     if (rollInput) {
         rollInput.addEventListener('input', updateGroupFromRoll);

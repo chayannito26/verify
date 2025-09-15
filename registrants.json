@@ -70,5 +70,23 @@
       "Food",
       "Gift"
     ]
+  },
+  {
+    "name": "Kazi Saimum",
+    "roll": "1202425010399",
+    "gender": "Male",
+    "registration_date": "14 September 2025",
+    "registration_id": "SC-B-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "kazinishad55@gmail.com",
+    "phone": "01707117261",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   }
 ]

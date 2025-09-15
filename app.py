@@ -9,6 +9,7 @@ Features CRUD operations, grouping by gender and group, and live verification li
 import json
 import base64
 import codecs
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
@@ -323,5 +324,71 @@ def api_stats():
     
     return jsonify(stats)
 
+
+@app.route('/push-github', methods=['POST'])
+def push_github():
+    """Trigger a git add/commit/push from the web UI.
+
+    Security:
+    - Requires environment variable ENABLE_GIT_PUSH=1 to be set on the server.
+    - Optionally accepts a commit message in the request body as JSON or form field `message`.
+    """
+    # Feature toggle
+    if not os.environ.get('DISABLE_GIT_PUSH', '0') != '1':
+        return jsonify({'success': False, 'error': 'Git push via web is disabled on this server.'}), 403
+    data = {}
+    try:
+        data = request.get_json(silent=True) or {}
+    except Exception:
+        data = {}
+    # Fallback to form data
+    if not data:
+        data = request.form or {}
+
+    commit_message = data.get('message') or f"Auto commit via web UI @ {datetime.utcnow().isoformat()}"
+
+    repo_dir = Path(__file__).parent
+    def run_cmd(cmd):
+        try:
+            if isinstance(cmd, str):
+                completed = subprocess.run(cmd, cwd=repo_dir, shell=True, capture_output=True, text=True)
+            else:
+                completed = subprocess.run(cmd, cwd=repo_dir, capture_output=True, text=True)
+            return {
+                'returncode': completed.returncode,
+                'stdout': completed.stdout.strip(),
+                'stderr': completed.stderr.strip()
+            }
+        except FileNotFoundError as e:
+            return {'returncode': 127, 'stdout': '', 'stderr': str(e)}
+        except Exception as e:
+            return {'returncode': 1, 'stdout': '', 'stderr': str(e)}
+
+    # Stage everything
+    add_res = run_cmd(['git', 'add', '-A'])
+
+    # Commit
+    commit_res = run_cmd(['git', 'commit', '-m', commit_message])
+    # If there's nothing to commit, git returns non-zero and mentions 'nothing to commit'
+    commit_done = False
+    if commit_res['returncode'] == 0:
+        commit_done = True
+
+    # Push
+    push_res = run_cmd(['git', 'push'])
+
+    success = (push_res.get('returncode', 1) == 0)
+
+    response = {
+        'success': success,
+        'commit_done': commit_done,
+        'add': add_res,
+        'commit': commit_res,
+        'push': push_res
+    }
+
+    status_code = 200 if success or commit_done else 500
+    return jsonify(response), status_code
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
