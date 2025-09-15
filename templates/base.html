@@ -151,12 +151,7 @@
             if (!btn) return;
 
             btn.addEventListener('click', async function() {
-                if (!confirm('Are you sure you want to push local repository changes to GitHub from the server?')) return;
-
-                // Optional commit message prompt
-                const message = prompt('Commit message (leave blank for default):', '');
-                const payload = {};
-                if (message) payload.message = message;
+                if (!confirm('Push local repository changes to GitHub now?')) return;
 
                 // Show a simple loading indicator
                 const original = btn.innerHTML;
@@ -167,9 +162,12 @@
                     const resp = await fetch('{{ url_for("push_github") }}', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify({})
                     });
-                    const data = await resp.json();
+                    // Ensure we only parse JSON if response is JSON
+                    const text = await resp.text();
+                    let data;
+                    try { data = JSON.parse(text); } catch (e) { throw new Error('Unexpected response: ' + text.slice(0, 200)); }
 
                     if (resp.ok && data.success) {
                         alert('Push successful.');

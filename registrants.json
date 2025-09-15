@@ -88,5 +88,23 @@
       "Food",
       "Gift"
     ]
+  },
+  {
+    "name": "Shahriyar Islam",
+    "roll": "1202425010646",
+    "gender": "Male",
+    "registration_date": "15 September 2025",
+    "registration_id": "SC-B-0003",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "spicygamert@gmail.com",
+    "phone": "01728203661",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   }
 ]
