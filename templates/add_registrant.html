@@ -219,11 +219,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const groupSelect = document.getElementById('group');
     const genderSelect = document.getElementById('gender');
     const regIdSpan = document.getElementById('reg-id');
+    const rollInput = document.getElementById('roll');
 
     function updateRegIdPreview() {
         const group = groupSelect.value;
         const gender = genderSelect.value;
-        
         if (group && gender) {
             const genderMap = {
                 'Male': 'B',
@@ -236,8 +236,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Auto-infer group from roll number
+    function inferGroupFromRoll(roll) {
+        // Science: 1202425010646 (1 after 1202425)
+        // Arts:    1202425020646 (2 after 1202425)
+        // Commerce:12024250130646 (13 after 1202425)
+        if (!roll || roll.length < 10) return '';
+        let code = '';
+        if (roll.startsWith('1202425')) {
+            code = roll.substring(8);
+            if (code.startsWith('1') && !code.startsWith('13')) return 'SC';
+            if (code.startsWith('2')) return 'AR';
+            if (code.startsWith('3')) return 'CO';
+        }
+        return '';
+    }
+
+    function updateGroupFromRoll() {
+        const roll = rollInput.value.trim();
+        const inferred = inferGroupFromRoll(roll);
+        if (inferred) {
+            for (let i = 0; i < groupSelect.options.length; i++) {
+                if (groupSelect.options[i].value === inferred) {
+                    groupSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            updateRegIdPreview();
+        }
+    }
+
     groupSelect.addEventListener('change', updateRegIdPreview);
     genderSelect.addEventListener('change', updateRegIdPreview);
+    if (rollInput) {
+        rollInput.addEventListener('input', updateGroupFromRoll);
+    }
 });
 </script>
 {% endblock %}
