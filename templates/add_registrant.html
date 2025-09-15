@@ -175,7 +175,15 @@
                         <div class="text-sm text-gray-600 space-y-1">
                             <label for="registration_date"><strong>Registration Date:</strong></label>
                             <input type="date" id="registration_date" name="registration_date" class="border-gray-300 rounded-md px-2 py-1 focus:ring-emerald-500 focus:border-emerald-500" />
-                            <p><strong>Registration ID:</strong> <span id="reg-id">Will be generated based on group and gender</span></p>
+                            <p class="flex items-center gap-2"><strong>Registration ID:</strong>
+                                <!-- Editable but visually minimal input to show generated ID. This input will be
+                                     automatically replaced with the server-generated ID whenever group or gender
+                                     changes (user edits are discarded on change as requested). -->
+                                <input type="text" id="registration_id" name="registration_id"
+                                       value="{{ form_data.registration_id if form_data else '' }}"
+                                       class="ml-2 bg-transparent text-sm font-mono text-gray-800 focus:outline-none"
+                                       placeholder="AR-B-####" />
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -221,18 +229,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const regIdSpan = document.getElementById('reg-id');
     const rollInput = document.getElementById('roll');
 
-    function updateRegIdPreview() {
+    const registrationIdInput = document.getElementById('registration_id');
+    const regIdHint = document.getElementById('reg-id');
+
+    async function updateRegIdPreview() {
         const group = groupSelect.value;
         const gender = genderSelect.value;
         if (group && gender) {
-            const genderMap = {
-                'Male': 'B',
-                'Female': 'G'
-            };
-            const genderShort = genderMap[gender];
-            regIdSpan.textContent = `${group}-${genderShort}-####`;
+            // fetch next id from server and always set the input value to it (discard edits)
+            try {
+                const params = new URLSearchParams({group, gender});
+                const resp = await fetch(`/api/next_registration_id?${params.toString()}`);
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (registrationIdInput) {
+                        registrationIdInput.value = data.next_id;
+                    }
+                }
+            } catch (err) {
+                // ignore network errors, leave input unchanged
+                console.warn('Could not fetch next registration id', err);
+            }
         } else {
-            regIdSpan.textContent = 'Will be generated based on group and gender';
+            if (registrationIdInput) {
+                registrationIdInput.value = '';
+            }
         }
     }
 
@@ -271,6 +292,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (rollInput) {
         rollInput.addEventListener('input', updateGroupFromRoll);
     }
+
+    // Trigger an initial update on load in case group/gender are pre-selected
+    updateRegIdPreview();
 });
 </script>
 {% endblock %}

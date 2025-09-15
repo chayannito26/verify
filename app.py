@@ -7,7 +7,6 @@ Features CRUD operations, grouping by gender and group, and live verification li
 """
 
 import json
-import os
 import base64
 import codecs
 from datetime import datetime
@@ -173,8 +172,20 @@ def add_registrant():
                                  GENDER_INFO=GENDER_INFO,
                                  form_data=request.form)
         
-        # Generate registration ID
-        registration_id = get_next_registration_id(group, gender)
+        # Use provided registration_id if the user edited it, otherwise generate one
+        provided_id = request.form.get('registration_id', '').strip()
+        if provided_id:
+            # Check uniqueness
+            if any(r.get('registration_id') == provided_id for r in registrants):
+                flash(f'Registration ID {provided_id} is already in use. Please choose a different ID.', 'error')
+                return render_template('add_registrant.html', 
+                                     GROUP_INFO=GROUP_INFO, 
+                                     GENDER_INFO=GENDER_INFO,
+                                     form_data=request.form)
+            registration_id = provided_id
+        else:
+            # Generate registration ID
+            registration_id = get_next_registration_id(group, gender)
         
         # Create new registrant
         new_registrant = {
@@ -203,6 +214,24 @@ def add_registrant():
     return render_template('add_registrant.html', 
                          GROUP_INFO=GROUP_INFO, 
                          GENDER_INFO=GENDER_INFO)
+
+
+@app.route('/api/next_registration_id')
+def api_next_registration_id():
+    """Return the next registration id for given group and gender.
+
+    Query params: group, gender
+    Response JSON: { "next_id": "AR-B-0001" }
+    """
+    group = request.args.get('group')
+    gender = request.args.get('gender')
+    if not group or not gender:
+        return jsonify({'error': 'missing group or gender'}), 400
+    try:
+        next_id = get_next_registration_id(group, gender)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    return jsonify({'next_id': next_id})
 
 @app.route('/edit/<registration_id>', methods=['GET', 'POST'])
 def edit_registrant(registration_id):
