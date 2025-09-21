@@ -275,8 +275,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const studentImage = document.getElementById('student-image');
     const studentStatus = document.getElementById('student-status');
 
-    // Track which fields have been manually edited
+    // Track which fields have been manually edited vs auto-filled
     const fieldEditState = {
+        name: false,
+        gender: false,
+        phone: false
+    };
+
+    // Track which fields were auto-filled (can be overwritten by new roll data)
+    const fieldAutoFilled = {
         name: false,
         gender: false,
         phone: false
@@ -286,6 +293,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function trackFieldEdit(fieldName, inputElement) {
         inputElement.addEventListener('input', function() {
             fieldEditState[fieldName] = true;
+            fieldAutoFilled[fieldName] = false; // User edit overrides auto-fill
+        });
+        inputElement.addEventListener('change', function() {
+            fieldEditState[fieldName] = true;
+            fieldAutoFilled[fieldName] = false; // User edit overrides auto-fill
         });
     }
 
@@ -342,17 +354,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     studentStatus.className = 'mt-1 text-xs text-green-600 text-center';
                 }
 
-                // Auto-fill fields only if they haven't been edited and are empty
-                if (!fieldEditState.name && nameInput && !nameInput.value.trim()) {
+                // Auto-fill fields: replace if empty, user hasn't edited, or was previously auto-filled
+                if (!fieldEditState.name && (nameInput && (!nameInput.value.trim() || fieldAutoFilled.name))) {
                     nameInput.value = data.student.name;
+                    fieldAutoFilled.name = true;
                 }
                 
-                if (!fieldEditState.gender && genderSelect && !genderSelect.value) {
+                if (!fieldEditState.gender && (genderSelect && (!genderSelect.value || fieldAutoFilled.gender))) {
                     genderSelect.value = data.student.gender;
+                    fieldAutoFilled.gender = true;
                 }
                 
-                if (!fieldEditState.phone && phoneInput && !phoneInput.value.trim()) {
+                if (!fieldEditState.phone && (phoneInput && (!phoneInput.value.trim() || fieldAutoFilled.phone))) {
                     phoneInput.value = data.student.phone;
+                    fieldAutoFilled.phone = true;
                 }
             } else {
                 // Update status for not found

@@ -358,7 +358,7 @@ def api_get_student(roll):
         # Find student by roll number
         student = None
         for s in students:
-            if str(s.get('roll', '')).strip() == str(roll).strip():
+            if str(s.get('class_roll', '')).strip() == str(roll).strip():
                 student = s
                 break
         
@@ -378,7 +378,7 @@ def api_get_student(roll):
             }
             
             student_data = {
-                'name': student.get('student_name_en', ''),
+                'name': student.get('student_name_en', '').capitalize() if student.get('student_name_en', '') else '',
                 'gender': gender_mapping.get(student.get('gender', ''), 'Male'),
                 'group': group_mapping.get(student.get('group', ''), ''),
                 'phone': student.get('student_phone', '')
