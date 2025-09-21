@@ -406,7 +406,13 @@ def main(argv: Optional[list[str]] = None):
                 ref_link = id_to_file.get(referer["registration_id"], "#")
                 ref_cells.append(f'<a href="{ref_link}" class="text-green-600 hover:underline">{referer["name"]}</a>')
             else:
-                ref_cells.append("—")
+                # If referred_by exists but couldn't be resolved, show the raw text as plain text.
+                # If no referred_by provided, show em-dash.
+                if ref_val and isinstance(ref_val, str) and ref_val.strip():
+                    safe_text = ref_val.strip()
+                    ref_cells.append(f'<span class="text-gray-800 font-semibold">{safe_text}</span>')
+                else:
+                    ref_cells.append("—")
 
             links.append(filename)
             progress.advance(task)

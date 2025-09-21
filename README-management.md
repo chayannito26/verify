@@ -123,3 +123,6 @@ The application is built with:
 ---
 
 Built with ❤️ for Chayannito 26
+
+Notes:
+- When generating the master verified list, the "Referred By" column will attempt to resolve the value by registration ID, roll, or name and link to the referer's page. If no matching registrant is found, the original text is shown as plain text (no hyperlink). If the field is empty, an em-dash (—) will be displayed.
