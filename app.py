@@ -326,6 +326,112 @@ def api_stats():
     return jsonify(stats)
 
 
+@app.route('/api/student/<roll>')
+def api_get_student(roll):
+    """API endpoint to fetch student data by roll number.
+    
+    Response JSON: {
+        "found": true/false,
+        "student": {
+            "name": "STUDENT NAME",
+            "gender": "Man/Woman",
+            "group": "Science/Arts/Commerce", 
+            "phone": "01XXXXXXXXX"
+        },
+        "image_url": "/api/student-image/1202425010276"
+    }
+    """
+    # Path to the student data file (relative to parent directory)
+    students_file = Path(__file__).parent.parent / 'college-students' / 'data' / 'students.json'
+    
+    try:
+        if not students_file.exists():
+            return jsonify({
+                'found': False,
+                'error': 'Student data file not found',
+                'image_url': '/api/student-image/placeholder'
+            })
+            
+        with open(students_file, 'r', encoding='utf-8') as f:
+            students = json.load(f)
+        
+        # Find student by roll number
+        student = None
+        for s in students:
+            if str(s.get('roll', '')).strip() == str(roll).strip():
+                student = s
+                break
+        
+        if student:
+            # Map gender values to our format
+            gender_mapping = {
+                'Man': 'Male',
+                'Woman': 'Female',
+                'Unknown': 'Male'  # Default fallback
+            }
+            
+            # Map group values to our format
+            group_mapping = {
+                'Science': 'SC',
+                'Arts': 'AR', 
+                'Commerce': 'CO'
+            }
+            
+            student_data = {
+                'name': student.get('student_name_en', ''),
+                'gender': gender_mapping.get(student.get('gender', ''), 'Male'),
+                'group': group_mapping.get(student.get('group', ''), ''),
+                'phone': student.get('student_phone', '')
+            }
+            
+            return jsonify({
+                'found': True,
+                'student': student_data,
+                'image_url': f'/api/student-image/{roll}'
+            })
+        else:
+            return jsonify({
+                'found': False,
+                'error': 'Student not found',
+                'image_url': '/api/student-image/placeholder'
+            })
+            
+    except Exception as e:
+        return jsonify({
+            'found': False,
+            'error': f'Error reading student data: {str(e)}',
+            'image_url': '/api/student-image/placeholder'
+        })
+
+
+@app.route('/api/student-image/<roll>')
+def api_student_image(roll):
+    """API endpoint to serve student images.
+    
+    Serves images from ../college-students/images/{roll}.jpg
+    Falls back to placeholder image if not found.
+    """
+    from flask import send_file, abort
+    
+    # Path to the images directory (relative to parent directory)
+    images_dir = Path(__file__).parent.parent / 'college-students' / 'images'
+    
+    if roll == 'placeholder':
+        image_path = images_dir / 'placeholder.jpg'
+    else:
+        image_path = images_dir / f'{roll}.jpg'
+    
+    # Fallback to placeholder if specific image doesn't exist
+    if not image_path.exists():
+        image_path = images_dir / 'placeholder.jpg'
+    
+    # If even placeholder doesn't exist, return 404
+    if not image_path.exists():
+        abort(404)
+    
+    return send_file(image_path, mimetype='image/jpeg')
+
+
 @app.route('/push-github', methods=['POST'])
 def push_github():
     """Trigger a git add/commit/push from the web UI.

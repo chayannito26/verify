@@ -31,6 +31,36 @@
                         <p class="mt-1 text-xs text-gray-500">Registration ID cannot be changed</p>
                     </div>
 
+                    <!-- Roll Number and Student Image -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <label for="roll" class="block text-sm font-medium text-gray-700">
+                                Roll Number <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="roll" 
+                                   id="roll" 
+                                   required
+                                   value="{{ registrant.roll }}"
+                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                        </div>
+                        
+                        <!-- Student Image Preview -->
+                        <div class="lg:col-span-1">
+                            <label class="block text-sm font-medium text-gray-700">
+                                Student Photo
+                            </label>
+                            <div class="mt-1 flex justify-center">
+                                <img id="student-image" 
+                                     src="/api/student-image/{{ registrant.roll }}" 
+                                     alt="Student photo" 
+                                     class="h-24 w-24 object-cover rounded-lg border-2 border-gray-300"
+                                     onerror="this.src='/api/student-image/placeholder'">
+                            </div>
+                            <p id="student-status" class="mt-1 text-xs text-gray-500 text-center">Current student photo</p>
+                        </div>
+                    </div>
+
                     <!-- Name -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">
@@ -41,19 +71,6 @@
                                id="name" 
                                required
                                value="{{ registrant.name }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
-                    </div>
-
-                    <!-- Roll Number -->
-                    <div>
-                        <label for="roll" class="block text-sm font-medium text-gray-700">
-                            Roll Number <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" 
-                               name="roll" 
-                               id="roll" 
-                               required
-                               value="{{ registrant.roll }}"
                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
                     </div>
 
@@ -247,5 +264,130 @@
     </div>
 </div>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get form elements
+    const rollInput = document.getElementById('roll');
+    const nameInput = document.getElementById('name');
+    const genderSelect = document.getElementById('gender');
+    const phoneInput = document.getElementById('phone');
+    const studentImage = document.getElementById('student-image');
+    const studentStatus = document.getElementById('student-status');
+
+    // Track which fields have been manually edited
+    const fieldEditState = {
+        name: false,
+        gender: false,
+        phone: false
+    };
+
+    // Track field editing state
+    function trackFieldEdit(fieldName, inputElement) {
+        inputElement.addEventListener('input', function() {
+            fieldEditState[fieldName] = true;
+        });
+    }
+
+    // Set up field edit tracking
+    if (nameInput) trackFieldEdit('name', nameInput);
+    if (genderSelect) trackFieldEdit('gender', genderSelect);
+    if (phoneInput) trackFieldEdit('phone', phoneInput);
+
+    // Debounce function for API calls
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Fetch student data by roll number
+    async function fetchStudentData(roll) {
+        if (!roll || roll.length < 8) {
+            // Reset to placeholder if roll is too short
+            if (studentImage) {
+                studentImage.src = '/api/student-image/placeholder';
+            }
+            if (studentStatus) {
+                studentStatus.textContent = 'Enter roll number to see photo';
+                studentStatus.className = 'mt-1 text-xs text-gray-500 text-center';
+            }
+            return;
+        }
+
+        try {
+            if (studentStatus) {
+                studentStatus.textContent = 'Loading...';
+                studentStatus.className = 'mt-1 text-xs text-blue-500 text-center';
+            }
+
+            const response = await fetch(`/api/student/${roll}`);
+            const data = await response.json();
+
+            // Update image
+            if (studentImage) {
+                studentImage.src = data.image_url;
+            }
+
+            if (data.found) {
+                // Update status
+                if (studentStatus) {
+                    studentStatus.textContent = 'Student found';
+                    studentStatus.className = 'mt-1 text-xs text-green-600 text-center';
+                }
+
+                // Auto-fill fields only if they haven't been edited and are empty
+                if (!fieldEditState.name && nameInput && !nameInput.value.trim()) {
+                    nameInput.value = data.student.name;
+                }
+                
+                if (!fieldEditState.gender && genderSelect && !genderSelect.value) {
+                    genderSelect.value = data.student.gender;
+                }
+                
+                if (!fieldEditState.phone && phoneInput && !phoneInput.value.trim()) {
+                    phoneInput.value = data.student.phone;
+                }
+            } else {
+                // Update status for not found
+                if (studentStatus) {
+                    studentStatus.textContent = 'Student not found';
+                    studentStatus.className = 'mt-1 text-xs text-yellow-600 text-center';
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching student data:', error);
+            if (studentStatus) {
+                studentStatus.textContent = 'Error loading data';
+                studentStatus.className = 'mt-1 text-xs text-red-500 text-center';
+            }
+            if (studentImage) {
+                studentImage.src = '/api/student-image/placeholder';
+            }
+        }
+    }
+
+    // Debounced version of fetchStudentData
+    const debouncedFetchStudentData = debounce(fetchStudentData, 300);
+
+    // Set up roll input listener
+    if (rollInput) {
+        rollInput.addEventListener('input', function() {
+            debouncedFetchStudentData(rollInput.value.trim());
+        });
+    }
+
+    // Load initial student data if roll is already filled
+    if (rollInput && rollInput.value.trim()) {
+        fetchStudentData(rollInput.value.trim());
+    }
+});
+</script>
 
 {% endblock %}
