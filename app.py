@@ -343,7 +343,7 @@ def api_get_student(roll):
     """
     # Path to the student data file (relative to parent directory)
     students_file = Path(__file__).parent.parent / 'college-students' / 'data' / 'students.json'
-    
+
     try:
         if not students_file.exists():
             return jsonify({
@@ -361,7 +361,7 @@ def api_get_student(roll):
             if str(s.get('class_roll', '')).strip() == str(roll).strip():
                 student = s
                 break
-        
+
         if student:
             # Map gender values to our format
             gender_mapping = {
@@ -378,7 +378,7 @@ def api_get_student(roll):
             }
             
             student_data = {
-                'name': student.get('student_name_en', '').capitalize() if student.get('student_name_en', '') else '',
+                'name': student.get('student_name_en', '').title() if student.get('student_name_en', '') else '',
                 'gender': gender_mapping.get(student.get('gender', ''), 'Male'),
                 'group': group_mapping.get(student.get('group', ''), ''),
                 'phone': student.get('student_phone', '')
