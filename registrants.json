@@ -106,5 +106,41 @@
       "Food",
       "Gift"
     ]
+  },
+  {
+    "name": "Sahariar Nafiz",
+    "roll": "1202425020165",
+    "gender": "Male",
+    "registration_date": "21 September 2025",
+    "registration_id": "AR-B-0001",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Faisal Arefin",
+    "paid": 1200,
+    "email": "sahariarnafiz84@gmail.com",
+    "phone": "01330561755",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
+  },
+  {
+    "name": "Khairum Anam Nafi",
+    "roll": "1202425020138",
+    "gender": "Male",
+    "registration_date": "21 September 2025",
+    "registration_id": "AR-B-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Faisal Arefin",
+    "paid": 1200,
+    "email": "khirumanamn@gmail.com",
+    "phone": "01782225146",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   }
 ]
