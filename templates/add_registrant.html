@@ -17,6 +17,37 @@
         <div class="bg-white shadow rounded-lg">
             <form method="POST" class="px-6 py-8">
                 <div class="grid grid-cols-1 gap-6">
+                    <!-- Roll Number and Student Image -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <label for="roll" class="block text-sm font-medium text-gray-700">
+                                Roll Number <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="roll" 
+                                   id="roll" 
+                                   required
+                                   value="{{ form_data.roll if form_data else '' }}"
+                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                                   placeholder="e.g., 1202425010276">
+                        </div>
+                        
+                        <!-- Student Image Preview -->
+                        <div class="lg:col-span-1">
+                            <label class="block text-sm font-medium text-gray-700">
+                                Student Photo
+                            </label>
+                            <div class="mt-1 flex justify-center">
+                                <img id="student-image" 
+                                     src="/api/student-image/placeholder" 
+                                     alt="Student photo" 
+                                     class="h-24 w-24 object-cover rounded-lg border-2 border-gray-300"
+                                     onerror="this.src='/api/student-image/placeholder'">
+                            </div>
+                            <p id="student-status" class="mt-1 text-xs text-gray-500 text-center">Enter roll number to see photo</p>
+                        </div>
+                    </div>
+
                     <!-- Name -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">
@@ -29,20 +60,6 @@
                                value="{{ form_data.name if form_data else '' }}"
                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                                placeholder="Enter full name">
-                    </div>
-
-                    <!-- Roll Number -->
-                    <div>
-                        <label for="roll" class="block text-sm font-medium text-gray-700">
-                            Roll Number <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" 
-                               name="roll" 
-                               id="roll" 
-                               required
-                               value="{{ form_data.roll if form_data else '' }}"
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
-                               placeholder="e.g., 1202425010276">
                     </div>
 
                     <!-- Group and Gender in row -->
@@ -225,9 +242,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Roll prefix logic
     const rollInput = document.getElementById('roll');
+    const nameInput = document.getElementById('name');
     const groupSelect = document.getElementById('group');
     const genderSelect = document.getElementById('gender');
+    const phoneInput = document.getElementById('phone');
     const registrationIdInput = document.getElementById('registration_id');
+    const studentImage = document.getElementById('student-image');
+    const studentStatus = document.getElementById('student-status');
+
+    // Track which fields have been manually edited vs auto-filled
+    const fieldEditState = {
+        name: false,
+        gender: false,
+        group: false,
+        phone: false
+    };
+
+    // Track which fields were auto-filled (can be overwritten by new roll data)
+    const fieldAutoFilled = {
+        name: false,
+        gender: false,
+        group: false,
+        phone: false
+    };
 
     // Prefixes for each group code
     const groupPrefixes = {
@@ -242,6 +279,117 @@ document.addEventListener('DOMContentLoaded', function() {
         // mark as auto-filled so we can safely overwrite when group changes
         rollInput.dataset.autofill = '1';
     }
+
+    // Track field editing state
+    function trackFieldEdit(fieldName, inputElement) {
+        inputElement.addEventListener('input', function() {
+            fieldEditState[fieldName] = true;
+            fieldAutoFilled[fieldName] = false; // User edit overrides auto-fill
+        });
+        inputElement.addEventListener('change', function() {
+            fieldEditState[fieldName] = true;
+            fieldAutoFilled[fieldName] = false; // User edit overrides auto-fill
+        });
+    }
+
+    // Set up field edit tracking
+    if (nameInput) trackFieldEdit('name', nameInput);
+    if (genderSelect) trackFieldEdit('gender', genderSelect);
+    if (groupSelect) trackFieldEdit('group', groupSelect);
+    if (phoneInput) trackFieldEdit('phone', phoneInput);
+
+    // Debounce function for API calls
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Fetch student data by roll number
+    async function fetchStudentData(roll) {
+        if (!roll || roll.length < 8) {
+            // Reset to placeholder if roll is too short
+            if (studentImage) {
+                studentImage.src = '/api/student-image/placeholder';
+            }
+            if (studentStatus) {
+                studentStatus.textContent = 'Enter roll number to see photo';
+                studentStatus.className = 'mt-1 text-xs text-gray-500 text-center';
+            }
+            return;
+        }
+
+        try {
+            if (studentStatus) {
+                studentStatus.textContent = 'Loading...';
+                studentStatus.className = 'mt-1 text-xs text-blue-500 text-center';
+            }
+
+            const response = await fetch(`/api/student/${roll}`);
+            const data = await response.json();
+
+            // Update image
+            if (studentImage) {
+                studentImage.src = data.image_url;
+            }
+
+            if (data.found) {
+                // Update status
+                if (studentStatus) {
+                    studentStatus.textContent = 'Student found';
+                    studentStatus.className = 'mt-1 text-xs text-green-600 text-center';
+                }
+
+                // Auto-fill fields: replace if empty, user hasn't edited, or was previously auto-filled
+                if (!fieldEditState.name && (nameInput && (!nameInput.value.trim() || fieldAutoFilled.name))) {
+                    nameInput.value = data.student.name;
+                    fieldAutoFilled.name = true;
+                }
+                
+                if (!fieldEditState.gender && (genderSelect && (!genderSelect.value || fieldAutoFilled.gender))) {
+                    genderSelect.value = data.student.gender;
+                    fieldAutoFilled.gender = true;
+                }
+                
+                if (!fieldEditState.group && (groupSelect && (!groupSelect.value || fieldAutoFilled.group))) {
+                    groupSelect.value = data.student.group;
+                    fieldAutoFilled.group = true;
+                }
+                
+                if (!fieldEditState.phone && (phoneInput && (!phoneInput.value.trim() || fieldAutoFilled.phone))) {
+                    phoneInput.value = data.student.phone;
+                    fieldAutoFilled.phone = true;
+                }
+
+                // Update registration ID preview after auto-filling group/gender
+                updateRegIdPreview();
+            } else {
+                // Update status for not found
+                if (studentStatus) {
+                    studentStatus.textContent = 'Student not found';
+                    studentStatus.className = 'mt-1 text-xs text-yellow-600 text-center';
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching student data:', error);
+            if (studentStatus) {
+                studentStatus.textContent = 'Error loading data';
+                studentStatus.className = 'mt-1 text-xs text-red-500 text-center';
+            }
+            if (studentImage) {
+                studentImage.src = '/api/student-image/placeholder';
+            }
+        }
+    }
+
+    // Debounced version of fetchStudentData
+    const debouncedFetchStudentData = debounce(fetchStudentData, 300);
 
     function updateRollPrefix() {
         let prefix = groupPrefixes['SC']; // Default to Science
@@ -309,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // user is typing; don't auto-overwrite their roll on group change
         rollInput.dataset.autofill = '0';
         const inferred = inferGroupFromRoll(roll);
-        if (inferred) {
+        if (inferred && !fieldEditState.group) {
             for (let i = 0; i < groupSelect.options.length; i++) {
                 if (groupSelect.options[i].value === inferred) {
                     groupSelect.selectedIndex = i;
@@ -322,11 +470,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     genderSelect.addEventListener('change', updateRegIdPreview);
     if (rollInput) {
-        rollInput.addEventListener('input', updateGroupFromRoll);
+        rollInput.addEventListener('input', function() {
+            updateGroupFromRoll();
+            debouncedFetchStudentData(rollInput.value.trim());
+        });
     }
 
     // Trigger an initial update on load in case group/gender are pre-selected
     updateRegIdPreview();
+    
+    // Load initial student data if roll is already filled
+    if (rollInput && rollInput.value.trim()) {
+        fetchStudentData(rollInput.value.trim());
+    }
 });
 </script>
 {% endblock %}
