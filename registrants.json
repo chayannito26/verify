@@ -142,5 +142,41 @@
       "Food",
       "Gift"
     ]
+  },
+  {
+    "name": "Nazmus Sadat",
+    "roll": "1202425010652",
+    "gender": "Male",
+    "registration_date": "22 September 2025",
+    "registration_id": "SC-B-0004",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "saadibnumar09@gmail.com",
+    "phone": "01816670047",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
+  },
+  {
+    "name": "Tanzid Jayid",
+    "roll": "1202425030202",
+    "gender": "Male",
+    "registration_date": "22 September 2025",
+    "registration_id": "CO-B-0001",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Abdus Siam",
+    "paid": 1200,
+    "email": "tanzidjayid@gmail.com",
+    "phone": "01840260600",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   }
 ]
