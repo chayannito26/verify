@@ -178,5 +178,41 @@
       "Food",
       "Gift"
     ]
+  },
+  {
+    "name": "Md. Newaj Hossain",
+    "roll": "1202425020184",
+    "gender": "Male",
+    "registration_date": "24 September 2025",
+    "registration_id": "AR-B-0003",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "neaujmd@gmail.com",
+    "phone": "01885184381",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
+  },
+  {
+    "name": "Nowshin Kibria",
+    "roll": "1202425010126",
+    "gender": "Female",
+    "registration_date": "24 September 2025",
+    "registration_id": "SC-G-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "nowshinkibria598@gmail.com",
+    "phone": "01791254326",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ]
   }
 ]
