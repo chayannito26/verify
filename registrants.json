@@ -15,7 +15,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XXL"
   },
   {
     "name": "Afiya Rubaiyah",
@@ -33,7 +34,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "S Shanta",
@@ -69,7 +71,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "Kazi Saimum",
@@ -87,7 +90,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "Shahriyar Islam",
@@ -105,7 +109,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XXL"
   },
   {
     "name": "Sahariar Nafiz",
@@ -159,7 +164,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "Tanzid Jayid",
@@ -213,6 +219,7 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "M"
   }
 ]
