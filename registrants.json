@@ -53,7 +53,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "Marzia Mittika",
@@ -128,7 +129,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "Khairum Anam Nafi",
@@ -146,7 +148,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "L"
   },
   {
     "name": "Nazmus Sadat",
@@ -201,7 +204,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "XL"
   },
   {
     "name": "Nowshin Kibria",
