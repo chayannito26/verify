@@ -165,6 +165,70 @@ def render_master_list(registrants, links, ref_cells) -> str:
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body {{ font-family: 'Inter', sans-serif; }}
+    
+    /* Dark theme styles */
+    @media (prefers-color-scheme: dark) {{
+      body {{
+        background-color: #0f172a !important; /* slate-900 */
+        color: #f1f5f9 !important; /* slate-100 */
+      }}
+      
+      .bg-gray-100 {{
+        background-color: #0f172a !important; /* slate-900 */
+      }}
+      
+      .bg-white {{
+        background-color: #1e293b !important; /* slate-800 */
+      }}
+      
+      .text-slate-700 {{
+        color: #e2e8f0 !important; /* slate-200 */
+      }}
+      
+      .text-gray-500 {{
+        color: #94a3b8 !important; /* slate-400 */
+      }}
+      
+      .text-gray-600 {{
+        color: #94a3b8 !important; /* slate-400 */
+      }}
+      
+      .text-gray-800 {{
+        color: #f1f5f9 !important; /* slate-100 */
+      }}
+      
+      .border-gray-200 {{
+        border-color: #475569 !important; /* slate-600 */
+      }}
+      
+      .divide-gray-200 {{
+        border-color: #475569 !important; /* slate-600 */
+      }}
+      
+      .divide-gray-100 {{
+        border-color: #475569 !important; /* slate-600 */
+      }}
+      
+      .bg-green-100 {{
+        background-color: #064e3b !important; /* emerald-950 */
+      }}
+      
+      .text-green-800 {{
+        color: #6ee7b7 !important; /* emerald-300 */
+      }}
+      
+      .text-green-600 {{
+        color: #16a34a !important; /* green-600 */
+      }}
+      
+      .hover\\:bg-green-50:hover {{
+        background-color: #022c22 !important; /* emerald-900 dark */
+      }}
+      
+      .hover\\:underline:hover {{
+        text-decoration: underline;
+      }}
+    }}
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen p-8">
