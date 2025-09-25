@@ -225,5 +225,43 @@
       "Gift"
     ],
     "tshirt_size": "M"
+  },
+  {
+    "name": "Masura Khatun",
+    "roll": "1202425030248",
+    "gender": "Female",
+    "registration_date": "25 September 2025",
+    "registration_id": "CO-G-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01765657767",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mst. Tasnia Khatun",
+    "roll": "1202425010384",
+    "gender": "Female",
+    "registration_date": "25 September 2025",
+    "registration_id": "SC-G-0003",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "tasnianoor91@gmail.com",
+    "phone": "01876010283",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
   }
 ]
