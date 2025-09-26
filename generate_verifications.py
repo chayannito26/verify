@@ -74,8 +74,8 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
         id_text_class = "text-red-800"
         id_badge_bg_class = "bg-red-200"
         revoked_banner = (
-            '<div class="mb-4 w-full max-w-sm rounded-xl border border-red-200 '
-            'bg-red-50 text-red-700 px-4 py-3 text-sm font-medium">'
+            '<div style="margin-bottom: 1rem; width: 100%; max-width: 24rem; border-radius: 0.75rem; border: 1px solid #fecaca; '
+            'background-color: #fef2f2; padding: 1rem; font-size: 0.875rem; font-weight: 500; color: #b91c1c;">'
             'This registration has been revoked. If you believe this is an error, please contact the organizers.'
             "</div>"
         )
@@ -92,8 +92,8 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
         id_text_class = "text-gray-800"
         id_badge_bg_class = "bg-gray-200"
         revoked_banner = (
-            '<div class="mb-4 w-full max-w-sm rounded-xl border border-amber-200 '
-            'bg-amber-50 text-amber-800 px-4 py-3 text-sm font-medium">'
+            '<div style="margin-bottom: 1rem; width: 100%; max-width: 24rem; border-radius: 0.75rem; border: 1px solid #fde68a; '
+            'background-color: #fffbeb; color: #92400e; padding: 1rem; font-size: 0.875rem; font-weight: 500;">'
             'No one has registered for this slot yet. Please retry later.'
             "</div>"
         )
@@ -143,14 +143,14 @@ def render_master_list(registrants, links, ref_cells) -> str:
     rows = []
     for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
         rows.append(f"""
-        <tr class="hover:bg-green-50 transition-colors">
-            <td class="px-6 py-4 font-semibold text-gray-800">
-                <a href="{link}" class="text-green-600 hover:underline">{reg['name']}</a>
+        <tr>
+            <td>
+                <a href="{link}">{reg['name']}</a>
             </td>
-            <td class="px-6 py-4 text-gray-600">{reg['roll']}</td>
-            <td class="px-6 py-4 font-mono text-sm text-green-800">{reg['registration_id']}</td>
-            <td class="px-6 py-4 text-gray-600">{reg['registration_date']}</td>
-            <td class="px-6 py-4">{ref_cell}</td>
+            <td>{reg['roll']}</td>
+            <td>{reg['registration_id']}</td>
+            <td>{reg['registration_date']}</td>
+            <td>{ref_cell}</td>
         </tr>
         """)
     rows_html = "\n".join(rows)
@@ -161,45 +161,73 @@ def render_master_list(registrants, links, ref_cells) -> str:
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Master Verified List</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {{ font-family: 'Inter', sans-serif; }}
+    /* Chayannito 26 Master List Styles */
+    * {{ box-sizing: border-box; }}
+    body {{ font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; min-height: 100vh; padding: 2rem; }}
+    .container {{ max-width: 80rem; margin-left: auto; margin-right: auto; background-color: #ffffff; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); border-radius: 1rem; overflow: hidden; }}
+    .header {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }}
+    .header h1 {{ font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: #334155; margin: 0; }}
+    .header-right {{ display: flex; align-items: center; gap: 0.75rem; }}
+    .header-right span {{ font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; }}
+    .shop-btn {{ display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 0.5rem; background-image: linear-gradient(to right, #10b981, #16a34a); padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.5rem; padding-bottom: 0.5rem; color: #ffffff; font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); text-decoration: none; transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); }}
+    .shop-btn:hover {{ background-image: linear-gradient(to right, #059669, #15803d); }}
+    .shop-btn:focus {{ outline: 2px solid transparent; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.5); }}
+    .shop-btn svg {{ height: 1rem; width: 1rem; opacity: 0.9; }}
+    .table-container {{ overflow-x: auto; }}
+    .table {{ min-width: 100%; border-collapse: separate; border-spacing: 0; }}
+    .table thead {{ background-color: #dcfce7; }}
+    .table th {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 0.75rem; padding-bottom: 0.75rem; text-align: left; font-size: 0.75rem; line-height: 1rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; }}
+    .table tbody {{ background-color: #ffffff; }}
+    .table tbody tr {{ border-top: 1px solid #f3f4f6; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); }}
+    .table tbody tr:hover {{ background-color: #f0fdf4; }}
+    .table td {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; }}
+    .table td:first-child {{ font-weight: 600; color: #1f2937; }}
+    .table td:first-child a {{ color: #16a34a; text-decoration: none; }}
+    .table td:first-child a:hover {{ text-decoration: underline; }}
+    .table td:nth-child(2) {{ color: #4b5563; }}
+    .table td:nth-child(3) {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; font-size: 0.875rem; line-height: 1.25rem; color: #166534; }}
+    .table td:nth-child(4) {{ color: #4b5563; }}
+    .table td:nth-child(5) {{ }}
+    .table td:nth-child(5) a {{ color: #16a34a; text-decoration: none; }}
+    .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
+    .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
+    .footer {{ text-align: center; margin-top: 2rem; font-size: 0.75rem; line-height: 1rem; color: #9ca3af; }}
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-8">
-  <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
-    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-slate-700">Chayannito 26 – Master Verified List</h1>
-      <div class="flex items-center gap-3">
-        <span class="text-sm text-gray-500">Total: {len(registrants)}</span>
-        <a href="https://shop.chayannito26.com" target="_blank" rel="noopener noreferrer"
-           class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 px-3 py-2 text-white text-sm font-semibold shadow hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Chayannito 26 – Master Verified List</h1>
+      <div class="header-right">
+        <span>Total: {len(registrants)}</span>
+        <a href="https://shop.chayannito26.com" target="_blank" rel="noopener noreferrer" class="shop-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 10-8 0v4M5 9h14l-1 10a2 2 0 01-2 2H8a2 2 0 01-2-2L5 9z" />
           </svg>
           Shop
         </a>
       </div>
     </div>
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-green-100">
+    <div class="table-container">
+      <table class="table">
+        <thead>
           <tr>
-            <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Name</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Roll</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Registration ID</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Date</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-green-800 uppercase tracking-wider">Referred By</th>
+            <th>Name</th>
+            <th>Roll</th>
+            <th>Registration ID</th>
+            <th>Date</th>
+            <th>Referred By</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-100">
+        <tbody>
           {rows_html}
         </tbody>
       </table>
     </div>
   </div>
-  <footer class="text-center mt-8 text-xs text-gray-400">
+  <footer class="footer">
     Generated automatically
   </footer>
 </body>
@@ -262,17 +290,17 @@ def _build_ref_section(entry, by_id, by_roll, by_name, id_to_file):
         href = id_to_file.get(referer.get("registration_id"), "#")
         label = referer.get("name", ref_val)
         return f'''
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500 font-medium">Referred By</span>
-                    <a href="{href}" class="text-green-600 hover:underline font-semibold">{label}</a>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #6b7280; font-weight: 500;">Referred By</span>
+                    <a href="{href}" style="color: #16a34a; text-decoration: none; font-weight: 600;">{label}</a>
                 </div>
         '''
     # fallback: show text as-is
     safe_text = str(ref_val)
     return f'''
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-500 font-medium">Referred By</span>
-                    <span class="text-gray-800 font-semibold">{safe_text}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #6b7280; font-weight: 500;">Referred By</span>
+                    <span style="color: #1f2937; font-weight: 600;">{safe_text}</span>
                 </div>
     '''
 
@@ -404,13 +432,13 @@ def main(argv: Optional[list[str]] = None):
             referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
             if referer:
                 ref_link = id_to_file.get(referer["registration_id"], "#")
-                ref_cells.append(f'<a href="{ref_link}" class="text-green-600 hover:underline">{referer["name"]}</a>')
+                ref_cells.append(f'<a href="{ref_link}">{referer["name"]}</a>')
             else:
                 # If referred_by exists but couldn't be resolved, show the raw text as plain text.
                 # If no referred_by provided, show em-dash.
                 if ref_val and isinstance(ref_val, str) and ref_val.strip():
                     safe_text = ref_val.strip()
-                    ref_cells.append(f'<span class="text-gray-800 font-semibold">{safe_text}</span>')
+                    ref_cells.append(f'<span style="color: #1f2937; font-weight: 600;">{safe_text}</span>')
                 else:
                     ref_cells.append("—")
 
