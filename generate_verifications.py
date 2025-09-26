@@ -183,7 +183,7 @@ def render_master_list(registrants, links, ref_cells) -> str:
     .table tbody tr {{ border-top: 1px solid #f3f4f6; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); }}
     .table tbody tr:hover {{ background-color: #f0fdf4; }}
     .table td {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; }}
-    .table td:first-child {{ font-weight: 600; color: #1f2937; }}
+    .table td:first-child {{ font-weight: 600; color: #262626; }}
     .table td:first-child a {{ color: #16a34a; text-decoration: none; }}
     .table td:first-child a:hover {{ text-decoration: underline; }}
     .table td:nth-child(2) {{ color: #4b5563; }}
@@ -192,36 +192,36 @@ def render_master_list(registrants, links, ref_cells) -> str:
     .table td:nth-child(5) {{ }}
     .table td:nth-child(5) a {{ color: #16a34a; text-decoration: none; }}
     .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
-    .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
+    .table td:nth-child(5) span {{ color: #262626; font-weight: 600; }}
     .footer {{ text-align: center; margin-top: 2rem; font-size: 0.75rem; line-height: 1rem; color: #9ca3af; }}
     .ref-label {{ color: #6b7280; font-weight: 500; }}
     .ref-link {{ color: #16a34a; text-decoration: none; font-weight: 600; }}
     .ref-link:hover {{ text-decoration: underline; }}
-    .ref-text {{ color: #1f2937; font-weight: 600; }}
+    .ref-text {{ color: #262626; font-weight: 600; }}
     
     /* Dark mode styles */
     @media (prefers-color-scheme: dark) {{
-      body {{ background-color: #111827; color: #f9fafb; }}
-      .container {{ background-color: #1f2937; }}
-      .header {{ border-bottom-color: #4b5563; }}
-      .header h1 {{ color: #d1d5db; }}
-      .header-right span {{ color: #9ca3af; }}
+      body {{ background-color: #0f0f0f; color: #f5f5f5; }}
+      .container {{ background-color: #1c1c1c; }}
+      .header {{ border-bottom-color: #525252; }}
+      .header h1 {{ color: #d4d4d4; }}
+      .header-right span {{ color: #a3a3a3; }}
       .table thead {{ background-color: #14532d; }}
       .table th {{ color: #86efac; }}
-      .table tbody {{ background-color: #1f2937; }}
-      .table tbody tr {{ border-top-color: #374151; }}
+      .table tbody {{ background-color: #1c1c1c; }}
+      .table tbody tr {{ border-top-color: #404040; }}
       .table tbody tr:hover {{ background-color: #14532d; }}
-      .table td:first-child {{ color: #f3f4f6; }}
+      .table td:first-child {{ color: #f5f5f5; }}
       .table td:first-child a {{ color: #4ade80; }}
-      .table td:nth-child(2) {{ color: #9ca3af; }}
+      .table td:nth-child(2) {{ color: #a3a3a3; }}
       .table td:nth-child(3) {{ color: #86efac; }}
-      .table td:nth-child(4) {{ color: #9ca3af; }}
+      .table td:nth-child(4) {{ color: #a3a3a3; }}
       .table td:nth-child(5) a {{ color: #4ade80; }}
-      .table td:nth-child(5) span {{ color: #f3f4f6; }}
-      .footer {{ color: #9ca3af; }}
-      .ref-label {{ color: #9ca3af; }}
+      .table td:nth-child(5) span {{ color: #f5f5f5; }}
+      .footer {{ color: #a3a3a3; }}
+      .ref-label {{ color: #a3a3a3; }}
       .ref-link {{ color: #4ade80; }}
-      .ref-text {{ color: #f3f4f6; }}
+      .ref-text {{ color: #f5f5f5; }}
     }}
   </style>
 </head>
