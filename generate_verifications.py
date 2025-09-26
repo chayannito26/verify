@@ -194,6 +194,35 @@ def render_master_list(registrants, links, ref_cells) -> str:
     .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
     .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
     .footer {{ text-align: center; margin-top: 2rem; font-size: 0.75rem; line-height: 1rem; color: #9ca3af; }}
+    .ref-label {{ color: #6b7280; font-weight: 500; }}
+    .ref-link {{ color: #16a34a; text-decoration: none; font-weight: 600; }}
+    .ref-link:hover {{ text-decoration: underline; }}
+    .ref-text {{ color: #1f2937; font-weight: 600; }}
+    
+    /* Dark mode styles */
+    @media (prefers-color-scheme: dark) {{
+      body {{ background-color: #111827; color: #f9fafb; }}
+      .container {{ background-color: #1f2937; }}
+      .header {{ border-bottom-color: #4b5563; }}
+      .header h1 {{ color: #d1d5db; }}
+      .header-right span {{ color: #9ca3af; }}
+      .table thead {{ background-color: #14532d; }}
+      .table th {{ color: #86efac; }}
+      .table tbody {{ background-color: #1f2937; }}
+      .table tbody tr {{ border-top-color: #374151; }}
+      .table tbody tr:hover {{ background-color: #14532d; }}
+      .table td:first-child {{ color: #f3f4f6; }}
+      .table td:first-child a {{ color: #4ade80; }}
+      .table td:nth-child(2) {{ color: #9ca3af; }}
+      .table td:nth-child(3) {{ color: #86efac; }}
+      .table td:nth-child(4) {{ color: #9ca3af; }}
+      .table td:nth-child(5) a {{ color: #4ade80; }}
+      .table td:nth-child(5) span {{ color: #f3f4f6; }}
+      .footer {{ color: #9ca3af; }}
+      .ref-label {{ color: #9ca3af; }}
+      .ref-link {{ color: #4ade80; }}
+      .ref-text {{ color: #f3f4f6; }}
+    }}
   </style>
 </head>
 <body>
@@ -291,16 +320,16 @@ def _build_ref_section(entry, by_id, by_roll, by_name, id_to_file):
         label = referer.get("name", ref_val)
         return f'''
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: #6b7280; font-weight: 500;">Referred By</span>
-                    <a href="{href}" style="color: #16a34a; text-decoration: none; font-weight: 600;">{label}</a>
+                    <span class="ref-label">Referred By</span>
+                    <a href="{href}" class="ref-link">{label}</a>
                 </div>
         '''
     # fallback: show text as-is
     safe_text = str(ref_val)
     return f'''
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: #6b7280; font-weight: 500;">Referred By</span>
-                    <span style="color: #1f2937; font-weight: 600;">{safe_text}</span>
+                    <span class="ref-label">Referred By</span>
+                    <span class="ref-text">{safe_text}</span>
                 </div>
     '''
 
@@ -438,7 +467,7 @@ def main(argv: Optional[list[str]] = None):
                 # If no referred_by provided, show em-dash.
                 if ref_val and isinstance(ref_val, str) and ref_val.strip():
                     safe_text = ref_val.strip()
-                    ref_cells.append(f'<span style="color: #1f2937; font-weight: 600;">{safe_text}</span>')
+                    ref_cells.append(f'<span class="ref-text">{safe_text}</span>')
                 else:
                     ref_cells.append("—")
 
