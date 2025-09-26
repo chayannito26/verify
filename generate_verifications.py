@@ -207,20 +207,20 @@ def render_master_list(registrants, links, ref_cells) -> str:
       .header h1 {{ color: #d4d4d4; }}
       .header-right span {{ color: #a3a3a3; }}
       .table thead {{ background-color: #14532d; }}
-      .table th {{ color: #86efac; }}
+      .table th {{ color: #6ee7b7; }}
       .table tbody {{ background-color: #1c1c1c; }}
       .table tbody tr {{ border-top-color: #404040; }}
       .table tbody tr:hover {{ background-color: #14532d; }}
       .table td:first-child {{ color: #f5f5f5; }}
-      .table td:first-child a {{ color: #4ade80; }}
+      .table td:first-child a {{ color: #34d399; }}
       .table td:nth-child(2) {{ color: #a3a3a3; }}
-      .table td:nth-child(3) {{ color: #86efac; }}
+      .table td:nth-child(3) {{ color: #6ee7b7; }}
       .table td:nth-child(4) {{ color: #a3a3a3; }}
-      .table td:nth-child(5) a {{ color: #4ade80; }}
+      .table td:nth-child(5) a {{ color: #34d399; }}
       .table td:nth-child(5) span {{ color: #f5f5f5; }}
       .footer {{ color: #a3a3a3; }}
       .ref-label {{ color: #a3a3a3; }}
-      .ref-link {{ color: #4ade80; }}
+      .ref-link {{ color: #34d399; }}
       .ref-text {{ color: #f5f5f5; }}
     }}
   </style>
