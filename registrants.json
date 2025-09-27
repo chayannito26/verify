@@ -263,5 +263,25 @@
       "Gift"
     ],
     "tshirt_size": "M"
+  },
+  {
+    "name": "Maisha Tabassum",
+    "roll": "1202425010414",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "27 September 2025",
+    "registration_id": "SC-G-0004",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01610838971",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
