@@ -283,5 +283,25 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "S. M. J. R. Abeer",
+    "roll": "1202425010286",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "29 September 2025",
+    "registration_id": "SC-B-0005",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "ZD Maruf",
+    "paid": 1200,
+    "email": "smjrabeer3@gmail.com",
+    "phone": "01716778141",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
