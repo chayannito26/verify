@@ -190,44 +190,75 @@ def generate_meta_card(output_path: Path, name: str, roll: str, registration_id:
         small_font = load_font("Inter-Regular.ttf", 24)
         mono_font = load_font("DejaVuSansMono.ttf", 28)
 
-        # Avatar: larger and vertically centered in the card area so the text can use more space
+    # Avatar: larger and vertically centered in the card area so the text can use more space
         avatar_size = 300
         avatar_x = margin + 48
         inner_h = H - margin * 2
         avatar_y = margin + (inner_h - avatar_size) // 2
 
         avatar = None
+        # Build prioritized avatar candidate list
+        candidates = []
         if photo_url:
-            # Try remote fetch first for http(s). If that fails, try local file fallbacks.
+            candidates.append(str(photo_url))
+        if roll:
+            candidates.append(f"https://chayannito26.com/college-students/images/{roll}.jpg")
+            candidates.append(str(SCRIPT_DIR / "assets" / f"{roll}.jpg"))
+            candidates.append(str(SCRIPT_DIR / "assets" / f"{roll}.png"))
+        if registration_id:
+            candidates.append(str(SCRIPT_DIR / "assets" / f"{registration_id}.jpg"))
+            candidates.append(str(SCRIPT_DIR / "assets" / f"{registration_id}.png"))
+
+        from io import BytesIO
+        import urllib.request
+        from urllib.error import HTTPError, URLError
+
+        # Prepare optional SSL context using certifi if available (fix local SSL verification in some envs)
+        ssl_context = None
+        try:
+            import ssl, certifi
+            ssl_context = ssl.create_default_context(cafile=certifi.where())
+        except Exception:
+            ssl_context = None
+
+        for cand in candidates:
+            if not cand:
+                continue
             try:
-                if str(photo_url).lower().startswith("http"):
-                    req = urllib.request.Request(photo_url, headers={"User-Agent": "chayannito26-meta-generator/1.0"})
-                    with urllib.request.urlopen(req, timeout=6) as resp:
-                        data = resp.read()
+                if cand.lower().startswith("http"):
+                    console.print(f"[info]Attempting remote avatar: {cand}[/info]")
+                    req = urllib.request.Request(cand, headers={"User-Agent": "chayannito26-meta-generator/1.0"})
+                    if ssl_context:
+                        with urllib.request.urlopen(req, timeout=6, context=ssl_context) as resp:
+                            data = resp.read()
+                    else:
+                        with urllib.request.urlopen(req, timeout=6) as resp:
+                            data = resp.read()
                     avatar = Image.open(BytesIO(data)).convert("RGBA")
+                    console.print(f"[success]Loaded remote avatar: {cand}[/success]")
+                    break
                 else:
-                    # local path: try script dir assets and absolute/relative paths
-                    candidates = [
-                        SCRIPT_DIR / "assets" / str(photo_url).lstrip('/'),
-                        Path(str(photo_url)).expanduser().resolve() if str(photo_url) else None,
-                    ]
-                    for c in [c for c in candidates if c]:
-                        try:
-                            if c.is_file():
-                                avatar = Image.open(c).convert("RGBA")
-                                break
-                        except Exception:
-                            continue
-                # center-crop to square if needed
-                if avatar:
-                    aw, ah = avatar.size
-                    if aw != ah:
-                        side = min(aw, ah)
-                        left = (aw - side) // 2
-                        top = (ah - side) // 2
-                        avatar = avatar.crop((left, top, left + side, top + side))
-            except Exception:
+                    cpath = Path(cand)
+                    console.print(f"[info]Attempting local avatar: {cpath}[/info]")
+                    if cpath.is_file():
+                        avatar = Image.open(cpath).convert("RGBA")
+                        console.print(f"[success]Loaded local avatar: {cpath}[/success]")
+                        break
+            except (HTTPError, URLError) as e:
+                console.print(f"[warning]Remote avatar failed ({cand}): {e}[/warning]")
                 avatar = None
+            except Exception as e:
+                console.print(f"[warning]Avatar candidate error ({cand}): {e}[/warning]")
+                avatar = None
+
+        # center-crop to square if needed
+        if avatar:
+            aw, ah = avatar.size
+            if aw != ah:
+                side = min(aw, ah)
+                left = (aw - side) // 2
+                top = (ah - side) // 2
+                avatar = avatar.crop((left, top, left + side, top + side))
 
         if avatar:
             # Resize and crop to square (already center-cropped above), then resize
@@ -250,6 +281,21 @@ def generate_meta_card(output_path: Path, name: str, roll: str, registration_id:
             iw = ib[2] - ib[0]
             ih = ib[3] - ib[1]
             draw.text((avatar_x + (avatar_size - iw) / 2, avatar_y + (avatar_size - ih) / 2), initials, font=initials_font, fill=(255, 255, 255))
+
+        # Site logo: try to include a small logo at the top-left of the card if available
+        try:
+            logo_path = SCRIPT_DIR / "logo.png"
+            if logo_path.is_file():
+                logo = Image.open(logo_path).convert("RGBA")
+                # small logo size
+                lsize = 96
+                logo.thumbnail((lsize, lsize), Image.LANCZOS)
+                # paste with a small margin inside the card
+                logo_x = margin + 20
+                logo_y = margin + 20
+                img.paste(logo, (logo_x, logo_y), logo)
+        except Exception:
+            pass
 
         # Text area start (use more horizontal space)
         text_x = avatar_x + avatar_size + 64
@@ -393,11 +439,14 @@ def render_master_list(registrants, links, ref_cells) -> str:
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Chayannito 26 – Master Verified List</h1>
-      <div class="header-right">
-        <span>Total: {len(registrants)}</span>
+    <div class="container">
+        <div class="header">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+                <img src="/assets/logo.png" alt="logo" style="width:48px; height:48px; object-fit:contain; border-radius:6px;" onerror="this.style.display='none'">
+                <h1>Chayannito 26  Master Verified List</h1>
+            </div>
+            <div class="header-right">
+                <span>Total: {len(registrants)}</span>
         <a href="https://shop.chayannito26.com" target="_blank" rel="noopener noreferrer" class="shop-btn">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 10-8 0v4M5 9h14l-1 10a2 2 0 01-2 2H8a2 2 0 01-2-2L5 9z" />
@@ -521,6 +570,16 @@ def _copy_static_pages(out_dir: Path):
     else:
         console.print(f"[warning]registrants.json not found:[/warning] [path]{REG_JSON}[/path]")
 
+    # Copy logo into assets if present
+    logo_src = ROOT_DIR / "logo.png"
+    if logo_src.is_file():
+        dst_logo = out_dir / "assets" / "logo.png"
+        dst_logo.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(logo_src, dst_logo)
+        console.print(f":frame_with_picture: Copied [path]{logo_src}[/path] -> [path]{dst_logo}[/path]", style="info")
+    else:
+        console.print(f"[warning]logo.png not found:[/warning] [path]{logo_src}[/path]")
+
 def _filter_registrants(registrants: list[dict], ids: Optional[Iterable[str]], limit: Optional[int]) -> list[dict]:
     if ids:
         wanted = {i.strip() for i in ids if i and i.strip()}
@@ -633,12 +692,16 @@ def main(argv: Optional[list[str]] = None):
             # Try to generate an image if Pillow is available
             generated_img = False
             if reg_id and PIL_AVAILABLE:
+                # treat empty or whitespace-only photo fields as missing
+                raw_photo = entry.get("photo") if entry.get("photo") is not None else ""
+                photo_clean = raw_photo.strip() if isinstance(raw_photo, str) else ""
+                photo_url = photo_clean if photo_clean else f"https://chayannito26.com/college-students/images/{entry.get('roll','placeholder')}.jpg"
                 generated_img = generate_meta_card(
                     meta_image_path,
                     name=reg_name,
                     roll=entry.get("roll", ""),
                     registration_id=reg_id,
-                    photo_url=entry.get("photo") or f"https://chayannito26.com/college-students/images/{entry.get('roll','placeholder')}.jpg",
+                    photo_url=photo_url,
                     status_text=title_status_local,
                     registration_date=entry.get("registration_date"),
                 )
