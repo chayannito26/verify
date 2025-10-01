@@ -303,5 +303,25 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Faisal Arefin Shezan",
+    "roll": "1202425010455",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "02 October 2025",
+    "registration_id": "SC-B-0006",
+    "photo": "https://i.imgur.com/tENhbBo.png",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "faisalarefin1272@gmail.com",
+    "phone": "01840391172",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
