@@ -718,9 +718,9 @@ def main(argv: Optional[list[str]] = None):
 
             # If not generated, use a site-default path (will be copied as-is later if exists)
             if generated_img:
-                meta_image_url = f"./assets/{meta_image_filename}"
+                meta_image_url = f"https://chayannito26.com/verify/assets/{meta_image_filename}"
             else:
-                meta_image_url = "./assets/meta_card.png"
+                meta_image_url = "https://chayannito26.com/verify/assets/meta_card.png"
 
             extra_meta = {
                 "referred_by_section": ref_section,
