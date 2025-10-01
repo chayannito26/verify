@@ -27,6 +27,13 @@ from rich.traceback import install as rich_traceback_install
 from rich.panel import Panel
 from rich.theme import Theme
 
+# Optional Pillow for meta image generation
+try:
+    from PIL import Image, ImageDraw, ImageFont
+    PIL_AVAILABLE = True
+except Exception:
+    PIL_AVAILABLE = False
+
 # Resolve paths relative to this script
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -137,6 +144,195 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
     for key, val in placeholders.items():
         out = out.replace("{{" + key + "}}", str(val))
     return out
+
+
+def generate_meta_card(output_path: Path, name: str, roll: str, registration_id: str, photo_url: str | None, status_text: str, registration_date: str | None = None, site_name: str = "Chayannito 26") -> bool:
+    """Generate a social-preview card (1200x630) showing the registrant's name, avatar, roll, registration id and registration date.
+    Uses robust text measurement via draw.textbbox. Returns True on success.
+    """
+    try:
+        if not PIL_AVAILABLE:
+            console.print("[warning]Pillow not available — skipping meta image generation[/warning]")
+            return False
+
+        from io import BytesIO
+        import urllib.request
+
+        W, H = 1200, 630
+        background = (249, 250, 251)  # light gray canvas
+        card_bg = (255, 255, 255)
+        accent = (16, 185, 129)  # emerald
+        text_dark = (17, 24, 39)
+        text_muted = (75, 85, 99)
+
+        img = Image.new("RGB", (W, H), color=background)
+        draw = ImageDraw.Draw(img)
+
+        # Card area
+        margin = 48
+        card_rect = (margin, margin, W - margin, H - margin)
+        draw.rounded_rectangle(card_rect, radius=24, fill=card_bg)
+
+        # Fonts: prefer Inter in assets, fall back to DejaVu or default
+        def load_font(name, size):
+            try:
+                p = SCRIPT_DIR / "assets" / name
+                return ImageFont.truetype(str(p), size)
+            except Exception:
+                try:
+                    return ImageFont.truetype("DejaVuSans-Bold.ttf", size)
+                except Exception:
+                    return ImageFont.load_default()
+
+        # Larger, more legible fonts for social preview
+        name_font = load_font("Inter-Bold.ttf", 64)
+        meta_font = load_font("Inter-Regular.ttf", 32)
+        small_font = load_font("Inter-Regular.ttf", 24)
+        mono_font = load_font("DejaVuSansMono.ttf", 28)
+
+        # Avatar: larger and vertically centered in the card area so the text can use more space
+        avatar_size = 300
+        avatar_x = margin + 48
+        inner_h = H - margin * 2
+        avatar_y = margin + (inner_h - avatar_size) // 2
+
+        avatar = None
+        if photo_url:
+            # Try remote fetch first for http(s). If that fails, try local file fallbacks.
+            try:
+                if str(photo_url).lower().startswith("http"):
+                    req = urllib.request.Request(photo_url, headers={"User-Agent": "chayannito26-meta-generator/1.0"})
+                    with urllib.request.urlopen(req, timeout=6) as resp:
+                        data = resp.read()
+                    avatar = Image.open(BytesIO(data)).convert("RGBA")
+                else:
+                    # local path: try script dir assets and absolute/relative paths
+                    candidates = [
+                        SCRIPT_DIR / "assets" / str(photo_url).lstrip('/'),
+                        Path(str(photo_url)).expanduser().resolve() if str(photo_url) else None,
+                    ]
+                    for c in [c for c in candidates if c]:
+                        try:
+                            if c.is_file():
+                                avatar = Image.open(c).convert("RGBA")
+                                break
+                        except Exception:
+                            continue
+                # center-crop to square if needed
+                if avatar:
+                    aw, ah = avatar.size
+                    if aw != ah:
+                        side = min(aw, ah)
+                        left = (aw - side) // 2
+                        top = (ah - side) // 2
+                        avatar = avatar.crop((left, top, left + side, top + side))
+            except Exception:
+                avatar = None
+
+        if avatar:
+            # Resize and crop to square (already center-cropped above), then resize
+            avatar = avatar.resize((avatar_size, avatar_size), Image.LANCZOS)
+            # Make circular mask and paste with alpha to preserve edges
+            mask = Image.new("L", (avatar_size, avatar_size), 0)
+            mask_draw = ImageDraw.Draw(mask)
+            mask_draw.ellipse((0, 0, avatar_size, avatar_size), fill=255)
+            if avatar.mode != "RGBA":
+                avatar = avatar.convert("RGBA")
+            img.paste(avatar, (avatar_x, avatar_y), mask)
+        else:
+            # Draw placeholder circle with initials
+            circle_bbox = (avatar_x, avatar_y, avatar_x + avatar_size, avatar_y + avatar_size)
+            draw.ellipse(circle_bbox, fill=accent)
+            # initials (use a font sized relative to avatar)
+            initials = "".join([p[0].upper() for p in (name or "").split()[:2]]) or "?"
+            initials_font = load_font("Inter-Bold.ttf", max(48, avatar_size // 4))
+            ib = draw.textbbox((0, 0), initials, font=initials_font)
+            iw = ib[2] - ib[0]
+            ih = ib[3] - ib[1]
+            draw.text((avatar_x + (avatar_size - iw) / 2, avatar_y + (avatar_size - ih) / 2), initials, font=initials_font, fill=(255, 255, 255))
+
+        # Text area start (use more horizontal space)
+        text_x = avatar_x + avatar_size + 64
+        text_max_w = W - margin - text_x - 48
+
+        # Site label (positioned near top of card area but allow more vertical breathing room)
+        site_label = site_name
+        draw.text((text_x, margin + 48), site_label, font=small_font, fill=text_muted)
+
+        # Name (wrap if necessary)
+        def wrap_lines(text, font, max_width):
+            words = text.split()
+            lines = []
+            cur = []
+            for w in words:
+                test = " ".join(cur + [w])
+                bbox = draw.textbbox((0, 0), test, font=font)
+                if bbox[2] - bbox[0] <= max_width:
+                    cur.append(w)
+                else:
+                    if cur:
+                        lines.append(" ".join(cur))
+                    cur = [w]
+            if cur:
+                lines.append(" ".join(cur))
+            return lines
+
+        name_lines = wrap_lines(name or "Registrant", name_font, text_max_w)
+        # Start the name a bit lower so the block occupies the center-left area
+        y = margin + inner_h // 4
+        for line in name_lines[:4]:
+            draw.text((text_x, y), line, font=name_font, fill=text_dark)
+            bbox = draw.textbbox((0, 0), line, font=name_font)
+            y += (bbox[3] - bbox[1]) + 10
+
+        # Status and roll/id row (give pills more padding for breathing room)
+        y += 12
+        pill_padding_x = 16
+        pill_padding_y = 10
+        pill_gap = 16
+
+        # Roll pill
+        roll_text = f"Roll: {roll or 'N/A'}"
+        rbox = draw.textbbox((0, 0), roll_text, font=meta_font)
+        rw = rbox[2] - rbox[0] + pill_padding_x * 2
+        rh = rbox[3] - rbox[1] + pill_padding_y * 2
+        pill_x = text_x
+        pill_y = y
+        draw.rounded_rectangle((pill_x, pill_y, pill_x + rw, pill_y + rh), radius=16, fill=(239, 250, 242))
+        draw.text((pill_x + pill_padding_x, pill_y + pill_padding_y), roll_text, font=meta_font, fill=accent)
+
+        # Registration ID pill
+        id_text = f"ID: {registration_id or '—'}"
+        ibox = draw.textbbox((0, 0), id_text, font=mono_font)
+        iw = ibox[2] - ibox[0] + pill_padding_x * 2
+        id_x = pill_x + rw + pill_gap
+        draw.rounded_rectangle((id_x, pill_y, id_x + iw, pill_y + rh), radius=16, fill=(243, 244, 246))
+        draw.text((id_x + pill_padding_x, pill_y + pill_padding_y), id_text, font=mono_font, fill=text_dark)
+
+        # Optional status label on right (increase padding and move slightly inward)
+        status_text = status_text or ""
+        if status_text:
+            sbbox = draw.textbbox((0, 0), status_text, font=meta_font)
+            sbw = sbbox[2] - sbbox[0] + pill_padding_x * 2
+            sbh = sbbox[3] - sbbox[1] + pill_padding_y * 2
+            status_x = W - margin - sbw - 56
+            status_y = margin + 48
+            draw.rounded_rectangle((status_x, status_y, status_x + sbw, status_y + sbh), radius=16, fill=accent)
+            draw.text((status_x + pill_padding_x, status_y + pill_padding_y), status_text, font=meta_font, fill=(255, 255, 255))
+
+        # Registration date (if provided) below the pills
+        if registration_date:
+            date_text = f"Registered: {registration_date}"
+            draw.text((text_x, pill_y + rh + 18), date_text, font=small_font, fill=text_muted)
+
+        # Save
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        img.save(output_path, format="PNG")
+        console.print(f":white_check_mark: Generated meta image [path]{output_path}[/path]")
+        return True
+    except Exception as e:
+        console.print(f"[warning]Failed to generate meta card:[/warning] {e}")
+        return False
 
 def render_master_list(registrants, links, ref_cells) -> str:
     """Create the master_list.html content with Tailwind styling."""
@@ -422,7 +618,46 @@ def main(argv: Optional[list[str]] = None):
             out_path = out_dir / filename
 
             ref_section = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
-            rendered = render_template(template_text, entry, {"referred_by_section": ref_section})
+
+            # Meta information for rich previews
+            reg_name = entry.get("name", "Registrant")
+            reg_id = entry.get("registration_id", "")
+            title_status_local = "Verified" if not entry.get("is_placeholder") and not entry.get("revoked") else ("Revoked" if entry.get("revoked") else "Not Registered")
+            page_title = f"Registration {title_status_local} - {reg_name}"
+            page_description = f"{reg_name} — {entry.get('roll', '')}. Status: {title_status_local}. Registration ID: {reg_id}."
+
+            # Generate or point to a meta image (prefer per-reg image)
+            assets_dir = out_dir / "assets"
+            meta_image_filename = f"meta_{id_to_filename(reg_id)}.png" if reg_id else "meta_default.png"
+            meta_image_path = assets_dir / meta_image_filename
+            # Try to generate an image if Pillow is available
+            generated_img = False
+            if reg_id and PIL_AVAILABLE:
+                generated_img = generate_meta_card(
+                    meta_image_path,
+                    name=reg_name,
+                    roll=entry.get("roll", ""),
+                    registration_id=reg_id,
+                    photo_url=entry.get("photo") or f"https://chayannito26.com/college-students/images/{entry.get('roll','placeholder')}.jpg",
+                    status_text=title_status_local,
+                    registration_date=entry.get("registration_date"),
+                )
+
+            # If not generated, use a site-default path (will be copied as-is later if exists)
+            if generated_img:
+                meta_image_url = f"/assets/{meta_image_filename}"
+            else:
+                meta_image_url = "/assets/meta_card.png"
+
+            extra_meta = {
+                "referred_by_section": ref_section,
+                "page_title": page_title,
+                "page_description": page_description,
+                "canonical_url": f"https://chayannito26.com/verify/{id_to_filename(reg_id)}.html" if reg_id else "https://chayannito26.com/verify/",
+                "meta_image": meta_image_url,
+            }
+
+            rendered = render_template(template_text, entry, extra_meta)
 
             changed = write_if_changed(out_path, rendered)
             files_written += int(changed)
