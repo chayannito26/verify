@@ -580,6 +580,16 @@ def _copy_static_pages(out_dir: Path):
     else:
         console.print(f"[warning]logo.png not found:[/warning] [path]{logo_src}[/path]")
 
+    # Ensure default meta image is copied into output assets so previews fall back correctly
+    meta_src = ROOT_DIR / "assets" / "meta_card.png"
+    if meta_src.is_file():
+        dst_meta = out_dir / "assets" / "meta_card.png"
+        dst_meta.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(meta_src, dst_meta)
+        console.print(f":frame_with_picture: Copied default meta image [path]{meta_src}[/path] -> [path]{dst_meta}[/path]", style="info")
+    else:
+        console.print(f"[warning]Default meta image not found:[/warning] [path]{meta_src}[/path]")
+
 def _filter_registrants(registrants: list[dict], ids: Optional[Iterable[str]], limit: Optional[int]) -> list[dict]:
     if ids:
         wanted = {i.strip() for i in ids if i and i.strip()}
