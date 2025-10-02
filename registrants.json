@@ -323,23 +323,5 @@
       "Gift"
     ],
     "tshirt_size": "XXL"
-  },
-  {
-    "name": "Redwan Talha",
-    "roll": "1202425010336",
-    "gender": "Male",
-    "group": "SC",
-    "registration_date": "02/10/2025",
-    "registration_id": "SC-B-0007",
-    "photo": "",
-    "revoked": false,
-    "referred_by": "",
-    "paid": 0,
-    "email": "radwantalha1234@gmail.com",
-    "phone": "01640359332",
-    "parts_available": [
-      "T-Shirt"
-    ],
-    "tshirt_size": "XL"
   }
 ]
