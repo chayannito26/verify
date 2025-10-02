@@ -323,5 +323,65 @@
       "Gift"
     ],
     "tshirt_size": "XXL"
+  },
+  {
+    "name": "Nawshad Anam",
+    "roll": "1202425020186",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "02 October 2025",
+    "registration_id": "AR-B-0004",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "nawshadanam37@gmail.com",
+    "phone": "01320430916",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Redwan Talha",
+    "roll": "1202425020334",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "02 October 2025",
+    "registration_id": "AR-B-0005",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Faisal Arefin Shezan",
+    "paid": 1200,
+    "email": "radwantalha1234@gmail.com",
+    "phone": "01640359332",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Minhazul Islam",
+    "roll": "1202425010101",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "02 October 2025",
+    "registration_id": "SC-B-0007",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Faisal Arefin Shezan",
+    "paid": 1200,
+    "email": "m12340226@gmail.com",
+    "phone": "01712340226",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
