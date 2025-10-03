@@ -383,5 +383,45 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Nafizur Rahman Ridoy",
+    "roll": "1202425020032",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "04 October 2025",
+    "registration_id": "AR-B-0006",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01316558719",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Amir hamja",
+    "roll": "1202425030063",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "04 October 2025",
+    "registration_id": "CO-B-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "ahroasters148@gmail.com",
+    "phone": "01753132033",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
