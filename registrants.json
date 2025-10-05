@@ -423,5 +423,65 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Roddro Zaman",
+    "roll": "1202425010674",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "04 October 2025",
+    "registration_id": "SC-B-0008",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "roddro80@gmail.com",
+    "phone": "01876003221",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Ayesha Siddiqua Ahona",
+    "roll": "1202425020350",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "04 October 2025",
+    "registration_id": "AR-G-0002",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "keyaalim1975@gmail.com",
+    "phone": "01976652015",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Nazmul Islam Himel",
+    "roll": "1202425010639",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "05 October 2025",
+    "registration_id": "SC-B-0050",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Faisal Arefin",
+    "paid": 1200,
+    "email": "hemel7979@gmail.com",
+    "phone": "01330704211",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
