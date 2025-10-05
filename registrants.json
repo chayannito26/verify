@@ -503,5 +503,25 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Jannatul Ferdous",
+    "roll": "1202425010481",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "05 October 2025",
+    "registration_id": "SC-G-0005",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "jannatulfardous5830@gmail.com",
+    "phone": "01767864870",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
