@@ -523,5 +523,65 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Akibul Haque Nahid",
+    "roll": "1202425010457",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "07 October 2025",
+    "registration_id": "SC-B-0009",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "01886168699",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Rafiu Tahrim Ahmed",
+    "roll": "1202425010392",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "07 October 2025",
+    "registration_id": "SC-B-0049",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "rafiu124321@gmail.com",
+    "phone": "01568929386",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Rohan Ahmed",
+    "roll": "1202425030051",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "07 October 2025",
+    "registration_id": "AR-B-0007",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Roddro Zaman",
+    "paid": 1200,
+    "email": "rohanahmed.pabna08@gmail.com",
+    "phone": "01312479772",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
