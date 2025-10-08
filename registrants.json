@@ -430,7 +430,7 @@
     "gender": "Male",
     "group": "SC",
     "registration_date": "04 October 2025",
-    "registration_id": "SC-B-0008",
+    "registration_id": "SC-B-0010",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -530,7 +530,7 @@
     "gender": "Male",
     "group": "SC",
     "registration_date": "07 October 2025",
-    "registration_id": "SC-B-0009",
+    "registration_id": "SC-B-0008",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -583,5 +583,25 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Zahin Dhaihan Maruf",
+    "roll": "1202425010064",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "08 October 2025",
+    "registration_id": "SC-B-0009",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Roddro Zaman",
+    "paid": 1200,
+    "email": "zdmaruf11@gmail.com",
+    "phone": "01745765978",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
