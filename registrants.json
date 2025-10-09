@@ -603,5 +603,25 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Junaid Islam Shafi",
+    "roll": "1202425010383",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "09 October 2025",
+    "registration_id": "SC-B-0011",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "junaidshafi4321@gmail.com",
+    "phone": "01737490390",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
