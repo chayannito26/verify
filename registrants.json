@@ -623,5 +623,25 @@
       "Gift"
     ],
     "tshirt_size": "XXL"
+  },
+  {
+    "name": "Sakib-Al Hasan",
+    "roll": "1202425030121",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "09 October 2025",
+    "registration_id": "CO-B-0003",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Roddro Zaman",
+    "paid": 1200,
+    "email": "shakibalhasanshakib611@gmail.com",
+    "phone": "01781706269",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
