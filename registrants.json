@@ -663,5 +663,25 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Dipu",
+    "roll": "1202425010638",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "10 October 2025",
+    "registration_id": "SC-B-0012",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "tamimdipu600@gmail.com",
+    "phone": "01763678798",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
