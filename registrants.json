@@ -506,7 +506,7 @@
   },
   {
     "name": "Jannatul Ferdous",
-    "roll": "1202425010481",
+    "roll": "1202425010477",
     "gender": "Female",
     "group": "SC",
     "registration_date": "05 October 2025",
@@ -683,5 +683,45 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Nayma",
+    "roll": "1202425010209",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "13 October 2025",
+    "registration_id": "SC-G-0006",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "ayath4958@gmail.com",
+    "phone": "01606982159",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Jeet Hasan Zidan",
+    "roll": "1202425030142",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "13 October 2025",
+    "registration_id": "CO-B-0102",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01617324499",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
   }
 ]
