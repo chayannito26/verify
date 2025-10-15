@@ -730,7 +730,7 @@
     "gender": "Male",
     "group": "SC",
     "registration_date": "15 October 2025",
-    "registration_id": "SC-B-0013",
+    "registration_id": "SC-B-0014",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -783,5 +783,25 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Jubayer Pramanik Sakib",
+    "roll": "1202425010177",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "15 October 2025",
+    "registration_id": "SC-B-0013",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "jubayerpramaniksakib@gmail.com",
+    "phone": "01759699518",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
