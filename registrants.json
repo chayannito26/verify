@@ -743,5 +743,45 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Hasnat Jahan Esha",
+    "roll": "1202425010068",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "15 October 2025",
+    "registration_id": "SC-G-0007",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Namera",
+    "paid": 1200,
+    "email": "hjisha234@gmail.com",
+    "phone": "01723312336",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mohona Rani Pramanik",
+    "roll": "1202425030073",
+    "gender": "Female",
+    "group": "CO",
+    "registration_date": "15 October 2025",
+    "registration_id": "CO-G-0003",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01728321662",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
