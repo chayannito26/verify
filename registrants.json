@@ -723,5 +723,25 @@
       "Gift"
     ],
     "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Kaif Rahman",
+    "roll": "1202425010148",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "15 October 2025",
+    "registration_id": "SC-B-0013",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "kaifrahman32@gmail.com",
+    "phone": "01300357264",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
