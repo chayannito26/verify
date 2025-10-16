@@ -803,5 +803,85 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Muammar Al Mujahid",
+    "roll": "1202425010642",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "16 October 2025",
+    "registration_id": "SC-B-0015",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "mujahid2006@gmail.com",
+    "phone": "01642645917",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Jannatul Maoya",
+    "roll": "1202425010105",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "16 October 2025",
+    "registration_id": "SC-G-0008",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01728956102",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Tamanna Hossen Tisha",
+    "roll": "1202425010108",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "16 October 2025",
+    "registration_id": "SC-G-0009",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01766875084",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Shanin Sakhawath Bishwas",
+    "roll": "1202425010110",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "16 October 2025",
+    "registration_id": "SC-G-0010",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01766009496",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
