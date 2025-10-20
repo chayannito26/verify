@@ -883,5 +883,85 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Samiya Ansari",
+    "roll": "1202425030080",
+    "gender": "Female",
+    "group": "CO",
+    "registration_date": "21 October 2025",
+    "registration_id": "CO-G-0006",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01731490200",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Siam",
+    "roll": "1202425030176",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "21 October 2025",
+    "registration_id": "CO-B-0051",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "munshisaim3@gmail.com",
+    "phone": "01614506172",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mst. Mymuna Khatun",
+    "roll": "1202425030156",
+    "gender": "Female",
+    "group": "CO",
+    "registration_date": "21 October 2025",
+    "registration_id": "CO-G-0005",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Tanvir",
+    "paid": 1200,
+    "email": "",
+    "phone": "01777500284",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Jayed Sheik",
+    "roll": "1202425020112",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "21 October 2025",
+    "registration_id": "CO-B-0103",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "jsjayed3@gmail.com",
+    "phone": "01715081443",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
