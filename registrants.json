@@ -963,5 +963,45 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Mst. Akhi Khatun",
+    "roll": "1202425030213",
+    "gender": "Female",
+    "group": "CO",
+    "registration_date": "23 October 2025",
+    "registration_id": "CO-G-0007",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01836493304",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mohammad Main Uddin Khan Main",
+    "roll": "1202425030332",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "23 October 2025",
+    "registration_id": "CO-B-0004",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "mahinuddinkhan859@gmail.com",
+    "phone": "0187747440",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
