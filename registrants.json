@@ -753,7 +753,7 @@
     "registration_id": "SC-G-0007",
     "photo": "",
     "revoked": false,
-    "referred_by": "Namera",
+    "referred_by": "AR-G-0051",
     "paid": 1200,
     "email": "hjisha234@gmail.com",
     "phone": "01723312336",
@@ -1322,7 +1322,7 @@
       "Food",
       "Gift"
     ],
-    "tshirt_size": "L"
+    "tshirt_size": "XL"
   },
   {
     "name": "Md. Daud Sheikh",
@@ -1413,7 +1413,7 @@
     "registration_id": "SC-G-0014",
     "photo": "",
     "revoked": false,
-    "referred_by": "Sonali",
+    "referred_by": "SC-G-0015",
     "paid": 1200,
     "email": "",
     "phone": "01310531973",
@@ -1433,7 +1433,7 @@
     "registration_id": "SC-G-0015",
     "photo": "",
     "revoked": false,
-    "referred_by": "Shammi",
+    "referred_by": "SC-G-0014",
     "paid": 1200,
     "email": "",
     "phone": "01310531973",
@@ -1453,7 +1453,7 @@
     "registration_id": "SC-G-0016",
     "photo": "",
     "revoked": false,
-    "referred_by": "Sonali",
+    "referred_by": "SC-G-0015",
     "paid": 1200,
     "email": "",
     "phone": "01310531973",
@@ -1493,7 +1493,7 @@
     "registration_id": "SC-G-0018",
     "photo": "",
     "revoked": false,
-    "referred_by": "Namara",
+    "referred_by": "AR-G-0051",
     "paid": 1200,
     "email": "",
     "phone": "01784225595",
