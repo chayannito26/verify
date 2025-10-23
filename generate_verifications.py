@@ -605,6 +605,7 @@ def main(argv: Optional[list[str]] = None):
     parser.add_argument("--limit", type=int, default=None, help="Generate only first N registrants")
     parser.add_argument("--ids", type=str, default=None, help="Comma-separated registration_id list to generate")
     parser.add_argument("--no-static", action="store_true", help="Do not copy index.html and 404.html into output")
+    parser.add_argument("--master-only", action="store_true", help="Only generate the master_list.html and static files (skip per-registrant pages)")
     args = parser.parse_args(argv)
 
     console.rule("[bold cyan]Chayannito 26 – Verification Generator")
@@ -658,100 +659,61 @@ def main(argv: Optional[list[str]] = None):
             id_to_file[reg_id] = f"{id_to_filename(reg_id)}.html"
 
     by_id, by_roll, by_name = _build_indexes(registrants)
-
-    # Render pages with a progress bar
+    # If requested, only generate the master list and skip per-registrant pages
     links = []
     ref_cells = []
     files_written = 0
     files_unchanged = 0
 
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(bar_width=None),
-        TaskProgressColumn(),
-        TimeElapsedColumn(),
-        console=console,
-    ) as progress:
-        task = progress.add_task("Rendering registrant pages", total=len(registrants))
+    if args.master_only:
+        console.print(":bookmark_tabs: [info]Master-only mode: skipping individual page generation[/info]")
+        # Build minimal links and ref_cells so master list can be generated from filtered registrants
         for entry in registrants:
             reg_id = entry.get("registration_id", "")
             if not reg_id:
-                console.print("[warning]Skipping entry without registration_id:[/warning] " + str(entry))
                 links.append("#")
                 ref_cells.append("—")
-                progress.advance(task)
                 continue
-
-            filename = id_to_file[reg_id]
-            out_path = out_dir / filename
-
-            ref_section = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
-
-            # Meta information for rich previews
-            reg_name = entry.get("name", "Registrant")
-            reg_id = entry.get("registration_id", "")
-            title_status_local = "Verified" if not entry.get("is_placeholder") and not entry.get("revoked") else ("Revoked" if entry.get("revoked") else "Not Registered")
-            page_title = f"Registration {title_status_local} - {reg_name}"
-            page_description = f"{reg_name} — {entry.get('roll', '')}. Status: {title_status_local}. Registration ID: {reg_id}."
-
-            # Generate or point to a meta image (prefer per-reg image)
-            assets_dir = out_dir / "assets"
-            meta_image_filename = f"meta_{id_to_filename(reg_id)}.png" if reg_id else "meta_default.png"
-            meta_image_path = assets_dir / meta_image_filename
-            # Try to generate an image if Pillow is available
-            generated_img = False
-            if reg_id and PIL_AVAILABLE:
-                # treat empty or whitespace-only photo fields as missing
-                raw_photo = entry.get("photo") if entry.get("photo") is not None else ""
-                photo_clean = raw_photo.strip() if isinstance(raw_photo, str) else ""
-                photo_url = photo_clean if photo_clean else f"https://chayannito26.com/college-students/images/{entry.get('roll','placeholder')}.jpg"
-                generated_img = generate_meta_card(
-                    meta_image_path,
-                    name=reg_name,
-                    roll=entry.get("roll", ""),
-                    registration_id=reg_id,
-                    photo_url=photo_url,
-                    status_text=title_status_local,
-                    registration_date=entry.get("registration_date"),
-                )
-
-            # If not generated, use a site-default path (will be copied as-is later if exists)
-            if generated_img:
-                meta_image_url = f"https://chayannito26.com/verify/assets/{meta_image_filename}"
-            else:
-                meta_image_url = "https://chayannito26.com/verify/assets/meta_card.png"
-
-            extra_meta = {
-                "referred_by_section": ref_section,
-                "page_title": page_title,
-                "page_description": page_description,
-                "canonical_url": f"https://chayannito26.com/verify/{id_to_filename(reg_id)}.html" if reg_id else "https://chayannito26.com/verify/",
-                "meta_image": meta_image_url,
-            }
-
-            rendered = render_template(template_text, entry, extra_meta)
-
-            changed = write_if_changed(out_path, rendered)
-            files_written += int(changed)
-            files_unchanged += int(not changed)
-
+            filename = id_to_file.get(reg_id, "#")
+            links.append(filename)
+            # build ref cell using existing helper (returns HTML snippet or raw text)
+            ref_html = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
+            # _build_ref_section returns a block; for master list we prefer a concise cell
+            # Try to resolve referer for a short cell
             ref_val = entry.get("referred_by")
             referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
             if referer:
-                ref_link = id_to_file.get(referer["registration_id"], "#")
-                ref_cells.append(f'<a href="{ref_link}">{referer["name"]}</a>')
+                ref_link = id_to_file.get(referer.get("registration_id"), "#")
+                ref_cells.append(f'<a href="{ref_link}">{referer.get("name")}</a>')
             else:
-                # If referred_by exists but couldn't be resolved, show the raw text as plain text.
-                # If no referred_by provided, show em-dash.
                 if ref_val and isinstance(ref_val, str) and ref_val.strip():
-                    safe_text = ref_val.strip()
-                    ref_cells.append(f'<span style="color: #1f2937; font-weight: 600;">{safe_text}</span>')
+                    ref_cells.append(f'<span style="color: #1f2937; font-weight: 600;">{ref_val.strip()}</span>')
                 else:
                     ref_cells.append("—")
 
-            links.append(filename)
-            progress.advance(task)
+        # Render and write master list
+        final_registrants_for_master_list = [r for r in registrants if not r.get("is_placeholder")]
+        final_links = [links[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
+        final_ref_cells = [ref_cells[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
+
+        master_html = render_master_list(final_registrants_for_master_list, final_links, final_ref_cells)
+        changed_master = write_if_changed(out_dir / "master_list.html", master_html)
+
+        # Copy static files unless explicitly disabled
+        if not args.no_static:
+            _copy_static_pages(out_dir)
+
+        console.print(Panel.fit(
+            f"Total registrants processed: {len(registrants)}\n"
+            f"Registrants in master list: {len(final_registrants_for_master_list)}\n"
+            f"Generated pages: {files_written}\n"
+            f"Unchanged pages: {files_unchanged}\n"
+            f"master_list.html: {'updated' if changed_master else 'unchanged'}\n"
+            f"Output: [path]{out_dir}[/path]",
+            title="Summary",
+            border_style="green"
+        ))
+        return
 
     # Filter out placeholder registrants from the master list
     final_registrants_for_master_list = [r for r in registrants if not r.get("is_placeholder")]
