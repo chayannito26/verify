@@ -56,6 +56,50 @@ CUSTOM_THEME = Theme({
 console = Console(theme=CUSTOM_THEME)
 rich_traceback_install(show_locals=False)
 
+def calculate_statistics(registrants: list[dict]) -> dict:
+    """Calculate registration statistics based on registration_id."""
+    stats = {
+        "science_boys": 0, "science_girls": 0,
+        "arts_boys": 0, "arts_girls": 0,
+        "commerce_boys": 0, "commerce_girls": 0,
+    }
+    for r in registrants:
+        reg_id = r.get("registration_id", "").lower()
+        if not reg_id or r.get("is_placeholder"):
+            continue
+
+        parts = reg_id.split('-')
+        if len(parts) < 2:
+            continue
+        
+        stream = parts[0]
+        gender = parts[1]
+
+        if stream == 'sc':
+            if gender == 'b':
+                stats['science_boys'] += 1
+            elif gender == 'g':
+                stats['science_girls'] += 1
+        elif stream == 'ar':
+            if gender == 'b':
+                stats['arts_boys'] += 1
+            elif gender == 'g':
+                stats['arts_girls'] += 1
+        elif stream == 'co':
+            if gender == 'b':
+                stats['commerce_boys'] += 1
+            elif gender == 'g':
+                stats['commerce_girls'] += 1
+
+    stats["total_science"] = stats["science_boys"] + stats["science_girls"]
+    stats["total_arts"] = stats["arts_boys"] + stats["arts_girls"]
+    stats["total_commerce"] = stats["commerce_boys"] + stats["commerce_girls"]
+    stats["total_boys"] = stats["science_boys"] + stats["arts_boys"] + stats["commerce_boys"]
+    stats["total_girls"] = stats["science_girls"] + stats["arts_girls"] + stats["commerce_girls"]
+    stats["total"] = len([r for r in registrants if not r.get("is_placeholder")])
+    
+    return stats
+
 def id_to_filename(reg_id: str) -> str:
     b64 = base64.urlsafe_b64encode(reg_id.encode('utf-8')).decode('utf-8')
     b64 = b64.rstrip("=")
@@ -380,7 +424,7 @@ def generate_meta_card(output_path: Path, name: str, roll: str, registration_id:
         console.print(f"[warning]Failed to generate meta card:[/warning] {e}")
         return False
 
-def render_master_list(registrants, links, ref_cells) -> str:
+def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     """Create the master_list.html content with Tailwind styling."""
     rows = []
     for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
@@ -397,6 +441,35 @@ def render_master_list(registrants, links, ref_cells) -> str:
         """)
     rows_html = "\n".join(rows)
 
+    stats_html = f"""
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>Science</h3>
+            <p><span>Boys:</span> <strong>{stats['science_boys']}</strong></p>
+            <p><span>Girls:</span> <strong>{stats['science_girls']}</strong></p>
+            <p class="total"><span>Total:</span> <strong>{stats['total_science']}</strong></p>
+        </div>
+        <div class="stat-card">
+            <h3>Arts</h3>
+            <p><span>Boys:</span> <strong>{stats['arts_boys']}</strong></p>
+            <p><span>Girls:</span> <strong>{stats['arts_girls']}</strong></p>
+            <p class="total"><span>Total:</span> <strong>{stats['total_arts']}</strong></p>
+        </div>
+        <div class="stat-card">
+            <h3>Commerce</h3>
+            <p><span>Boys:</span> <strong>{stats['commerce_boys']}</strong></p>
+            <p><span>Girls:</span> <strong>{stats['commerce_girls']}</strong></p>
+            <p class="total"><span>Total:</span> <strong>{stats['total_commerce']}</strong></p>
+        </div>
+        <div class="stat-card summary">
+            <h3>Summary</h3>
+            <p><span>Total Boys:</span> <strong>{stats['total_boys']}</strong></p>
+            <p><span>Total Girls:</span> <strong>{stats['total_girls']}</strong></p>
+            <p class="total"><span>Grand Total:</span> <strong>{stats['total']}</strong></p>
+        </div>
+    </div>
+    """
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -408,6 +481,15 @@ def render_master_list(registrants, links, ref_cells) -> str:
     /* Chayannito 26 Master List Styles */
     * {{ box-sizing: border-box; }}
     body {{ font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; min-height: 100vh; padding: 2rem; }}
+    .stats-container {{ max-width: 80rem; margin: 0 auto 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }}
+    .stat-card {{ background-color: #ffffff; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e5e7eb; }}
+    .stat-card h3 {{ margin: 0 0 1rem; font-size: 1.25rem; font-weight: 700; color: #1f2937; }}
+    .stat-card p {{ margin: 0.5rem 0; display: flex; justify-content: space-between; font-size: 0.9rem; color: #4b5563; }}
+    .stat-card p span {{ color: #6b7280; }}
+    .stat-card p strong {{ color: #111827; font-weight: 600; }}
+    .stat-card p.total {{ margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #f3f4f6; font-weight: 700; }}
+    .stat-card.summary {{ border-color: #10b981; background-color: #f0fdf4; }}
+    .stat-card.summary h3 {{ color: #065f46; }}
     .container {{ max-width: 80rem; margin-left: auto; margin-right: auto; background-color: #ffffff; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); border-radius: 1rem; overflow: hidden; }}
     .header {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }}
     .header h1 {{ font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: #334155; margin: 0; }}
@@ -439,6 +521,7 @@ def render_master_list(registrants, links, ref_cells) -> str:
   </style>
 </head>
 <body>
+    {stats_html}
     <div class="container">
         <div class="header">
             <div style="display:flex; align-items:center; gap:0.75rem;">
@@ -646,6 +729,9 @@ def main(argv: Optional[list[str]] = None):
                 "is_placeholder": True,
             })
 
+    # Calculate statistics on all registrants (excluding placeholders)
+    stats = calculate_statistics(all_registrants)
+
     # Apply filters for local testing
     ids_list = [s for s in (args.ids.split(",") if args.ids else []) if s]
     registrants = _filter_registrants(all_registrants, ids_list or None, args.limit)
@@ -659,69 +745,48 @@ def main(argv: Optional[list[str]] = None):
             id_to_file[reg_id] = f"{id_to_filename(reg_id)}.html"
 
     by_id, by_roll, by_name = _build_indexes(registrants)
-    # If requested, only generate the master list and skip per-registrant pages
-    links = []
-    ref_cells = []
     files_written = 0
     files_unchanged = 0
 
-    if args.master_only:
-        console.print(":bookmark_tabs: [info]Master-only mode: skipping individual page generation[/info]")
-        # Build minimal links and ref_cells so master list can be generated from filtered registrants
-        for entry in registrants:
-            reg_id = entry.get("registration_id", "")
-            if not reg_id:
-                links.append("#")
-                ref_cells.append("—")
-                continue
-            filename = id_to_file.get(reg_id, "#")
-            links.append(filename)
-            # build ref cell using existing helper (returns HTML snippet or raw text)
-            ref_html = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
-            # _build_ref_section returns a block; for master list we prefer a concise cell
-            # Try to resolve referer for a short cell
-            ref_val = entry.get("referred_by")
-            referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
-            if referer:
-                ref_link = id_to_file.get(referer.get("registration_id"), "#")
-                ref_cells.append(f'<a href="{ref_link}">{referer.get("name")}</a>')
+    if not args.master_only:
+        # Per-registrant page generation logic would go here.
+        # This appears to have been removed from the script.
+        # The script will now only generate the master list and static files.
+        pass
+
+    # Build links and ref_cells for master list
+    links = []
+    ref_cells = []
+    for entry in registrants:
+        reg_id = entry.get("registration_id", "")
+        if not reg_id:
+            links.append("#")
+            ref_cells.append("—")
+            continue
+        filename = id_to_file.get(reg_id, "#")
+        links.append(filename)
+        ref_val = entry.get("referred_by")
+        referer = _resolve_referer(ref_val, by_id, by_roll, by_name) if ref_val else None
+        if referer:
+            ref_link = id_to_file.get(referer.get("registration_id"), "#")
+            ref_cells.append(f'<a href="{ref_link}">{referer.get("name")}</a>')
+        else:
+            if ref_val and isinstance(ref_val, str) and ref_val.strip():
+                ref_cells.append(f'<span style="color: #1f2937; font-weight: 600;">{ref_val.strip()}</span>')
             else:
-                if ref_val and isinstance(ref_val, str) and ref_val.strip():
-                    ref_cells.append(f'<span style="color: #1f2937; font-weight: 600;">{ref_val.strip()}</span>')
-                else:
-                    ref_cells.append("—")
+                ref_cells.append("—")
 
-        # Render and write master list
-        final_registrants_for_master_list = [r for r in registrants if not r.get("is_placeholder")]
-        final_links = [links[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
-        final_ref_cells = [ref_cells[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
-
-        master_html = render_master_list(final_registrants_for_master_list, final_links, final_ref_cells)
-        changed_master = write_if_changed(out_dir / "master_list.html", master_html)
-
-        # Copy static files unless explicitly disabled
-        if not args.no_static:
-            _copy_static_pages(out_dir)
-
-        console.print(Panel.fit(
-            f"Total registrants processed: {len(registrants)}\n"
-            f"Registrants in master list: {len(final_registrants_for_master_list)}\n"
-            f"Generated pages: {files_written}\n"
-            f"Unchanged pages: {files_unchanged}\n"
-            f"master_list.html: {'updated' if changed_master else 'unchanged'}\n"
-            f"Output: [path]{out_dir}[/path]",
-            title="Summary",
-            border_style="green"
-        ))
-        return
-
-    # Filter out placeholder registrants from the master list
+    # Render and write master list
     final_registrants_for_master_list = [r for r in registrants if not r.get("is_placeholder")]
     final_links = [links[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
     final_ref_cells = [ref_cells[i] for i, r in enumerate(registrants) if not r.get("is_placeholder")]
 
-    master_html = render_master_list(final_registrants_for_master_list, final_links, final_ref_cells)
+    master_html = render_master_list(final_registrants_for_master_list, final_links, final_ref_cells, stats)
     changed_master = write_if_changed(out_dir / "master_list.html", master_html)
+    if changed_master:
+        files_written += 1
+    else:
+        files_unchanged += 1
 
     # Copy static files unless explicitly disabled
     if not args.no_static:
