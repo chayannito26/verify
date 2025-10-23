@@ -443,7 +443,7 @@ def render_master_list(registrants, links, ref_cells) -> str:
         <div class="header">
             <div style="display:flex; align-items:center; gap:0.75rem;">
                 <img src="/assets/logo.png" alt="logo" style="width:48px; height:48px; object-fit:contain; border-radius:6px;" onerror="this.style.display='none'">
-                <h1>Chayannito 26  Master Verified List</h1>
+                <h1>Chayannito 26 Master Verified List</h1>
             </div>
             <div class="header-right">
                 <span>Total: {len(registrants)}</span>
