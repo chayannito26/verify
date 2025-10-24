@@ -442,7 +442,8 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     rows_html = "\n".join(rows)
 
     stats_html = f"""
-    <div class="stats-container">
+    <!-- Desktop & Tablet Card View -->
+    <div class="stats-cards-grid">
         <div class="stat-card">
             <h3>Science</h3>
             <p><span>Boys:</span> <strong>{stats['science_boys']}</strong></p>
@@ -468,6 +469,34 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             <p class="total"><span>Grand Total:</span> <strong>{stats['total']}</strong></p>
         </div>
     </div>
+
+    <!-- Mobile Compact Column View -->
+    <div class="stats-compact-mobile">
+        <div class="stat-column">
+            <h3>Science</h3>
+            <p><span>Boys:</span> <strong>{stats['science_boys']}</strong></p>
+            <p><span>Girls:</span> <strong>{stats['science_girls']}</strong></p>
+            <p class="total"><span>Total:</span> <strong>{stats['total_science']}</strong></p>
+        </div>
+        <div class="stat-column">
+            <h3>Arts</h3>
+            <p><span>Boys:</span> <strong>{stats['arts_boys']}</strong></p>
+            <p><span>Girls:</span> <strong>{stats['arts_girls']}</strong></p>
+            <p class="total"><span>Total:</span> <strong>{stats['total_arts']}</strong></p>
+        </div>
+        <div class="stat-column">
+            <h3>Commerce</h3>
+            <p><span>Boys:</span> <strong>{stats['commerce_boys']}</strong></p>
+            <p><span>Girls:</span> <strong>{stats['commerce_girls']}</strong></p>
+            <p class="total"><span>Total:</span> <strong>{stats['total_commerce']}</strong></p>
+        </div>
+        <div class="stat-column summary">
+            <h3>Summary</h3>
+            <p><span>Total Boys:</span> <strong>{stats['total_boys']}</strong></p>
+            <p><span>Total Girls:</span> <strong>{stats['total_girls']}</strong></p>
+            <p class="total"><span>Grand Total:</span> <strong>{stats['total']}</strong></p>
+        </div>
+    </div>
     """
 
     return f"""<!DOCTYPE html>
@@ -481,15 +510,40 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     /* Chayannito 26 Master List Styles */
     * {{ box-sizing: border-box; }}
     body {{ font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; min-height: 100vh; padding: 2rem; }}
-    .stats-container {{ max-width: 80rem; margin: 0 auto 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }}
-    .stat-card {{ background-color: #ffffff; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e5e7eb; }}
-    .stat-card h3 {{ margin: 0 0 1rem; font-size: 1.25rem; font-weight: 700; color: #1f2937; }}
-    .stat-card p {{ margin: 0.5rem 0; display: flex; justify-content: space-between; font-size: 0.9rem; color: #4b5563; }}
-    .stat-card p span {{ color: #6b7280; }}
-    .stat-card p strong {{ color: #111827; font-weight: 600; }}
-    .stat-card p.total {{ margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #f3f4f6; font-weight: 700; }}
-    .stat-card.summary {{ border-color: #10b981; background-color: #f0fdf4; }}
-    .stat-card.summary h3 {{ color: #065f46; }}
+    
+    /* Mobile-first: Hide desktop cards by default */
+    .stats-cards-grid {{ display: none; }}
+    
+    /* Mobile Compact Column Styles */
+    .stats-compact-mobile {{ max-width: 80rem; margin: 0 auto 2rem auto; background-color: #ffffff; border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 0.75rem; }}
+    .stats-compact-mobile .stat-column {{ padding-bottom: 0.75rem; border-bottom: 1px solid #e5e7eb; }}
+    .stats-compact-mobile .stat-column:last-child {{ border-bottom: none; padding-bottom: 0; }}
+    .stats-compact-mobile h3 {{ margin: 0 0 0.5rem; font-size: 1rem; font-weight: 700; color: #1f2937; }}
+    .stats-compact-mobile p {{ margin: 0.25rem 0; display: flex; justify-content: space-between; font-size: 0.875rem; }}
+    .stats-compact-mobile p span {{ color: #6b7280; }}
+    .stats-compact-mobile p strong {{ color: #111827; font-weight: 600; }}
+    .stats-compact-mobile p.total {{ margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f3f4f6; font-weight: 700; }}
+    .stats-compact-mobile .summary h3 {{ color: #065f46; }}
+
+    /* Tablet & Desktop Styles (min-width: 768px) */
+    @media (min-width: 768px) {{
+        .stats-compact-mobile {{ display: none; }} /* Hide mobile view */
+        /* Tablet: keep two cards per row for comfortable reading */
+        .stats-cards-grid {{ display: grid; max-width: 80rem; margin: 0 auto 2rem auto; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }}
+        .stat-card {{ background-color: #ffffff; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e5e7eb; }}
+        .stat-card h3 {{ margin: 0 0 1rem; font-size: 1.25rem; font-weight: 700; color: #1f2937; }}
+        .stat-card p {{ margin: 0.5rem 0; display: flex; justify-content: space-between; font-size: 0.9rem; color: #4b5563; }}
+        .stat-card p span {{ color: #6b7280; }}
+        .stat-card p strong {{ color: #111827; font-weight: 600; }}
+        .stat-card p.total {{ margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #f3f4f6; font-weight: 700; }}
+        .stat-card.summary {{ border-color: #10b981; background-color: #f0fdf4; }}
+        .stat-card.summary h3 {{ color: #065f46; }}
+    }}
+    /* Large desktop: allow more columns so cards can spread out */
+    @media (min-width: 1200px) {{
+        .stats-cards-grid {{ grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }}
+    }}
+
     .container {{ max-width: 80rem; margin-left: auto; margin-right: auto; background-color: #ffffff; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); border-radius: 1rem; overflow: hidden; }}
     .header {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }}
     .header h1 {{ font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: #334155; margin: 0; }}
