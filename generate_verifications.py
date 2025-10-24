@@ -667,6 +667,30 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     }});
                 }}
 
+                function applyRollDividers(rows) {{
+                    clearDividers();
+                    let lastGroup = null;
+                    rows.forEach(row => {{
+                        const cell = row.children[1]; // Roll column
+                        const txt = cell ? cell.getAttribute('data-full-roll') || cell.textContent.trim() : '';
+                        let groupChar = '';
+                        // Try 9th char (index 8), fall back to 10th (index 9)
+                        if (txt && txt.length > 8) groupChar = txt.charAt(8);
+                        if (!groupChar && txt && txt.length > 9) groupChar = txt.charAt(9);
+                        const group = groupChar === '1' ? 'Science' : groupChar === '2' ? 'Arts' : groupChar === '3' ? 'Commerce' : 'Unknown';
+                        if (group && group !== lastGroup) {{
+                            const tr = document.createElement('tr');
+                            tr.className = 'divider-row';
+                            const td = document.createElement('td');
+                            td.colSpan = 5;
+                            td.textContent = group;
+                            tr.appendChild(td);
+                            tbody.insertBefore(tr, row);
+                            lastGroup = group;
+                        }}
+                    }});
+                }}
+
             headers.forEach((th, index) => {{
                 th.classList.add('sortable');
                 th.setAttribute('data-index', index);
@@ -705,11 +729,13 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     }});
                     if (indicator) indicator.textContent = asc ? '▲' : '▼';
 
-                        // If sorting by Registration ID, add dividers
-                        const key = th.getAttribute('data-key');
-                        if (key === 'registration_id') {{
-                            applyRegIdDividers(rows);
-                        }}
+                          // If sorting by Registration ID or Roll, add dividers
+                                    const key = th.getAttribute('data-key');
+                                    if (key === 'registration_id') {{
+                                        applyRegIdDividers(rows);
+                                    }} else if (key === 'roll') {{
+                                        applyRollDividers(rows);
+                                    }}
                 }});
                 // Update roll cells to show last 5 chars on tablet/mobile (<=1024px)
                 function updateRollCells() {{
