@@ -549,10 +549,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     .header h1 {{ font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: #334155; margin: 0; }}
     .header-right {{ display: flex; align-items: center; gap: 0.75rem; }}
     .header-right span {{ font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; }}
-    .shop-btn {{ display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 0.5rem; background-image: linear-gradient(to right, #10b981, #16a34a); padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.5rem; padding-bottom: 0.5rem; color: #ffffff; font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); text-decoration: none; transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); }}
-    .shop-btn:hover {{ background-image: linear-gradient(to right, #059669, #15803d); }}
-    .shop-btn:focus {{ outline: 2px solid transparent; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.5); }}
-    .shop-btn svg {{ height: 1rem; width: 1rem; opacity: 0.9; }}
+    
     .table-container {{ overflow-x: auto; }}
     .table {{ min-width: 100%; border-collapse: separate; border-spacing: 0; }}
     .table thead {{ background-color: #dcfce7; }}
@@ -597,12 +594,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             </div>
             <div class="header-right">
                 <span>Total: {len(registrants)}</span>
-        <a href="https://shop.chayannito26.com" target="_blank" rel="noopener noreferrer" class="shop-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 10-8 0v4M5 9h14l-1 10a2 2 0 01-2 2H8a2 2 0 01-2-2L5 9z" />
-          </svg>
-          Shop
-        </a>
+        
       </div>
     </div>
     <div class="table-container">
