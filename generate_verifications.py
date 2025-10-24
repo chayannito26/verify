@@ -573,6 +573,17 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
         .table th.sortable {{ cursor: pointer; user-select: none; }}
         .sort-indicator {{ margin-left: 0.5rem; font-size: 0.75rem; color: #166534; opacity: 0.8; }}
+        /* Divider rows for grouped Registration ID sections */
+        .divider-row td {{
+            background-color: #ecfdf5;
+            color: #065f46;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-top: 3px solid #10b981;
+        }}
     .footer {{ text-align: center; margin-top: 2rem; font-size: 0.75rem; line-height: 1rem; color: #9ca3af; }}
   </style>
 </head>
@@ -598,11 +609,11 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             <table class="table">
                 <thead>
                     <tr>
-                        <th data-type="string">Name <span class="sort-indicator"></span></th>
-                        <th data-type="string">Roll <span class="sort-indicator"></span></th>
-                        <th data-type="string">Registration ID <span class="sort-indicator"></span></th>
-                        <th data-type="date">Date <span class="sort-indicator"></span></th>
-                        <th data-type="string">Referred By <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="name">Name <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="roll">Roll <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="registration_id">Registration ID <span class="sort-indicator"></span></th>
+                        <th data-type="date" data-key="registration_date">Date <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="referred_by">Referred By <span class="sort-indicator"></span></th>
                     </tr>
                 </thead>
         <tbody>
@@ -622,16 +633,51 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             const headers = table.querySelectorAll('th');
             let sortState = {{ index: null, asc: true }};
 
+                function clearDividers() {{
+                    tbody.querySelectorAll('tr.divider-row').forEach(r => r.remove());
+                }}
+
+                function titleForKey(key) {{
+                    const parts = (key || '').toLowerCase().split('-');
+                    const stream = parts[0] || '';
+                    const gender = parts[1] || '';
+                    const streamTitle = stream === 'sc' ? 'Science' : stream === 'ar' ? 'Arts' : stream === 'co' ? 'Commerce' : 'Unknown';
+                    const genderTitle = gender === 'b' ? 'Boys' : gender === 'g' ? 'Girls' : '';
+                    return genderTitle ? `${{streamTitle}} - ${{genderTitle}}` : streamTitle;
+                }}
+
+                function applyRegIdDividers(rows) {{
+                    clearDividers();
+                    let lastKey = null;
+                    rows.forEach(row => {{
+                        const cell = row.children[2]; // Registration ID column
+                        const txt = cell ? cell.textContent.trim().toLowerCase() : '';
+                        const parts = txt.split('-');
+                        const key = parts.length >= 2 ? `${{parts[0]}}-${{parts[1]}}` : '';
+                        if (key && key !== lastKey) {{
+                            const tr = document.createElement('tr');
+                            tr.className = 'divider-row';
+                            const td = document.createElement('td');
+                            td.colSpan = 5;
+                            td.textContent = titleForKey(key);
+                            tr.appendChild(td);
+                            tbody.insertBefore(tr, row);
+                            lastKey = key;
+                        }}
+                    }});
+                }}
+
             headers.forEach((th, index) => {{
                 th.classList.add('sortable');
                 th.setAttribute('data-index', index);
                 const indicator = th.querySelector('.sort-indicator');
                 th.addEventListener('click', () => {{
+                        clearDividers();
                     const type = th.getAttribute('data-type') || 'string';
                     const asc = (sortState.index === index) ? !sortState.asc : true;
                     sortState = {{ index, asc }};
                     const rows = Array.from(tbody.querySelectorAll('tr'));
-                    rows.sort((a, b) => {{
+                        rows.sort((a, b) => {{
                         const aCell = a.children[index] ? a.children[index].textContent.trim() : '';
                         const bCell = b.children[index] ? b.children[index].textContent.trim() : '';
                         if (type === 'date') {{
@@ -658,6 +704,12 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                         if (ind) ind.textContent = '';
                     }});
                     if (indicator) indicator.textContent = asc ? '▲' : '▼';
+
+                        // If sorting by Registration ID, add dividers
+                        const key = th.getAttribute('data-key');
+                        if (key === 'registration_id') {{
+                            applyRegIdDividers(rows);
+                        }}
                 }});
             }});
         }});
