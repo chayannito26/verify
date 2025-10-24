@@ -239,11 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
         els.title.textContent = 'Verification Pending Confirmation';
         els.subtitle.textContent = 'This coupon appears valid but has not been claimed yet.';
         els.subtitle.className = 'text-sm font-medium text-amber-700 mt-1';
+        const regNote = regId ? ` (${regId})` : '';
         els.details.innerHTML = `
             <p>What this means:</p>
             <ul class="list-disc list-inside space-y-1 pl-2">
                 <li>The link is correctly formatted for our system.</li>
-                <li>No one has registered for this specific coupon/slot (${regId}) yet.</li>
+                <li>No one has registered for this specific coupon/slot${regNote} yet.</li>
                 <li>If you expected this to be claimed, please contact the organizers.</li>
             </ul>
         `;
@@ -259,15 +260,21 @@ document.addEventListener('DOMContentLoaded', () => {
         els.footerStatusPill.textContent = 'PENDING';
     }
 
-    // Default to invalid UI
-    setInvalidUI();
+    // Default to Pending UI per requested behavior
+    setPendingUI();
 
-    if (!slug) return; // no candidate
+    if (!slug) { // no candidate — redirect to index.html under current subpath
+        const p = window.location.pathname;
+        const base = p.endsWith('/') ? p : p.replace(/\/[^\/]*$/, '/');
+        window.location.replace(base + 'index.html');
+        return;
+    }
 
     const regId = filenameToRegId(slug);
     const pattern = /^(AR|SC|CO)-(B|G)-\d{4}$/;
     if (!regId || !pattern.test(regId)) {
-        // Not in our format: remain in Invalid UI
+        // Not in our expected format: switch to Invalid UI
+        setInvalidUI();
         return;
     }
 
