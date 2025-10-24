@@ -198,7 +198,7 @@
             <div class="space-y-4 text-sm">
                 <div class="flex justify-between items-center">
                     <span class="text-gray-500 font-medium">Roll Number</span>
-                    <span class="text-gray-800 font-semibold">{{roll}}</span>
+                    <span id="rollNumber" data-full-roll="{{roll}}" class="text-gray-800 font-semibold">{{roll}}</span>
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-gray-500 font-medium">Gender</span>
@@ -255,6 +255,27 @@
                     hour: '2-digit', minute: '2-digit'
                 });
             }
+
+            // Show only last 5 characters of roll on tablets and mobile (<= 1024px)
+            const rollEl = document.getElementById('rollNumber');
+            function updateRollDisplay() {
+                if (!rollEl) return;
+                const full = rollEl.getAttribute('data-full-roll') || rollEl.textContent || '';
+                const width = window.innerWidth || document.documentElement.clientWidth;
+                if (width <= 1024) {
+                    // show last 5 characters (if available)
+                    const last5 = full.length > 5 ? full.slice(-5) : full;
+                    rollEl.textContent = last5;
+                } else {
+                    // restore full roll
+                    rollEl.textContent = full;
+                }
+            }
+
+            // Initial update and also on resize/orientation change
+            updateRollDisplay();
+            window.addEventListener('resize', updateRollDisplay);
+            window.addEventListener('orientationchange', updateRollDisplay);
         });
     </script>
 </body>

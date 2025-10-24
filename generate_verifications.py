@@ -433,7 +433,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             <td>
                 <a href="{link}">{reg['name']}</a>
             </td>
-            <td>{reg['roll']}</td>
+            <td class="roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</td>
             <td>{reg['registration_id']}</td>
             <td>{reg['registration_date']}</td>
             <td>{ref_cell}</td>
@@ -711,6 +711,22 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                             applyRegIdDividers(rows);
                         }}
                 }});
+                // Update roll cells to show last 5 chars on tablet/mobile (<=1024px)
+                function updateRollCells() {{
+                    const width = window.innerWidth || document.documentElement.clientWidth;
+                    document.querySelectorAll('.roll-cell').forEach(td => {{
+                        const full = td.getAttribute('data-full-roll') || td.textContent || '';
+                        if (width <= 1024) {{
+                            td.textContent = full.length > 5 ? full.slice(-5) : full;
+                        }} else {{
+                            td.textContent = full;
+                        }}
+                    }});
+                }}
+
+                updateRollCells();
+                window.addEventListener('resize', updateRollCells);
+                window.addEventListener('orientationchange', updateRollCells);
             }});
         }});
     </script>
