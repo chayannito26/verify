@@ -39,7 +39,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 # --- Constants ---
 # These IDs will always be generated, even if not in registrants.json
-PLACEHOLDER_IDS = ["AR-B-0001", "SC-G-0001", "CO-B-0001"]
+PLACEHOLDER_IDS = ["SC-B-0001", "SC-G-0001", "AR-B-0001", "AR-G-0001", "CO-B-0001", "CO-G-0001"]
 # Path definitions
 ROOT_DIR = SCRIPT_DIR
 REG_JSON = SCRIPT_DIR / "registrants.json"
@@ -939,10 +939,69 @@ def main(argv: Optional[list[str]] = None):
     files_unchanged = 0
 
     if not args.master_only:
-        # Per-registrant page generation logic would go here.
-        # This appears to have been removed from the script.
-        # The script will now only generate the master list and static files.
-        pass
+        # Generate per-registrant pages and meta images
+        console.print(":sparkles: [info]Generating per-registrant pages...[/info]")
+        meta_out_dir = out_dir / "assets" / "meta"
+        meta_out_dir.mkdir(parents=True, exist_ok=True)
+
+        for entry in registrants:
+            reg_id = entry.get("registration_id", "")
+            # Skip entries without registration_id
+            if not reg_id:
+                console.print(f"[warning]Skipping entry without registration_id: {entry.get('name', '<unknown>')}[/warning]")
+                continue
+
+            filename = id_to_file.get(reg_id, id_to_filename(reg_id) + ".html")
+            out_path = out_dir / filename
+
+            # Build meta image filename (no extension collisions)
+            meta_name = Path(filename).stem + ".png"
+            meta_rel_path = f"/assets/meta/{meta_name}"
+            meta_file_path = meta_out_dir / meta_name
+
+            # Determine status text similar to render_template
+            if entry.get("revoked") is True:
+                status_text = "Registration Revoked"
+            elif entry.get("is_placeholder"):
+                status_text = "Not Yet Registered"
+            else:
+                status_text = "Registration Verified"
+
+            # Attempt to generate meta image (best-effort)
+            photo_url = entry.get("photo") or None
+            try:
+                generated = generate_meta_card(meta_file_path, entry.get("name", "Registrant"), entry.get("roll", ""), reg_id, photo_url, status_text, entry.get("registration_date", ""))
+                if not generated:
+                    # fallback to default meta card (copied by _copy_static_pages)
+                    meta_rel = "/assets/meta_card.png"
+                else:
+                    meta_rel = meta_rel_path
+            except Exception as e:
+                console.print(f"[warning]Meta generation failed for {reg_id}: {e}[/warning]")
+                meta_rel = "/assets/meta_card.png"
+
+            # Build canonical URL and page metadata
+            canonical_url = f"https://chayannito26.com/{filename}"
+            page_title = f"{entry.get('name', 'Registrant')} — Verification"
+            page_description = f"Verification card for {entry.get('name', '')} ({reg_id})"
+
+            # Build referred_by section
+            referred_html = _build_ref_section(entry, by_id, by_roll, by_name, id_to_file)
+
+            extra = {
+                "page_title": page_title,
+                "page_description": page_description,
+                "canonical_url": canonical_url,
+                "meta_image": meta_rel,
+                "referred_by_section": referred_html,
+            }
+
+            content = render_template(template_text, entry, extra)
+
+            if write_if_changed(out_path, content):
+                files_written += 1
+            else:
+                files_unchanged += 1
 
     # Build links and ref_cells for master list
     links = []
