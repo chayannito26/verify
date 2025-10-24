@@ -571,6 +571,8 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     .table td:nth-child(5) a {{ color: #16a34a; text-decoration: none; }}
     .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
     .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
+        .table th.sortable {{ cursor: pointer; user-select: none; }}
+        .sort-indicator {{ margin-left: 0.5rem; font-size: 0.75rem; color: #166534; opacity: 0.8; }}
     .footer {{ text-align: center; margin-top: 2rem; font-size: 0.75rem; line-height: 1rem; color: #9ca3af; }}
   </style>
 </head>
@@ -593,16 +595,16 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
       </div>
     </div>
     <div class="table-container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Roll</th>
-            <th>Registration ID</th>
-            <th>Date</th>
-            <th>Referred By</th>
-          </tr>
-        </thead>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th data-type="string">Name <span class="sort-indicator"></span></th>
+                        <th data-type="string">Roll <span class="sort-indicator"></span></th>
+                        <th data-type="string">Registration ID <span class="sort-indicator"></span></th>
+                        <th data-type="date">Date <span class="sort-indicator"></span></th>
+                        <th data-type="string">Referred By <span class="sort-indicator"></span></th>
+                    </tr>
+                </thead>
         <tbody>
           {rows_html}
         </tbody>
@@ -612,6 +614,54 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
   <footer class="footer">
     Generated automatically
   </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {{
+            const table = document.querySelector('.table');
+            if (!table) return;
+            const tbody = table.querySelector('tbody');
+            const headers = table.querySelectorAll('th');
+            let sortState = {{ index: null, asc: true }};
+
+            headers.forEach((th, index) => {{
+                th.classList.add('sortable');
+                th.setAttribute('data-index', index);
+                const indicator = th.querySelector('.sort-indicator');
+                th.addEventListener('click', () => {{
+                    const type = th.getAttribute('data-type') || 'string';
+                    const asc = (sortState.index === index) ? !sortState.asc : true;
+                    sortState = {{ index, asc }};
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.sort((a, b) => {{
+                        const aCell = a.children[index] ? a.children[index].textContent.trim() : '';
+                        const bCell = b.children[index] ? b.children[index].textContent.trim() : '';
+                        if (type === 'date') {{
+                            const aTime = Date.parse(aCell) || 0;
+                            const bTime = Date.parse(bCell) || 0;
+                            return asc ? aTime - bTime : bTime - aTime;
+                        }}
+                        const aNum = parseFloat(aCell.replace(/[^0-9.-]+/g, ''));
+                        const bNum = parseFloat(bCell.replace(/[^0-9.-]+/g, ''));
+                        const aIsNum = !isNaN(aNum);
+                        const bIsNum = !isNaN(bNum);
+                        if (aIsNum && bIsNum) {{
+                            return asc ? aNum - bNum : bNum - aNum;
+                        }}
+                        return asc
+                            ? aCell.localeCompare(bCell, undefined, {{ numeric: true, sensitivity: 'base' }})
+                            : bCell.localeCompare(aCell, undefined, {{ numeric: true, sensitivity: 'base' }});
+                    }});
+                    // Re-append rows in new order
+                    rows.forEach(r => tbody.appendChild(r));
+                    // Update indicators
+                    headers.forEach(h => {{
+                        const ind = h.querySelector('.sort-indicator');
+                        if (ind) ind.textContent = '';
+                    }});
+                    if (indicator) indicator.textContent = asc ? '▲' : '▼';
+                }});
+            }});
+        }});
+    </script>
 </body>
 </html>"""
 
