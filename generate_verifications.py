@@ -429,7 +429,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     rows = []
     for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
         rows.append(f"""
-        <tr>
+        <tr class="clickable-row" data-href="{link}">
             <td>
                 <div class="reg-id-main">{reg['registration_id']}</div>
                 <div class="name-secondary"><a href="{link}">{reg['name']}</a></div>
@@ -789,6 +789,19 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                         applyRollDividers(rows);
                     }}
                 }});
+            }});
+
+            // Make rows clickable on mobile
+            tbody.addEventListener('click', function(e) {{
+                if (window.innerWidth >= 768) return; // Only on mobile
+                
+                // Don't interfere with clicks on links
+                if (e.target.tagName === 'A') return;
+
+                const row = e.target.closest('.clickable-row');
+                if (row && row.dataset.href) {{
+                    window.location.href = row.dataset.href;
+                }}
             }});
 
             // Update roll cells to show last 5 chars on tablet/mobile (<=1024px)
