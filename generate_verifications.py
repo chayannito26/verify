@@ -428,22 +428,13 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     """Create the master_list.html content with Tailwind styling."""
     rows = []
     for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
-        referred_by_html = ""
-        if ref_cell != "—":
-            referred_by_html = f'<div class="referred-by-mobile">Referred by: {ref_cell}</div>'
-
         rows.append(f"""
         <tr>
             <td>
-                <a href="{link}">{reg['name']}</a>
-                <div class="mobile-details">
-                    <span class="reg-id">{reg['registration_id']}</span>
-                    <span class="roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</span>
-                </div>
-                {referred_by_html}
+                <div class="reg-id-main">{reg['registration_id']}</div>
+                <div class="name-secondary"><a href="{link}">{reg['name']}</a></div>
             </td>
-            <td class="desktop-only roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</td>
-            <td class="desktop-only">{reg['registration_id']}</td>
+            <td class="roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</td>
             <td>{reg['registration_date']}</td>
             <td class="desktop-only">{ref_cell}</td>
         </tr>
@@ -576,39 +567,53 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     .table-container {{ overflow-x: auto; }}
     .table {{ width: 100%; border-collapse: separate; border-spacing: 0; }}
     .table thead {{ background-color: #dcfce7; }}
-    .table th {{ padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; line-height: 1rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; }}
-     @media (min-width: 768px) {{
-        .table th {{ padding-left: 1.5rem; padding-right: 1.5rem; }}
+    .table th {{ padding: 0.75rem 0.5rem; text-align: left; font-size: 0.75rem; line-height: 1rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; }}
+    .table td {{ padding: 0.75rem 0.5rem; }}
+    
+    @media (min-width: 768px) {{
+        .table th {{ padding: 0.75rem 1.5rem; }}
+        .table td {{ padding: 1rem 1.5rem; }}
     }}
+
     .table tbody {{ background-color: #ffffff; }}
     .table tbody tr {{ border-top: 1px solid #f3f4f6; }}
     @media (min-width: 768px) {{
         .table tbody tr:hover {{ background-color: #f0fdf4; }}
     }}
-    .table td {{ padding: 1rem; }}
-    @media (min-width: 768px) {{
-        .table td {{ padding-left: 1.5rem; padding-right: 1.5rem; }}
+
+    .reg-id-main {{
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace;
+        font-weight: 600;
+        color: #166534;
     }}
-    .table td:first-child {{ font-weight: 600; color: #1f2937; }}
-    .table td:first-child a {{ color: #16a34a; text-decoration: none; }}
-    .table td:first-child a:hover {{ text-decoration: underline; }}
-    
+    .name-secondary {{
+        font-size: 0.875rem;
+        color: #4b5563;
+        margin-top: 0.125rem;
+    }}
+    .name-secondary a {{ color: #16a34a; text-decoration: none; }}
+    .name-secondary a:hover {{ text-decoration: underline; }}
+
+    @media (min-width: 768px) {{
+        .reg-id-main {{ display: none; }}
+        .name-secondary {{ font-size: 1rem; margin-top: 0; }}
+        .name-secondary a {{ color: #1f2937; font-weight: 600; }}
+    }}
+
     .desktop-only {{ display: none; }}
-    .mobile-details, .referred-by-mobile {{ display: block; }}
     @media (min-width: 768px) {{
         .desktop-only {{ display: table-cell; }}
-        .mobile-details, .referred-by-mobile {{ display: none; }}
     }}
 
-    .mobile-details {{ font-size: 0.875rem; color: #4b5563; font-weight: 400; margin-top: 0.25rem; }}
-    .mobile-details .reg-id {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; color: #166534; }}
-    .mobile-details .roll-cell::before {{ content: " / "; }}
-    .referred-by-mobile {{ font-size: 0.875rem; color: #4b5563; font-weight: 400; margin-top: 0.5rem; }}
-    .referred-by-mobile a {{ color: #16a34a; }}
+    .table td:nth-child(3), .table td:nth-child(4) {{ color: #4b5563; }}
+    
+    @media (min-width: 768px) {{
+        .table td:first-child a {{ color: #16a34a; }}
+        .table td:nth-child(2) {{ color: #4b5563; }}
+        .table td:nth-child(3) {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; font-size: 0.875rem; line-height: 1.25rem; color: #166534; }}
+        .table td:nth-child(4) {{ color: #4b5563; }}
+    }}
 
-    .table td:nth-child(2) {{ color: #4b5563; }}
-    .table td:nth-child(3) {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; font-size: 0.875rem; line-height: 1.25rem; color: #166534; }}
-    .table td:nth-child(4) {{ color: #4b5563; }}
     .table td:nth-child(5) a {{ color: #16a34a; text-decoration: none; }}
     .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
     .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
@@ -645,9 +650,8 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             <table class="table">
                 <thead>
                     <tr>
-                        <th data-type="string" data-key="name">Name <span class="sort-indicator"></span></th>
-                        <th class="desktop-only" data-type="string" data-key="roll">Roll <span class="sort-indicator"></span></th>
-                        <th class="desktop-only" data-type="string" data-key="registration_id">Registration ID <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="registration_id">Reg. ID / Name <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="roll">Roll <span class="sort-indicator"></span></th>
                         <th data-type="date" data-key="registration_date">Date <span class="sort-indicator"></span></th>
                         <th class="desktop-only" data-type="string" data-key="referred_by">Referred By <span class="sort-indicator"></span></th>
                     </tr>
@@ -686,7 +690,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     clearDividers();
                     let lastKey = null;
                     rows.forEach(row => {{
-                        const cell = row.querySelector('.desktop-only:nth-child(3)'); // Registration ID column
+                        const cell = row.querySelector('.reg-id-main');
                         const txt = cell ? cell.textContent.trim().toLowerCase() : '';
                         const parts = txt.split('-');
                         const key = parts.length >= 2 ? `${{parts[0]}}-${{parts[1]}}` : '';
@@ -694,7 +698,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                             const tr = document.createElement('tr');
                             tr.className = 'divider-row';
                             const td = document.createElement('td');
-                            td.colSpan = 5;
+                            td.colSpan = headers.length;
                             td.textContent = titleForKey(key);
                             tr.appendChild(td);
                             tbody.insertBefore(tr, row);
@@ -707,7 +711,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     clearDividers();
                     let lastGroup = null;
                     rows.forEach(row => {{
-                        const cell = row.querySelector('.desktop-only.roll-cell'); // Roll column
+                        const cell = row.querySelector('.roll-cell');
                         const txt = cell ? cell.getAttribute('data-full-roll') || cell.textContent.trim() : '';
                         let groupChar = '';
                         // Try 9th char (index 8), fall back to 10th (index 9)
@@ -718,7 +722,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                             const tr = document.createElement('tr');
                             tr.className = 'divider-row';
                             const td = document.createElement('td');
-                            td.colSpan = 5;
+                            td.colSpan = headers.length;
                             td.textContent = group;
                             tr.appendChild(td);
                             tbody.insertBefore(tr, row);
@@ -742,13 +746,14 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                         const aCellNode = a.children[index];
                         const bCellNode = b.children[index];
                         
-                        let aCell = aCellNode ? aCellNode.textContent.trim() : '';
-                        let bCell = bCellNode ? bCellNode.textContent.trim() : '';
+                        let aCell, bCell;
 
-                        // For name column, just use the link text
-                        if (index === 0) {{
-                            aCell = aCellNode.querySelector('a') ? aCellNode.querySelector('a').textContent.trim() : aCell;
-                            bCell = bCellNode.querySelector('a') ? bCellNode.querySelector('a').textContent.trim() : bCell;
+                        if (index === 0) {{ // Special handling for combined Reg ID / Name column
+                            aCell = aCellNode.querySelector('.reg-id-main') ? aCellNode.querySelector('.reg-id-main').textContent.trim() : '';
+                            bCell = bCellNode.querySelector('.reg-id-main') ? bCellNode.querySelector('.reg-id-main').textContent.trim() : '';
+                        }} else {{
+                            aCell = aCellNode ? aCellNode.textContent.trim() : '';
+                            bCell = bCellNode ? bCellNode.textContent.trim() : '';
                         }}
 
                         if (type === 'date') {{
@@ -791,7 +796,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                 const width = window.innerWidth || document.documentElement.clientWidth;
                 document.querySelectorAll('.roll-cell').forEach(td => {{
                     const full = td.getAttribute('data-full-roll') || td.textContent || '';
-                    if (width <= 1024) {{
+                    if (width < 768) {{
                         td.textContent = full.length > 5 ? '...' + full.slice(-5) : full;
                     }} else {{
                         td.textContent = full;
