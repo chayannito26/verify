@@ -5,11 +5,20 @@ generate_verifications.py
 - Generates per-registrant verification HTML files.
 - Generates 'master_list.html'.
 - Copies static pages (index.html, 404.html) into the output dir.
+- Supports meta image caching for faster CI builds.
 
 Usage examples:
   - CI full build to dist/:       python3 generate_verifications.py --out ../dist --clean
   - Local quick sample build:     python3 generate_verifications.py --out ../dist --clean --limit 10
   - Build specific IDs only:      python3 generate_verifications.py --out ../dist --ids SC-B-0001,AR-G-0001
+  - Generate and cache meta:      python3 generate_verifications.py --out ../dist --clean --cache-meta
+  - Force regenerate meta:        python3 generate_verifications.py --out ../dist --clean --regenerate-meta
+
+Meta Image Caching:
+  By default, the script uses cached meta images from meta_images/ directory if available.
+  This significantly speeds up builds by avoiding regeneration of unchanged images.
+  Use --cache-meta to save newly generated images back to the cache directory.
+  Use --regenerate-meta to force regeneration of all meta images (ignoring cache).
 """
 
 import json
@@ -17,6 +26,7 @@ import base64
 import codecs
 import shutil
 import argparse
+import hashlib
 from pathlib import Path
 from typing import Iterable, Optional
 
@@ -190,14 +200,36 @@ def render_template(template_text: str, data: dict, extra: dict | None = None) -
     return out
 
 
-def generate_meta_card(output_path: Path, name: str, roll: str, registration_id: str, photo_url: str | None, status_text: str, registration_date: str | None = None, site_name: str = "Chayannito 26") -> bool:
+def _compute_meta_hash(name: str, roll: str, registration_id: str, photo_url: str | None, status_text: str, registration_date: str | None) -> str:
+    """Compute a hash of the meta card parameters to detect changes."""
+    data = f"{name}|{roll}|{registration_id}|{photo_url}|{status_text}|{registration_date}"
+    return hashlib.md5(data.encode('utf-8')).hexdigest()[:8]
+
+def generate_meta_card(output_path: Path, name: str, roll: str, registration_id: str, photo_url: str | None, status_text: str, registration_date: str | None = None, site_name: str = "Chayannito 26", force_regenerate: bool = False, cache_dir: Path | None = None) -> bool:
     """Generate a social-preview card (1200x630) showing the registrant's name, avatar, roll, registration id and registration date.
     Uses robust text measurement via draw.textbbox. Returns True on success.
+    
+    Args:
+        output_path: Where to save the generated image
+        name, roll, registration_id, photo_url, status_text, registration_date: Card content
+        site_name: Site name to display
+        force_regenerate: If True, regenerate even if cached version exists
+        cache_dir: Directory containing cached meta images (usually repo root meta_images/)
     """
     try:
         if not PIL_AVAILABLE:
             console.print("[warning]Pillow not available — skipping meta image generation[/warning]")
             return False
+        
+        # Check if we can use a cached version from the repo
+        if cache_dir and not force_regenerate:
+            cache_file = cache_dir / output_path.name
+            if cache_file.is_file():
+                # Copy cached version to output
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(cache_file, output_path)
+                console.print(f"[success]Using cached meta image: {cache_file.name}[/success]")
+                return True
 
         from io import BytesIO
         import urllib.request
@@ -953,6 +985,8 @@ def main(argv: Optional[list[str]] = None):
     parser.add_argument("--ids", type=str, default=None, help="Comma-separated registration_id list to generate")
     parser.add_argument("--no-static", action="store_true", help="Do not copy index.html and 404.html into output")
     parser.add_argument("--master-only", action="store_true", help="Only generate the master_list.html and static files (skip per-registrant pages)")
+    parser.add_argument("--regenerate-meta", action="store_true", help="Force regenerate all meta images even if cached versions exist")
+    parser.add_argument("--cache-meta", action="store_true", help="After generating, copy new meta images back to meta_images/ for caching")
     args = parser.parse_args(argv)
 
     console.rule("[bold cyan]Chayannito 26 – Verification Generator")
@@ -1011,6 +1045,10 @@ def main(argv: Optional[list[str]] = None):
     by_id, by_roll, by_name = _build_indexes(registrants)
     files_written = 0
     files_unchanged = 0
+    
+    # Meta image cache directory (in repo root)
+    meta_cache_dir = ROOT_DIR / "meta_images"
+    newly_generated_meta = []  # Track newly generated images for caching
 
     if not args.master_only:
         # Generate per-registrant pages and meta images
@@ -1041,15 +1079,27 @@ def main(argv: Optional[list[str]] = None):
             else:
                 status_text = "Registration Verified"
 
-            # Attempt to generate meta image (best-effort)
+            # Attempt to generate meta image (best-effort) with caching support
             photo_url = entry.get("photo") or None
             try:
-                generated = generate_meta_card(meta_file_path, entry.get("name", "Registrant"), entry.get("roll", ""), reg_id, photo_url, status_text, entry.get("registration_date", ""))
-                if not generated:
+                generated = generate_meta_card(
+                    meta_file_path, 
+                    entry.get("name", "Registrant"), 
+                    entry.get("roll", ""), 
+                    reg_id, 
+                    photo_url, 
+                    status_text, 
+                    entry.get("registration_date", ""),
+                    force_regenerate=args.regenerate_meta,
+                    cache_dir=meta_cache_dir if meta_cache_dir.exists() else None
+                )
+                if generated and meta_file_path.is_file():
+                    # Track for potential caching
+                    newly_generated_meta.append((meta_file_path, meta_name))
+                    meta_rel = meta_rel_path
+                else:
                     # fallback to default meta card (copied by _copy_static_pages)
                     meta_rel = "/assets/meta_card.png"
-                else:
-                    meta_rel = meta_rel_path
             except Exception as e:
                 console.print(f"[warning]Meta generation failed for {reg_id}: {e}[/warning]")
                 meta_rel = "/assets/meta_card.png"
@@ -1114,6 +1164,18 @@ def main(argv: Optional[list[str]] = None):
     # Copy static files unless explicitly disabled
     if not args.no_static:
         _copy_static_pages(out_dir)
+    
+    # Cache newly generated meta images back to repo if requested
+    if args.cache_meta and newly_generated_meta:
+        meta_cache_dir.mkdir(parents=True, exist_ok=True)
+        cached_count = 0
+        console.print(f":floppy_disk: [info]Caching {len(newly_generated_meta)} meta images to {meta_cache_dir}...[/info]")
+        for src_path, img_name in newly_generated_meta:
+            if src_path.is_file():
+                cache_dest = meta_cache_dir / img_name
+                shutil.copy2(src_path, cache_dest)
+                cached_count += 1
+        console.print(f"[success]Cached {cached_count} meta images to repository[/success]")
 
     console.print(Panel.fit(
         f"Total registrants processed: {len(registrants)}\n"

@@ -28,6 +28,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+      
+      - name: Cache meta images
+        uses: actions/cache@v4
+        with:
+          path: meta_images/
+          key: meta-images-${{ hashFiles('registrants.json') }}
+          restore-keys: |
+            meta-images-
 
       - name: Install Python deps
         run: |
