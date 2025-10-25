@@ -428,15 +428,24 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     """Create the master_list.html content with Tailwind styling."""
     rows = []
     for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
+        referred_by_html = ""
+        if ref_cell != "—":
+            referred_by_html = f'<div class="referred-by-mobile">Referred by: {ref_cell}</div>'
+
         rows.append(f"""
         <tr>
             <td>
                 <a href="{link}">{reg['name']}</a>
+                <div class="mobile-details">
+                    <span class="reg-id">{reg['registration_id']}</span>
+                    <span class="roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</span>
+                </div>
+                {referred_by_html}
             </td>
-            <td class="roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</td>
-            <td>{reg['registration_id']}</td>
+            <td class="desktop-only roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</td>
+            <td class="desktop-only">{reg['registration_id']}</td>
             <td>{reg['registration_date']}</td>
-            <td>{ref_cell}</td>
+            <td class="desktop-only">{ref_cell}</td>
         </tr>
         """)
     rows_html = "\n".join(rows)
@@ -509,8 +518,12 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
   <style>
     /* Chayannito 26 Master List Styles */
     * {{ box-sizing: border-box; }}
-    body {{ font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; min-height: 100vh; padding: 2rem; }}
+    body {{ font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; min-height: 100vh; }}
     
+    @media (min-width: 768px) {{
+        body {{ padding: 2rem; }}
+    }}
+
     /* Mobile-first: Hide desktop cards by default */
     .stats-cards-grid {{ display: none; }}
     
@@ -544,43 +557,74 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
         .stats-cards-grid {{ grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }}
     }}
 
-    .container {{ max-width: 80rem; margin-left: auto; margin-right: auto; background-color: #ffffff; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); border-radius: 1rem; overflow: hidden; }}
-    .header {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }}
-    .header h1 {{ font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: #334155; margin: 0; }}
+    .container {{ background-color: #ffffff; }}
+    @media (min-width: 768px) {{
+        .container {{ max-width: 80rem; margin-left: auto; margin-right: auto; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); border-radius: 1rem; overflow: hidden; }}
+    }}
+
+    .header {{ padding: 1rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }}
+    @media (min-width: 768px) {{
+        .header {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; }}
+    }}
+    .header h1 {{ font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; color: #334155; margin: 0; }}
+     @media (min-width: 768px) {{
+        .header h1 {{ font-size: 1.5rem; line-height: 2rem; }}
+    }}
     .header-right {{ display: flex; align-items: center; gap: 0.75rem; }}
     .header-right span {{ font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; }}
     
     .table-container {{ overflow-x: auto; }}
-    .table {{ min-width: 100%; border-collapse: separate; border-spacing: 0; }}
+    .table {{ width: 100%; border-collapse: separate; border-spacing: 0; }}
     .table thead {{ background-color: #dcfce7; }}
-    .table th {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 0.75rem; padding-bottom: 0.75rem; text-align: left; font-size: 0.75rem; line-height: 1rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; }}
+    .table th {{ padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; line-height: 1rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; }}
+     @media (min-width: 768px) {{
+        .table th {{ padding-left: 1.5rem; padding-right: 1.5rem; }}
+    }}
     .table tbody {{ background-color: #ffffff; }}
-    .table tbody tr {{ border-top: 1px solid #f3f4f6; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); }}
-    .table tbody tr:hover {{ background-color: #f0fdf4; }}
-    .table td {{ padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 1rem; padding-bottom: 1rem; }}
+    .table tbody tr {{ border-top: 1px solid #f3f4f6; }}
+    @media (min-width: 768px) {{
+        .table tbody tr:hover {{ background-color: #f0fdf4; }}
+    }}
+    .table td {{ padding: 1rem; }}
+    @media (min-width: 768px) {{
+        .table td {{ padding-left: 1.5rem; padding-right: 1.5rem; }}
+    }}
     .table td:first-child {{ font-weight: 600; color: #1f2937; }}
     .table td:first-child a {{ color: #16a34a; text-decoration: none; }}
     .table td:first-child a:hover {{ text-decoration: underline; }}
+    
+    .desktop-only {{ display: none; }}
+    .mobile-details, .referred-by-mobile {{ display: block; }}
+    @media (min-width: 768px) {{
+        .desktop-only {{ display: table-cell; }}
+        .mobile-details, .referred-by-mobile {{ display: none; }}
+    }}
+
+    .mobile-details {{ font-size: 0.875rem; color: #4b5563; font-weight: 400; margin-top: 0.25rem; }}
+    .mobile-details .reg-id {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; color: #166534; }}
+    .mobile-details .roll-cell::before {{ content: " / "; }}
+    .referred-by-mobile {{ font-size: 0.875rem; color: #4b5563; font-weight: 400; margin-top: 0.5rem; }}
+    .referred-by-mobile a {{ color: #16a34a; }}
+
     .table td:nth-child(2) {{ color: #4b5563; }}
     .table td:nth-child(3) {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; font-size: 0.875rem; line-height: 1.25rem; color: #166534; }}
     .table td:nth-child(4) {{ color: #4b5563; }}
-    .table td:nth-child(5) {{ }}
     .table td:nth-child(5) a {{ color: #16a34a; text-decoration: none; }}
     .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
     .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
-        .table th.sortable {{ cursor: pointer; user-select: none; }}
-        .sort-indicator {{ margin-left: 0.5rem; font-size: 0.75rem; color: #166534; opacity: 0.8; }}
-        /* Divider rows for grouped Registration ID sections */
-        .divider-row td {{
-            background-color: #ecfdf5;
-            color: #065f46;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-            border-top: 3px solid #10b981;
-        }}
+    .table th.sortable {{ cursor: pointer; user-select: none; }}
+    .sort-indicator {{ margin-left: 0.5rem; font-size: 0.75rem; color: #166534; opacity: 0.8; }}
+    /* Divider rows for grouped Registration ID sections */
+    .divider-row td {{
+        background-color: #ecfdf5;
+        color: #065f46;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-top: 3px solid #10b981;
+    }}
     .footer {{ text-align: center; margin-top: 2rem; font-size: 0.75rem; line-height: 1rem; color: #9ca3af; }}
   </style>
 </head>
@@ -602,10 +646,10 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                 <thead>
                     <tr>
                         <th data-type="string" data-key="name">Name <span class="sort-indicator"></span></th>
-                        <th data-type="string" data-key="roll">Roll <span class="sort-indicator"></span></th>
-                        <th data-type="string" data-key="registration_id">Registration ID <span class="sort-indicator"></span></th>
+                        <th class="desktop-only" data-type="string" data-key="roll">Roll <span class="sort-indicator"></span></th>
+                        <th class="desktop-only" data-type="string" data-key="registration_id">Registration ID <span class="sort-indicator"></span></th>
                         <th data-type="date" data-key="registration_date">Date <span class="sort-indicator"></span></th>
-                        <th data-type="string" data-key="referred_by">Referred By <span class="sort-indicator"></span></th>
+                        <th class="desktop-only" data-type="string" data-key="referred_by">Referred By <span class="sort-indicator"></span></th>
                     </tr>
                 </thead>
         <tbody>
@@ -642,7 +686,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     clearDividers();
                     let lastKey = null;
                     rows.forEach(row => {{
-                        const cell = row.children[2]; // Registration ID column
+                        const cell = row.querySelector('.desktop-only:nth-child(3)'); // Registration ID column
                         const txt = cell ? cell.textContent.trim().toLowerCase() : '';
                         const parts = txt.split('-');
                         const key = parts.length >= 2 ? `${{parts[0]}}-${{parts[1]}}` : '';
@@ -663,7 +707,7 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     clearDividers();
                     let lastGroup = null;
                     rows.forEach(row => {{
-                        const cell = row.children[1]; // Roll column
+                        const cell = row.querySelector('.desktop-only.roll-cell'); // Roll column
                         const txt = cell ? cell.getAttribute('data-full-roll') || cell.textContent.trim() : '';
                         let groupChar = '';
                         // Try 9th char (index 8), fall back to 10th (index 9)
@@ -684,18 +728,29 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                 }}
 
             headers.forEach((th, index) => {{
+                if (th.offsetParent === null) return; // Skip hidden headers
                 th.classList.add('sortable');
                 th.setAttribute('data-index', index);
                 const indicator = th.querySelector('.sort-indicator');
                 th.addEventListener('click', () => {{
-                        clearDividers();
+                    clearDividers();
                     const type = th.getAttribute('data-type') || 'string';
                     const asc = (sortState.index === index) ? !sortState.asc : true;
                     sortState = {{ index, asc }};
-                    const rows = Array.from(tbody.querySelectorAll('tr'));
-                        rows.sort((a, b) => {{
-                        const aCell = a.children[index] ? a.children[index].textContent.trim() : '';
-                        const bCell = b.children[index] ? b.children[index].textContent.trim() : '';
+                    const rows = Array.from(tbody.querySelectorAll('tr:not(.divider-row)'));
+                    rows.sort((a, b) => {{
+                        const aCellNode = a.children[index];
+                        const bCellNode = b.children[index];
+                        
+                        let aCell = aCellNode ? aCellNode.textContent.trim() : '';
+                        let bCell = bCellNode ? bCellNode.textContent.trim() : '';
+
+                        // For name column, just use the link text
+                        if (index === 0) {{
+                            aCell = aCellNode.querySelector('a') ? aCellNode.querySelector('a').textContent.trim() : aCell;
+                            bCell = bCellNode.querySelector('a') ? bCellNode.querySelector('a').textContent.trim() : bCell;
+                        }}
+
                         if (type === 'date') {{
                             const aTime = Date.parse(aCell) || 0;
                             const bTime = Date.parse(bCell) || 0;
@@ -721,31 +776,32 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     }});
                     if (indicator) indicator.textContent = asc ? '▲' : '▼';
 
-                          // If sorting by Registration ID or Roll, add dividers
-                                    const key = th.getAttribute('data-key');
-                                    if (key === 'registration_id') {{
-                                        applyRegIdDividers(rows);
-                                    }} else if (key === 'roll') {{
-                                        applyRollDividers(rows);
-                                    }}
+                    // If sorting by Registration ID or Roll, add dividers
+                    const key = th.getAttribute('data-key');
+                    if (key === 'registration_id') {{
+                        applyRegIdDividers(rows);
+                    }} else if (key === 'roll') {{
+                        applyRollDividers(rows);
+                    }}
                 }});
-                // Update roll cells to show last 5 chars on tablet/mobile (<=1024px)
-                function updateRollCells() {{
-                    const width = window.innerWidth || document.documentElement.clientWidth;
-                    document.querySelectorAll('.roll-cell').forEach(td => {{
-                        const full = td.getAttribute('data-full-roll') || td.textContent || '';
-                        if (width <= 1024) {{
-                            td.textContent = full.length > 5 ? full.slice(-5) : full;
-                        }} else {{
-                            td.textContent = full;
-                        }}
-                    }});
-                }}
-
-                updateRollCells();
-                window.addEventListener('resize', updateRollCells);
-                window.addEventListener('orientationchange', updateRollCells);
             }});
+
+            // Update roll cells to show last 5 chars on tablet/mobile (<=1024px)
+            function updateRollCells() {{
+                const width = window.innerWidth || document.documentElement.clientWidth;
+                document.querySelectorAll('.roll-cell').forEach(td => {{
+                    const full = td.getAttribute('data-full-roll') || td.textContent || '';
+                    if (width <= 1024) {{
+                        td.textContent = full.length > 5 ? '...' + full.slice(-5) : full;
+                    }} else {{
+                        td.textContent = full;
+                    }}
+                }});
+            }}
+
+            updateRollCells();
+            window.addEventListener('resize', updateRollCells);
+            window.addEventListener('orientationchange', updateRollCells);
         }});
     </script>
 </body>
