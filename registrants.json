@@ -1763,5 +1763,105 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Jannatul Fardos Soshe",
+    "roll": "1202425020337",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "27 October 2025",
+    "registration_id": "AR-G-0053",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01317446442",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md Minhaz Khondokar Emon",
+    "roll": "1202425030215",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "27 October 2025",
+    "registration_id": "CO-B-0054",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "minhazkhondoker650@gmail.com",
+    "phone": "01704925261",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Rubiya Afiya Suchi",
+    "roll": "1202425010357",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "27 October 2025",
+    "registration_id": "SC-G-0019",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-G-0005",
+    "paid": 1200,
+    "email": "",
+    "phone": "01770460085",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Farhatul Jannat Jim",
+    "roll": "1202425010013",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "27 October 2025",
+    "registration_id": "SC-G-0020",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "AR-G-0051",
+    "paid": 1200,
+    "email": "",
+    "phone": "01719573028",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Mst. Farjana Faria Maisha",
+    "roll": "1202425010254",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "27 October 2025",
+    "registration_id": "SC-G-0021",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "AR-G-0003",
+    "paid": 1200,
+    "email": "",
+    "phone": "01784707100",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
