@@ -1863,5 +1863,65 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Sinthia Ridy",
+    "roll": "1202425020352",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "29 October 2025",
+    "registration_id": "AR-G-0009",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01988847996",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Mst. Farhana Akter Mohona",
+    "roll": "1202425020047",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "29 October 2025",
+    "registration_id": "AR-G-0010",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01738628675",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Shohel Rana",
+    "roll": "1202425030181",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "29 October 2025",
+    "registration_id": "CO-B-0055",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "1202425030182",
+    "paid": 1200,
+    "email": "md.sohel.rana.0428@gmail.com",
+    "phone": "01821902305",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
