@@ -1943,5 +1943,45 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Rubayet Hossain",
+    "roll": "1202425010504",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "02 November 2025",
+    "registration_id": "SC-B-0017",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "monstarking1932@gmail.com",
+    "phone": "01920440296",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "3XL"
+  },
+  {
+    "name": "Emtiaj Ahmed Tamim",
+    "roll": "1202425010527",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "02 November 2025",
+    "registration_id": "SC-B-0018",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "emtiazahmed990@gmail.com",
+    "phone": "01752589527",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
