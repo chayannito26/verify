@@ -1983,5 +1983,105 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Jannatul Tayaba Tuba",
+    "roll": "1202425020335",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "03 November 2025",
+    "registration_id": "AR-G-0011",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01576979683",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Asikur Rahman Asik",
+    "roll": "1202425030065",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "03 November 2025",
+    "registration_id": "CO-B-0006",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0007",
+    "paid": 1000,
+    "email": "riderapon287@gmail.com",
+    "phone": "01314788632",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Piarul Hossain",
+    "roll": "1202425030200",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "03 November 2025",
+    "registration_id": "CO-B-0007",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0006",
+    "paid": 1000,
+    "email": "mstshamima1231@gmail.com",
+    "phone": "01312254393",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Arafat Hossain",
+    "roll": "1202425030086",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "03 November 2025",
+    "registration_id": "CO-B-0008",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0006",
+    "paid": 1000,
+    "email": "a88130716@gmail.com",
+    "phone": "01732606336",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Siam Hassan",
+    "roll": "1202425030186",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "03 November 2025",
+    "registration_id": "CO-B-0009",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0006",
+    "paid": 1000,
+    "email": "mdsiamhassan584@gmail.com",
+    "phone": "01703748584",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
