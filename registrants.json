@@ -2290,7 +2290,7 @@
     "gender": "Female",
     "group": "CO",
     "registration_date": "06 November 2025",
-    "registration_id": "CO-G-0012",
+    "registration_id": "CO-G-0037",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -2310,7 +2310,7 @@
     "gender": "Female",
     "group": "CO",
     "registration_date": "06 November 2025",
-    "registration_id": "CO-G-0013",
+    "registration_id": "CO-G-0038",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -2323,5 +2323,65 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Tanvir Rahman Bayzid",
+    "roll": "1202425020208",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "08 November 2025",
+    "registration_id": "AR-B-0008",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0001",
+    "paid": 1200,
+    "email": "bayzid131308@gmail.com",
+    "phone": "01777572013",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Araf Adiat",
+    "roll": "1202425020135",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "08 November 2025",
+    "registration_id": "AR-B-0013",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "arafpc.78@gmail.com",
+    "phone": "01312948914",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Saraban Tahura Sara",
+    "roll": "1202425020168",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "08 November 2025",
+    "registration_id": "AR-G-0012",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01775061812",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
