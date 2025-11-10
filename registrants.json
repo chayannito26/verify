@@ -2743,5 +2743,25 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Jakir Hossain",
+    "roll": "1202425020357",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "10 November 2025",
+    "registration_id": "AR-B-0020",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1200,
+    "email": "",
+    "phone": "01334514644",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]

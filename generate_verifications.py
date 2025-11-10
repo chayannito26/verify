@@ -457,17 +457,20 @@ def generate_meta_card(output_path: Path, name: str, roll: str, registration_id:
         return False
 
 def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
-    """Create the master_list.html content with Tailwind styling."""
+    """Create the master_list.html content with Tailwind styling.
+
+    This renders separate columns for Registration ID and Name. Registration ID is
+    placed in its own cell so that dividers can be applied when sorting by that
+    column; Name is a normal sortable column.
+    """
     rows = []
     for (reg, link, ref_cell) in zip(registrants, links, ref_cells):
         rows.append(f"""
         <tr class="clickable-row" data-href="{link}">
-            <td>
-                <div class="reg-id-main">{reg['registration_id']}</div>
-                <div class="name-secondary"><a href="{link}">{reg['name']}</a></div>
-            </td>
+            <td class="reg-id-cell"><div class="reg-id-main">{reg['registration_id']}</div></td>
+            <td class="name-cell"><div class="name-secondary"><a href="{link}">{reg['name']}</a></div></td>
             <td class="roll-cell" data-full-roll="{reg['roll']}">{reg['roll']}</td>
-            <td>{reg['registration_date']}</td>
+            <td class="date-cell">{reg['registration_date']}</td>
             <td class="desktop-only">{ref_cell}</td>
         </tr>
         """)
@@ -637,15 +640,19 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
         .desktop-only {{ display: table-cell; }}
     }}
 
-    .table td:nth-child(3), .table td:nth-child(4) {{ color: #4b5563; }}
-    
     @media (min-width: 768px) {{
-        .table td:first-child a {{ color: #16a34a; }}
-        .table td:nth-child(2) {{ color: #4b5563; }}
-        .table td:nth-child(3) {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; font-size: 0.875rem; line-height: 1.25rem; color: #166534; }}
-        .table td:nth-child(4) {{ color: #4b5563; }}
+        /* Name links live in the second column */
+        .table td:nth-child(2) a {{ color: #16a34a; text-decoration: none; }}
+        .table td:nth-child(2) a:hover {{ text-decoration: underline; }}
+
+        /* Roll shows muted text */
+        .table td:nth-child(3) {{ color: #4b5563; }}
+
+        /* Date column uses monospace and an accent color for clarity */
+        .table td:nth-child(4) {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace; font-size: 0.875rem; line-height: 1.25rem; color: #166534; }}
     }}
 
+    /* Referred-by (desktop-only) is the 5th column */
     .table td:nth-child(5) a {{ color: #16a34a; text-decoration: none; }}
     .table td:nth-child(5) a:hover {{ text-decoration: underline; }}
     .table td:nth-child(5) span {{ color: #1f2937; font-weight: 600; }}
@@ -682,7 +689,8 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
             <table class="table">
                 <thead>
                     <tr>
-                        <th data-type="string" data-key="registration_id">Reg. ID / Name <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="registration_id">Reg. ID <span class="sort-indicator"></span></th>
+                        <th data-type="string" data-key="name">Name <span class="sort-indicator"></span></th>
                         <th data-type="string" data-key="roll">Roll <span class="sort-indicator"></span></th>
                         <th data-type="date" data-key="registration_date">Date <span class="sort-indicator"></span></th>
                         <th class="desktop-only" data-type="string" data-key="referred_by">Referred By <span class="sort-indicator"></span></th>
@@ -722,7 +730,8 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                     clearDividers();
                     let lastKey = null;
                     rows.forEach(row => {{
-                        const cell = row.querySelector('.reg-id-main');
+                        // Prefer the reg-id cell, fall back to the inner reg-id-main element
+                        const cell = row.querySelector('.reg-id-cell') || row.querySelector('.reg-id-main');
                         const txt = cell ? cell.textContent.trim().toLowerCase() : '';
                         const parts = txt.split('-');
                         const key = parts.length >= 2 ? `${{parts[0]}}-${{parts[1]}}` : '';
@@ -778,14 +787,15 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
                         const aCellNode = a.children[index];
                         const bCellNode = b.children[index];
                         
-                        let aCell, bCell;
-
-                        if (index === 0) {{ // Special handling for combined Reg ID / Name column
-                            aCell = aCellNode.querySelector('.reg-id-main') ? aCellNode.querySelector('.reg-id-main').textContent.trim() : '';
-                            bCell = bCellNode.querySelector('.reg-id-main') ? bCellNode.querySelector('.reg-id-main').textContent.trim() : '';
-                        }} else {{
-                            aCell = aCellNode ? aCellNode.textContent.trim() : '';
-                            bCell = bCellNode ? bCellNode.textContent.trim() : '';
+                        let aCell = '';
+                        let bCell = '';
+                        if (aCellNode) {{
+                            const regElemA = (aCellNode.querySelector && aCellNode.querySelector('.reg-id-main')) || null;
+                            aCell = regElemA ? regElemA.textContent.trim() : aCellNode.textContent.trim();
+                        }}
+                        if (bCellNode) {{
+                            const regElemB = (bCellNode.querySelector && bCellNode.querySelector('.reg-id-main')) || null;
+                            bCell = regElemB ? regElemB.textContent.trim() : bCellNode.textContent.trim();
                         }}
 
                         if (type === 'date') {{
