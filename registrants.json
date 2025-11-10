@@ -2763,5 +2763,25 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Murshid Mostofa Sani",
+    "roll": "1202425030119",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "10 November 2025",
+    "registration_id": "CO-B-0014",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Akash",
+    "paid": 1200,
+    "email": "",
+    "phone": "01766108122",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
