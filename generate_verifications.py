@@ -630,7 +630,8 @@ def render_master_list(registrants, links, ref_cells, stats: dict) -> str:
     .name-secondary a:hover {{ text-decoration: underline; }}
 
     @media (min-width: 768px) {{
-        .reg-id-main {{ display: none; }}
+        /* Show registration id in its own column on desktop */
+        .reg-id-main {{ display: inline-block; font-size: 0.875rem; margin-top: 0; color: #164e2e; }}
         .name-secondary {{ font-size: 1rem; margin-top: 0; }}
         .name-secondary a {{ color: #1f2937; font-weight: 600; }}
     }}

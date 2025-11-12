@@ -1602,7 +1602,7 @@
       "Food",
       "Gift"
     ],
-    "tshirt_size": "M"
+    "tshirt_size": "XL"
   },
   {
     "name": "Mst. Sadia Khatun",
@@ -2783,5 +2783,145 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Rabbi Hossain",
+    "roll": "1202425020036",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "12 November 2025",
+    "registration_id": "AR-B-0021",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0011",
+    "paid": 1200,
+    "email": "",
+    "phone": "01756272194",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Maisha Akther Mahi",
+    "roll": "1202425020107",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "12 November 2025",
+    "registration_id": "AR-G-0013",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Tanvir",
+    "paid": 1000,
+    "email": "joyrahmankabbo@gmail.com@gmail.com",
+    "phone": "01868383611",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Tassnuba Zarin Yanna",
+    "roll": "1202425020182",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "12 November 2025",
+    "registration_id": "AR-G-0014",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "tasnubazariny@gmail.com",
+    "phone": "01642391179",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Jerin Tasnim",
+    "roll": "1202425030099",
+    "gender": "Female",
+    "group": "CO",
+    "registration_date": "12 November 2025",
+    "registration_id": "CO-G-0012",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01326509356",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Shohan Mahmud",
+    "roll": "260",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "12 November 2025",
+    "registration_id": "CO-B-0105",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "sohanmahmud255@gmail.com",
+    "phone": "01700955954",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Regdho Das Brinto",
+    "roll": "1202425010394",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "12 November 2025",
+    "registration_id": "SC-B-0028",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "callmepanda1005@gmail.com",
+    "phone": "01773140000",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mst. Tazrin Islam",
+    "roll": "1202425010393",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "12 November 2025",
+    "registration_id": "SC-G-0025",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "01305945905",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
