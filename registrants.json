@@ -2923,5 +2923,45 @@
       "Gift"
     ],
     "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md. Taj Mahmud",
+    "roll": "1202425030036",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "13 November 2025",
+    "registration_id": "CO-B-0056",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0002",
+    "paid": 1000,
+    "email": "mdtajmahmud5560@gmail.com",
+    "phone": "01608845560",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Anik Kumar Saha",
+    "roll": "1202425030131",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "13 November 2025",
+    "registration_id": "CO-B-0015",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01732536599",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
   }
 ]
