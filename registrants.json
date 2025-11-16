@@ -2950,7 +2950,7 @@
     "gender": "Male",
     "group": "CO",
     "registration_date": "13 November 2025",
-    "registration_id": "CO-B-0015",
+    "registration_id": "CO-B-0057",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -2963,5 +2963,25 @@
       "Gift"
     ],
     "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Akash Mondol",
+    "roll": "1202425030050",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "16 November 2025",
+    "registration_id": "CO-B-0015",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0003",
+    "paid": 1000,
+    "email": "mondolakash472@gmail.com",
+    "phone": "01320432004",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
