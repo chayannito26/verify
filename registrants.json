@@ -2983,5 +2983,125 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Shamim Mahalder",
+    "roll": "1202425010509",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "18 November 2025",
+    "registration_id": "SC-B-0061",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1100,
+    "email": "",
+    "phone": "01618142043",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Salman Farsi",
+    "roll": "1202425010450",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "18 November 2025",
+    "registration_id": "SC-B-0062",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1100,
+    "email": "",
+    "phone": "01617161607",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Foysal Mahmud",
+    "roll": "1202425010466",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "18 November 2025",
+    "registration_id": "SC-B-0063",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1100,
+    "email": "",
+    "phone": "01705550178",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Tasnim Nahar Prova",
+    "roll": "1202425010625",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "18 November 2025",
+    "registration_id": "SC-G-0026",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0002",
+    "paid": 1200,
+    "email": "",
+    "phone": "01969726383",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Parvez",
+    "roll": "1202425030108",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "18 November 2025",
+    "registration_id": "CO-B-0016",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0015",
+    "paid": 1000,
+    "email": "",
+    "phone": "01713320900",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Anik Islam Romon",
+    "roll": "1202425030139",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "18 November 2025",
+    "registration_id": "CO-B-0017",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "CO-B-0015",
+    "paid": 1000,
+    "email": "",
+    "phone": "01753424092",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
