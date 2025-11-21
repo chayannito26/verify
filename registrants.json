@@ -2866,7 +2866,7 @@
   },
   {
     "name": "Shohan Mahmud",
-    "roll": "260",
+    "roll": "1202425030260",
     "gender": "Male",
     "group": "CO",
     "registration_date": "10 November 2025",
@@ -3137,6 +3137,86 @@
     "paid": 1000,
     "email": "",
     "phone": "01845321454",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Ibrahim Haque",
+    "roll": "1202425010198",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "18 November 2025",
+    "registration_id": "SC-B-0029",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01327160576",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Touhidul Haque Chowdhury",
+    "roll": "1202425010373",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "21 November 2025",
+    "registration_id": "SC-B-0067",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "01771684200",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "3XL"
+  },
+  {
+    "name": "Ajoy Kumer Deb",
+    "roll": "1202425030133",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "21 November 2025",
+    "registration_id": "CO-B-0106",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "ajoykumardev46@gmail.com",
+    "phone": "01786042666",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Nusrat Tabassum Urbi",
+    "roll": "1202425010640",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "21 November 2025",
+    "registration_id": "AR-B-0022",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01792925838",
     "parts_available": [
       "T-Shirt",
       "Food",
