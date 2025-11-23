@@ -3055,7 +3055,7 @@
     "revoked": false,
     "referred_by": "SC-B-0002",
     "paid": 1200,
-    "email": "",
+    "email": "tasnimnaherprova550@gmail.com",
     "phone": "01969726383",
     "parts_available": [
       "T-Shirt",
@@ -3223,5 +3223,105 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Rahat Joardar",
+    "roll": "1202425020103",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "23 November 2025",
+    "registration_id": "AR-B-0053",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01880756973",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Ahommed Al-Beruni",
+    "roll": "1202425020314",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "23 November 2025",
+    "registration_id": "AR-B-0023",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01304782265",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Jubaer Islam Ruhan",
+    "roll": "1202425020109",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "23 November 2025",
+    "registration_id": "AR-B-0024",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "AR-B-0007",
+    "paid": 1000,
+    "email": "",
+    "phone": "01344288050",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Golam Kobir",
+    "roll": "1202425020276",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "23 November 2025",
+    "registration_id": "AR-B-0051",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0002",
+    "paid": 1000,
+    "email": "gkruhan1@gmail.com",
+    "phone": "01878057472",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mahib Hasan",
+    "roll": "1202425010454",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "23 November 2025",
+    "registration_id": "AR-B-0052",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0002",
+    "paid": 1200,
+    "email": "mahibhasan360@gmail.com",
+    "phone": "01770381395",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
   }
 ]
