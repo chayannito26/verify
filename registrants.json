@@ -3323,5 +3323,205 @@
       "Gift"
     ],
     "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Abdullah -Al-Rakib",
+    "roll": "1202425010582",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "25 November 2025",
+    "registration_id": "SC-B-0068",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01859125422",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md. Sifat Sarkar Joy",
+    "roll": "1202425010139",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "25 November 2025",
+    "registration_id": "SC-B-0064",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1100,
+    "email": "",
+    "phone": "01763975476",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mahin Mohammad Siam",
+    "roll": "1202425020271",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "25 November 2025",
+    "registration_id": "AR-B-0023",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "Mehedi",
+    "paid": 1200,
+    "email": "",
+    "phone": "01835021138",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Mazharul Molla Sadhin",
+    "roll": "1202425020072",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "25 November 2025",
+    "registration_id": "AR-B-0024",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "AR-B-0006",
+    "paid": 700,
+    "email": "",
+    "phone": "01920890092",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Shoron Gosh",
+    "roll": "1202425020113",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "25 November 2025",
+    "registration_id": "SC-B-0069",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01316961091",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "3XL"
+  },
+  {
+    "name": "Md, Sadat Rahman",
+    "roll": "1202425010459",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "25 November 2025",
+    "registration_id": "SC-B-0030",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1100,
+    "email": "",
+    "phone": "01944703399",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Moontasir Abedin Moon",
+    "roll": "1202425010331",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "25 November 2025",
+    "registration_id": "SC-B-0031",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1100,
+    "email": "",
+    "phone": "01336403631",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mst. Fatema Khatun",
+    "roll": "1202425020339",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "25 November 2025",
+    "registration_id": "AR-G-0015",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01318191459",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Humaira Akter",
+    "roll": "1202425020130",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "25 November 2025",
+    "registration_id": "AR-G-0016",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01303633144",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Maysha Mudra",
+    "roll": "1202425020267",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "25 November 2025",
+    "registration_id": "AR-G-0017",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 1000,
+    "email": "",
+    "phone": "01887715205",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
