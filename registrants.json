@@ -3352,9 +3352,9 @@
     "registration_date": "25 November 2025",
     "registration_id": "SC-B-0064",
     "photo": "",
-    "revoked": false,
+    "revoked": true,
     "referred_by": "SC-B-0016",
-    "paid": 1100,
+    "paid": 0,
     "email": "",
     "phone": "01763975476",
     "parts_available": [
@@ -3523,5 +3523,25 @@
       "Gift"
     ],
     "tshirt_size": "XXL"
+  },
+  {
+    "name": "Musfiqur Rahman Noyon",
+    "roll": "1202425020192",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "26 November 2025",
+    "registration_id": "AR-B-0025",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 700,
+    "email": "",
+    "phone": "01522130254",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
   }
 ]
