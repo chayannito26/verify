@@ -186,7 +186,8 @@
       "T-Shirt",
       "Food",
       "Gift"
-    ]
+    ],
+    "tshirt_size": "L"
   },
   {
     "name": "Md. Newaj Hossain",
@@ -3543,5 +3544,125 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Naziur Rahman",
+    "roll": "1202425010224",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "27 November 2025",
+    "registration_id": "SC-B-0070",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 700,
+    "email": "",
+    "phone": "01784458430",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Nazmul Hoque",
+    "roll": "1202425010225",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "27 November 2025",
+    "registration_id": "SC-B-0071",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 700,
+    "email": "",
+    "phone": "01907895861",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Jubayer Rahman",
+    "roll": "1202425010580",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "27 November 2025",
+    "registration_id": "SC-B-0072",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "SC-B-0016",
+    "paid": 700,
+    "email": "",
+    "phone": "01767380429",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Nahian Ibne Masud",
+    "roll": "1202425010565",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "27 November 2025",
+    "registration_id": "SC-B-0073",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01615948267",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Ahnaf Hossain Agroz",
+    "roll": "1202425010641",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "27 November 2025",
+    "registration_id": "SC-B-0074",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "01615948833",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "3XL"
+  },
+  {
+    "name": "Md. Nabil Kibria",
+    "roll": "1202425010669",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "27 November 2025",
+    "registration_id": "SC-B-0075",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "01780-106563",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
   }
 ]
