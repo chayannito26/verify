@@ -3664,5 +3664,165 @@
       "Gift"
     ],
     "tshirt_size": "XL"
+  },
+  {
+    "name": "Aminuzzaman",
+    "roll": "1202425010117",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0076",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01741945409",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Farhan Shahariar",
+    "roll": "1202425020167",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0077",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01791451792",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Eashan",
+    "roll": "1202425020196",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0078",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01997657749",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mahim Rahman",
+    "roll": "1202425020210",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0079",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 600,
+    "email": "",
+    "phone": "01330605725",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Morsalin Islam Likhon",
+    "roll": "1202425020166",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0080",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 600,
+    "email": "",
+    "phone": "01755468496",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Samiul Rahman",
+    "roll": "1202425010350",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0081",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01302236038",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Salman Farsi",
+    "roll": "1202425010502",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "29 November 2025",
+    "registration_id": "SC-B-0032",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01726317234",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Tajkiya Islam Samiya",
+    "roll": "1202425020080",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "30 November 2025",
+    "registration_id": "AR-G-0018",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01712714185",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
