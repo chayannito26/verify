@@ -3786,8 +3786,8 @@
     "tshirt_size": "L"
   },
   {
-    "name": "Md. Salman Farsi",
-    "roll": "1202425010502",
+    "name": "Talha Tosin",
+    "roll": "1202425010486",
     "gender": "Male",
     "group": "SC",
     "registration_date": "29 November 2025",
@@ -3797,7 +3797,7 @@
     "referred_by": "",
     "paid": 800,
     "email": "",
-    "phone": "01726317234",
+    "phone": "",
     "parts_available": [
       "T-Shirt",
       "Food",
@@ -4158,6 +4158,646 @@
     "paid": 900,
     "email": "mdi671760@gmail.com",
     "phone": "01317961858",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Shakibul Bari",
+    "roll": "1202425010330",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "30 November 2025",
+    "registration_id": "SC-B-0044",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01784639392",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Moshiur Rahman Sajib",
+    "roll": "1202425010449",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0045",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01792735747",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Rokibul Hasan Rudro",
+    "roll": "1202425010302",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0046",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01955942487",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Araf Hossain Safin",
+    "roll": "1202425030015",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0022",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 600,
+    "email": "",
+    "phone": "01768297651",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md. Rakibul Hassan Rafi",
+    "roll": "1202425030122",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0023",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "01798292840",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Junaid Islam Shafin",
+    "roll": "1202425030145",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0024",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01706094838",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Salman Farsi",
+    "roll": "1202425010502",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0082",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01726317234",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Borhan Uddin",
+    "roll": "1202425010341",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0083",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 600,
+    "email": "",
+    "phone": "01786671882",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Shaiun Sarker",
+    "roll": "1202425010655",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0084",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Hadiya Rahman",
+    "roll": "1202425010094",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0100",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 900,
+    "email": "",
+    "phone": "01833218366",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Roktim Sheikh",
+    "roll": "1202425030105",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0025",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01985491205",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Atia Afrin Dripty",
+    "roll": "1202425020042",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-G-0027",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01705528234",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Jannatul",
+    "roll": "1202425010505",
+    "gender": "Female",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-G-0028",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01787834574",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Tashdid Rahman",
+    "roll": "1202425020203",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-G-0029",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01309633410",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Ratul Hasan",
+    "roll": "1202425010032",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0085",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01609972898",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Nahiduzaaman",
+    "roll": "1202425030257",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0026",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01893366245",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Moinul Islam",
+    "roll": "1202425030195",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0027",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01774561426",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Sumon Islam",
+    "roll": "1202425030098",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0028",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01739067216",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Ovi Ali",
+    "roll": "1202425030141",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0029",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01881283054",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Ashik Rohman",
+    "roll": "1202425030008",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0030",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01763848407",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Rahul Ahmed",
+    "roll": "1202425030185",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0031",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01972834780",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md. Jobayer Perves Tasin",
+    "roll": "1202425030030",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0032",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01760987978",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Md. Arafat Rahman",
+    "roll": "1202425030058",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "01 December 2025",
+    "registration_id": "CO-B-0033",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01637954699",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Mst. Ema Parven",
+    "roll": "1202425020041",
+    "gender": "Female",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-G-0019",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 0,
+    "email": "",
+    "phone": "01770669155",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Abir All Islam",
+    "roll": "1202425020200",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0026",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01729372729",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Ratul Hossain Riyan",
+    "roll": "1202425020330",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0028",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "3XL"
+  },
+  {
+    "name": "Md.Shihab Uddin Shishir",
+    "roll": "1202425020328",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0027",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md. Sakibul Islam Santo",
+    "roll": "1202425020119",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0029",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 700,
+    "email": "",
+    "phone": "01305065206",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Md. Mehedi Hasan Badan",
+    "roll": "1202425020355",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0030",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 700,
+    "email": "",
+    "phone": "",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XL"
+  },
+  {
+    "name": "Md. Salman Hosen",
+    "roll": "1202425020265",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0031",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 700,
+    "email": "",
+    "phone": "01788242743",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Jisan Hossain",
+    "roll": "1202425020033",
+    "gender": "Male",
+    "group": "AR",
+    "registration_date": "01 December 2025",
+    "registration_id": "AR-B-0032",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01312338470",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Digonto Kumar Ghosh",
+    "roll": "1202425010512",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0047",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 800,
+    "email": "",
+    "phone": "01765451434",
     "parts_available": [
       "T-Shirt",
       "Food",
