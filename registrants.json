@@ -4804,5 +4804,25 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Shakib Shahriar Khan",
+    "roll": "1202425010520",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "01 December 2025",
+    "registration_id": "SC-B-0086",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1200,
+    "email": "",
+    "phone": "01715324718",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
   }
 ]
