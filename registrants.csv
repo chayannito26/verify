@@ -1,0 +1,248 @@
+registration_id,name,roll_last5,paid,tshirt_size
+AR-B-0001,Sahariar Nafiz,20165,1200,XL
+AR-B-0002,Khairum Anam Nafi,20138,1200,L
+AR-B-0003,Md. Newaj Hossain,20184,1200,XL
+AR-B-0004,Nawshad Anam,20186,1200,XXL
+AR-B-0005,Redwan Talha,20334,1200,XL
+AR-B-0006,Nafizur Rahman Ridoy,20032,1200,XL
+AR-B-0007,Rohan Ahmed,30051,1200,XL
+AR-B-0008,Md. Tanvir Rahman Bayzid,20208,1200,L
+AR-B-0009,Md. Noyon Hossain Jibon,20244,1200,XL
+AR-B-0010,Md. Siam Reza,20206,1200,XL
+AR-B-0011,Md. Riajul Islam Rain,20226,1200,XL
+AR-B-0012,Md. Shipon Hossen,20157,1200,XL
+AR-B-0013,Araf Adiat,20135,1200,L
+AR-B-0014,Md. Ibna Al Noman,20064,1200,M
+AR-B-0015,Md. Saymon Hossain,20236,1200,XL
+AR-B-0016,Md. Ashik Khandaker,20071,1200,L
+AR-B-0017,Mst. Marufa Khatun Mow,20084,1200,L
+AR-B-0018,Md. Mushfiqur Rahman Badhon,20088,1200,XXL
+AR-B-0019,Md. Tanzib Ahmed Chanchal,20194,1200,XL
+AR-B-0020,Md. Jakir Hossain,20357,1200,L
+AR-B-0021,Md. Rabbi Hossain,20036,1200,L
+AR-B-0022,Nusrat Tabassum Urbi,10640,1200,L
+AR-B-0023,Mahin Mohammad Siam,20271,1200,L
+AR-B-0024,Md. Mazharul Molla Sadhin,20072,700,M
+AR-B-0025,Musfiqur Rahman Noyon,20192,700,L
+AR-B-0026,Md. Abir All Islam,20200,800,XL
+AR-B-0027,Md.Shihab Uddin Shishir,20328,800,XXL
+AR-B-0028,Md. Ratul Hossain Riyan,20330,1200,3XL
+AR-B-0029,Md. Sakibul Islam Santo,20119,700,XXL
+AR-B-0030,Md. Mehedi Hasan Badan,20355,700,XL
+AR-B-0031,Md. Salman Hosen,20265,700,L
+AR-B-0032,Md. Jisan Hossain,20033,500,L
+AR-B-0034,Shakib Shahriar Khan,10520,1200,XXL
+AR-B-0051,Md. Golam Kobir,20276,1000,L
+AR-B-0052,Mahib Hasan,10454,1200,M
+AR-B-0053,Md. Rahat Joardar,20103,1200,L
+AR-B-0054,Ahommed Al-Beruni,20314,1200,L
+AR-B-0055,Md. Jubaer Islam Ruhan,20109,1000,XL
+AR-B-0101,Md. Taslim Ahammed Nafi,20050,1200,M
+AR-B-0102,Md. Jihad Pk.,20286,1200,L
+AR-B-0103,Shrabon Kumar,20142,1200,M
+AR-B-0104,Md. Ashik Khandaker,20071,1200,L
+AR-B-0105,Mahbubur Rashid Khan,20303,1200,L
+AR-G-0001,Afiya Rubaiyah,20163,1250,XL
+AR-G-0002,Ayesha Siddiqua Ahona,20350,1200,XL
+AR-G-0003,Israt Jahan Tisha,20133,1200,XL
+AR-G-0004,Mst. Afia Ibnath Sneha,20338,1200,XL
+AR-G-0005,Riya Karmoker,20221,1200,XL
+AR-G-0006,Sangita Porshi,20320,1200,XXL
+AR-G-0007,Mst. Sanzida Ferdous Suchi,20164,1000,L
+AR-G-0008,Mst. Jannatul Fardaus,20211,1000,L
+AR-G-0009,Sinthia Ridy,20352,1200,XL
+AR-G-0010,Mst. Farhana Akter Mohona,20047,1200,XL
+AR-G-0011,Jannatul Tayaba Tuba,20335,1200,L
+AR-G-0012,Saraban Tahura Sara,20168,1200,XL
+AR-G-0013,Maisha Akther Mahi,20107,1000,M
+AR-G-0014,Tassnuba Zarin Yanna,20182,1200,XL
+AR-G-0015,Mst. Fatema Khatun,20339,1200,XXL
+AR-G-0016,Humaira Akter,20130,1200,L
+AR-G-0017,Maysha Mudra,20267,1000,XXL
+AR-G-0018,Tajkiya Islam Samiya,20080,1200,XXL
+AR-G-0019,Mst. Ema Parven,20041,0,XL
+AR-G-0051,Namara Aksa Karim,20048,1000,L
+AR-G-0052,Mst. Sumaiya Afrin Sorna,20019,1000,L
+AR-G-0053,Jannatul Fardos Soshe,20337,1200,XXL
+AR-G-0054,Mst. Mitu Khatun,30329,1200,M
+CO-B-0001,Tanzid Jayid,30202,1200,L
+CO-B-0002,Amir hamja,30063,1200,XL
+CO-B-0003,Md. Rihad Hossain,30076,1200,L
+CO-B-0004,Anowar Shahdat Lilaf,30132,500,L
+CO-B-0005,Md. Mahdi Hasan Raihan,30192,1200,L
+CO-B-0006,Md. Asikur Rahman Asik,30065,1000,L
+CO-B-0007,Md. Piarul Hossain,30200,1000,L
+CO-B-0008,Md. Arafat Hossain,30086,1000,XL
+CO-B-0009,Md. Siam Hassan,30186,1000,L
+CO-B-0010,Md. Limon Hossain,30264,1000,M
+CO-B-0011,Md. Rohan Biswas,30198,1000,L
+CO-B-0012,Nusrat Jahan Trisha,30083,1200,L
+CO-B-0013,Md. Abu Talha,30256,1000,XL
+CO-B-0014,Md. Murshid Mostofa Sani,30119,1200,L
+CO-B-0015,Md. Akash Mondol,30050,1000,L
+CO-B-0016,Md. Parvez,30108,1000,L
+CO-B-0017,Md. Anik Islam Romon,30139,1000,XL
+CO-B-0018,Sagor Hossan,30033,900,M
+CO-B-0019,Arafat Hamim,30085,1000,XL
+CO-B-0020,Md. Golam Robbani,30187,1000,L
+CO-B-0021,Md. Showon Shaike,30002,600,XXL
+CO-B-0022,Md. Araf Hossain Safin,30015,600,XXL
+CO-B-0023,Md. Rakibul Hassan Rafi,30122,1000,L
+CO-B-0024,Md. Junaid Islam Shafin,30145,500,M
+CO-B-0025,Md. Roktim Sheikh,30105,500,M
+CO-B-0026,Md. Nahiduzaaman,30257,500,M
+CO-B-0027,Moinul Islam,30195,500,M
+CO-B-0028,Md. Sumon Islam,30098,500,L
+CO-B-0029,Md. Ovi Ali,30141,500,L
+CO-B-0030,Md. Ashik Rohman,30008,500,L
+CO-B-0031,Rahul Ahmed,30185,500,XXL
+CO-B-0032,Md. Jobayer Perves Tasin,30030,500,M
+CO-B-0033,Md. Arafat Rahman,30058,500,XL
+CO-B-0051,Md. Siam,30176,1200,L
+CO-B-0052,Mohammad Main Uddin Khan Main,30332,1200,XXL
+CO-B-0053,Md. Atiqur Rahman,30049,1200,M
+CO-B-0054,Md Minhaz Khondokar Emon,30215,1200,XL
+CO-B-0055,Md. Shohel Rana,30181,1200,L
+CO-B-0056,Md. Taj Mahmud,30036,1000,L
+CO-B-0057,Anik Kumar Saha,30131,1200,M
+CO-B-0058,Rumon Islam,30163,1000,L
+CO-B-0059,Md. Ekram Malitha,30109,900,L
+CO-B-0060,Md. Asif Hasan,10248,500,L
+CO-B-0062,Rahul,30369,500,L
+CO-B-0101,Sakib-Al Hasan,30121,1200,L
+CO-B-0102,Md. Jeet Hasan Zidan,30142,1200,M
+CO-B-0103,Jayed Sheik,20112,1200,XL
+CO-B-0104,Munsi Safat Ashkher,30170,1000,XXL
+CO-B-0105,Shohan Mahmud,30260,1200,XL
+CO-B-0106,Ajoy Kumer Deb,30133,1200,L
+CO-G-0001,S Shanta,20274,1250,XL
+CO-G-0002,Masura Khatun,30248,1200,L
+CO-G-0003,Mohona Rani Pramanik,30073,1200,XL
+CO-G-0004,Meheboba Islam Mouli,30328,1200,XL
+CO-G-0005,Mst. Mymuna Khatun,30156,1200,M
+CO-G-0006,Samiya Ansari,30080,1200,L
+CO-G-0007,Mst. Akhi Khatun,30213,1200,L
+CO-G-0008,Sidratul Muntaha,30297,1200,L
+CO-G-0009,Nusrat Akter Tonmoy,30144,1200,XL
+CO-G-0010,Payel Devnath,30229,1200,XL
+CO-G-0011,Mst. Sadia Khatun,30241,1000,L
+CO-G-0012,Jerin Tasnim,30099,1200,L
+CO-G-0036,Nusrat Jahan Neha,30258,1000,XL
+CO-G-0037,Mst. Bristi Sheikh,30218,1200,M
+CO-G-0038,Mst. Maya Khatun,30167,1200,L
+SC-B-0001,Arian Mollik Wasi,10276,1200,XXL
+SC-B-0002,Kazi Saimum,10399,1200,XL
+SC-B-0003,Shahriyar Islam,10646,1200,XXL
+SC-B-0004,Nazmus Sadat,10652,1200,XL
+SC-B-0005,S. M. J. R. Abeer,10286,1200,XL
+SC-B-0006,Faisal Arefin Shezan,10455,1200,XXL
+SC-B-0007,Md. Minhazul Islam,10101,1200,XL
+SC-B-0008,Akibul Haque Nahid,10457,1000,XL
+SC-B-0009,ZD Maruf,10064,1200,L
+SC-B-0010,Roddro Zaman,10674,1200,XL
+SC-B-0011,Md. Junaid Islam Shafi,10383,1200,XXL
+SC-B-0012,Md. Dipu,10638,1200,L
+SC-B-0013,Md. Jubayer Pramanik Sakib,10177,1200,L
+SC-B-0014,Md. Kaif Rahman,10148,1200,L
+SC-B-0015,Muammar Al Mujahid,10642,1200,XL
+SC-B-0016,Mehedi Hasan Saruk,10487,1200,XL
+SC-B-0017,Md. Rubayet Hossain,10504,1200,3XL
+SC-B-0018,Emtiaj Ahmed Tamim,10527,1000,L
+SC-B-0019,Md. Mustafizur Rahman,10317,1200,XXL
+SC-B-0020,Molla Andalib Rahman Abir,10129,800,L
+SC-B-0021,Md. Asifur Rahman,10542,800,XL
+SC-B-0022,Md. Sabbir Hoshen,10364,1200,XL
+SC-B-0023,Tanjim Ahmed Turzo,10524,1200,L
+SC-B-0024,Md. Rakib Hossen,10525,1200,L
+SC-B-0025,Sadd Al Golam Rabbi,10220,1200,L
+SC-B-0026,Md. Oyahidur Rahman Siam,10014,1200,XL
+SC-B-0027,Arafat Islam Sabid,10534,1200,L
+SC-B-0028,Regdho Das Brinto,10394,1000,L
+SC-B-0029,Md. Ibrahim Haque,10198,1200,XXL
+SC-B-0030,"Md, Sadat Rahman",10459,1100,XL
+SC-B-0031,Md. Moontasir Abedin Moon,10331,1100,L
+SC-B-0032,Talha Tosin,10486,800,XL
+SC-B-0033,Md. Arafat Hossain,10073,1200,XXL
+SC-B-0034,Md. Rasibul Hasan Rasib,10468,1200,XL
+SC-B-0035,Md. Tashfiq Imam Akkhor,10581,1200,XL
+SC-B-0036,Md. Rafiul Islam Apon,10514,1000,XL
+SC-B-0037,Arindom Sarkar,10400,1000,XL
+SC-B-0038,Faekujjaman Rahat,10360,800,XL
+SC-B-0039,Md. Shiam Shah,10270,500,M
+SC-B-0040,Mir Shahidul Islam Omio,10188,500,M
+SC-B-0041,Md. Mahfuzur Rahman,10222,500,L
+SC-B-0042,Md. Jubayir Hosan,10033,500,L
+SC-B-0043,Sumaiya Afrin Oyshee,10358,600,XXL
+SC-B-0044,Md. Shakibul Bari,10330,500,XL
+SC-B-0045,Md. Moshiur Rahman Sajib,10449,500,L
+SC-B-0046,Md. Rokibul Hasan Rudro,10302,500,M
+SC-B-0047,Digonto Kumar Ghosh,10512,800,L
+SC-B-0048,Md. Hiul Islam Himel,10084,1200,L
+SC-B-0049,Rafiu Tahrim Ahmed,10392,1200,XL
+SC-B-0050,Nazmul Islam Himel,10639,1200,XXL
+SC-B-0052,Md. Rakib Jaman,10214,1200,XL
+SC-B-0053,Md. Shofikuzzaman Kaif,10207,1200,XL
+SC-B-0054,Md. Arman Khan Abir,10154,1200,3XL
+SC-B-0055,Zaoud Jabir,10240,1200,XXL
+SC-B-0056,Md. Saif Rahman,10231,1200,XL
+SC-B-0057,Md. Jahid Al-Mamun Joy,10340,1200,XL
+SC-B-0058,Md. Daud Sheikh,10342,1200,XL
+SC-B-0059,Sadik Bin Sayeed,10653,1200,L
+SC-B-0060,Ahnaf Tahmid,10635,1200,XL
+SC-B-0061,Md. Shamim Mahalder,10509,1100,L
+SC-B-0062,Salman Farsi,10450,1100,L
+SC-B-0063,Md. Foysal Mahmud,10466,1100,L
+SC-B-0064,Md. Sifat Sarkar Joy,10139,0,L
+SC-B-0065,Md. Siyam,10192,1000,XL
+SC-B-0066,Md. Ubaydul Habib,10193,1000,L
+SC-B-0067,Touhidul Haque Chowdhury,10373,1000,3XL
+SC-B-0068,Md. Abdullah -Al-Rakib,10582,1200,XXL
+SC-B-0069,Shoron Gosh,20113,1200,3XL
+SC-B-0070,Md. Naziur Rahman,10224,700,L
+SC-B-0071,Md. Nazmul Hoque,10225,700,L
+SC-B-0072,Md. Jubayer Rahman,10580,700,XL
+SC-B-0073,Nahian Ibne Masud,10565,1200,L
+SC-B-0074,Md. Ahnaf Hossain Agroz,10641,1000,3XL
+SC-B-0075,Md. Nabil Kibria,10669,1000,XL
+SC-B-0076,Aminuzzaman,10117,800,M
+SC-B-0077,Farhan Shahariar,20167,500,L
+SC-B-0078,Md. Eashan,20196,500,L
+SC-B-0079,Mahim Rahman,20210,600,L
+SC-B-0080,Md. Morsalin Islam Likhon,20166,600,L
+SC-B-0081,Md. Samiul Rahman,10350,800,L
+SC-B-0082,Md. Salman Farsi,10502,800,XL
+SC-B-0083,Md. Borhan Uddin,10341,600,XL
+SC-B-0084,Shaiun Sarker,10655,1000,XXL
+SC-B-0085,Md. Ratul Hasan,10032,500,M
+SC-B-0100,Hadiya Rahman,10094,900,XL
+SC-G-0001,Marzia Mittika,10271,1200,XL
+SC-G-0002,Nowshin Kibria,10126,1200,M
+SC-G-0003,Mst. Tasnia Khatun,10384,1200,M
+SC-G-0004,Maisha Tabassum,10414,1200,L
+SC-G-0005,Jannatul Ferdous,10477,1200,XL
+SC-G-0006,Nayma,10209,1200,M
+SC-G-0007,Hasnat Jahan Esha,10068,1200,L
+SC-G-0008,Jannatul Maoya,10105,1200,XL
+SC-G-0009,Tamanna Hossen Tisha,10108,1200,XXL
+SC-G-0010,Shanin Sakhawath Bishwas,10110,1200,L
+SC-G-0011,Mst. Ayasha Siddika Sadia,10409,1200,L
+SC-G-0012,Najifa Tabassum,10506,1200,L
+SC-G-0013,Mehjabin Alam,10432,1200,XL
+SC-G-0014,Mst. Meherun Nesa Shammi,10662,1200,XL
+SC-G-0015,Jannatul Hafsa Sonali,10627,1200,XL
+SC-G-0016,Mst. Orpita Khatun,10628,1200,XL
+SC-G-0017,Anika Hasan Adity,10667,1200,XL
+SC-G-0018,Mst. Sompa Khatun,10297,1200,L
+SC-G-0019,Rubiya Afiya Suchi,10357,1200,M
+SC-G-0020,Farhatul Jannat Jim,10013,1200,XL
+SC-G-0021,Mst. Farjana Faria Maisha,10254,1200,XL
+SC-G-0022,Mst. Sanjida Akter Afsana,10165,1200,XXL
+SC-G-0023,Mst. Marufa Khatun,10566,1200,M
+SC-G-0024,Mst. Sagupta Khatun Afiya,10575,1200,M
+SC-G-0025,Mst. Tazrin Islam,10393,1000,XXL
+SC-G-0026,Tasnim Nahar Prova,10625,1200,XL
+SC-G-0027,Atia Afrin Dripty,20042,800,L
+SC-G-0028,Jannatul,10505,800,XL
+SC-G-0029,Md. Tashdid Rahman,20203,500,XL
+SC-G-0030,Raiyan Haque,10548,800,XXL
+SC-G-0031,Mst. Farjana Khatun,10061,800,
