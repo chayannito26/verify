@@ -4851,7 +4851,7 @@
     "gender": "Male",
     "group": "CO",
     "registration_date": "01 December 2025",
-    "registration_id": "CO-B-0063",
+    "registration_id": "CO-B-0080",
     "photo": "",
     "revoked": false,
     "referred_by": "",
@@ -4943,5 +4943,84 @@
       "Gift"
     ],
     "tshirt_size": "L"
+  },
+  {
+    "name": "Md. Shahriyar Hossen Shourove",
+    "roll": "1202425030322",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "02 December 2025",
+    "registration_id": "CO-B-0034",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "L"
+  },
+  {
+    "name": "Mehedi Hasan",
+    "roll": "1202425030123",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "02 December 2025",
+    "registration_id": "CO-B-0035",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 500,
+    "email": "",
+    "phone": "01779622602",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "M"
+  },
+  {
+    "name": "Saif",
+    "roll": "1202425010671",
+    "gender": "Male",
+    "group": "CO",
+    "registration_date": "02 December 2025",
+    "registration_id": "CO-B-0063",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 1000,
+    "email": "",
+    "phone": "",
+    "parts_available": [
+      "T-Shirt",
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": "XXL"
+  },
+  {
+    "name": "Arafat",
+    "roll": "1202425010387",
+    "gender": "Male",
+    "group": "SC",
+    "registration_date": "02 December 2025",
+    "registration_id": "CO-B-0064",
+    "photo": "",
+    "revoked": false,
+    "referred_by": "",
+    "paid": 0,
+    "email": "",
+    "phone": "01771602532",
+    "parts_available": [
+      "Food",
+      "Gift"
+    ],
+    "tshirt_size": ""
   }
 ]
